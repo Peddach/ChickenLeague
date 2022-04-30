@@ -1,0 +1,12 @@
+name: ChickenLeagueHost
+main: de.petropia.chickenLeagueHost.ChickenLeagueHost
+author: Professor_Sam
+softdepend:
+- Multiverse-Core
+version: ${project.version}
+api-version: 1.18
+commands:
+   ChickenLeague:
+      description: Manage ChickenLeague
+   Start:
+      description: Startet das Spiel

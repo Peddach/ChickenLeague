@@ -1,0 +1,16 @@
+debug: true
+Database:
+   Host: localhost
+   Port: 3306
+   User: ChickenLeague
+   Password: password
+   Database: ChickenLeague
+Arenas: 4
+Spawn:
+   X: 100
+   Y: 100
+   Z: 100
+   Yaw: 0
+   Pitch: 0
+   World: world
+   
