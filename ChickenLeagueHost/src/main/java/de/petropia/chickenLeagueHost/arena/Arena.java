@@ -12,12 +12,17 @@ import org.bukkit.entity.Player;
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.MultiverseCore.api.MVWorldManager;
 
+import de.petropia.chickenLeagueHost.Constants;
 import de.petropia.chickenLeagueHost.events.GameStateChangeEvent;
 import de.petropia.chickenLeagueHost.events.PlayerJoinArenaEvent;
 import de.petropia.chickenLeagueHost.events.PlayerQuitArenaEvent;
+import de.petropia.chickenLeagueHost.mysql.MySQLManager;
 import de.petropia.chickenLeagueHost.team.ChickenLeagueTeam;
 
 public class Arena {
+	
+	private static final List<Arena> ARENAS = new ArrayList<>();
+	
 	private final String name;
 	private GameState gamestate;
 	private final ArenaMode arenaMode;
@@ -26,7 +31,7 @@ public class Arena {
 	private int maxPlayer;
 	private final ChickenLeagueTeam team1;
 	private final ChickenLeagueTeam team2;
-
+	
 	public Arena(ArenaMode mode) {
 		setGamestate(GameState.WAITING);
 		this.name = getRandomString();
@@ -51,6 +56,12 @@ public class Arena {
 		
 		team1 = new ChickenLeagueTeam(maxPlayer);
 		team2 = new ChickenLeagueTeam(maxPlayer);
+	}
+	
+	private void registerArena() {
+		ARENAS.add(this);
+		MySQLManager.addArena(this);
+		Constants.plugin.getLogger().info("Arena " + name + " registered and added to DB");
 	}
 	
 	public void assignPlayersToTeams() {
@@ -140,6 +151,10 @@ public class Arena {
 
 	public ArenaMode getArenaMode() {
 		return arenaMode;
+	}
+
+	public static List<Arena> getArenas() {
+		return ARENAS;
 	}
 
 }
