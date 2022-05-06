@@ -12,8 +12,6 @@ public class PlayerJoinArenaListener implements Listener {
 	
 	private static final Component JOIN_MESSAGE = Component.text(" ist dem Spiel beigetreten!").color(NamedTextColor.GRAY);
 	
-	public PlayerJoinArenaListener() {};
-	
 	@EventHandler
 	public void onPlayerJoinArena(PlayerJoinArenaEvent event) {
 		MessageSender.INSTANCE.broadcastMessage(event.getArena(), event.getPlayer().name().append(JOIN_MESSAGE));
