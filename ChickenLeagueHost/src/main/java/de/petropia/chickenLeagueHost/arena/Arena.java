@@ -56,6 +56,8 @@ public class Arena {
 		
 		team1 = new ChickenLeagueTeam(maxPlayer);
 		team2 = new ChickenLeagueTeam(maxPlayer);
+		
+		registerArena();
 	}
 	
 	private void registerArena() {
