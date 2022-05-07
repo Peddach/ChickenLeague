@@ -18,6 +18,7 @@ import de.petropia.chickenLeagueHost.events.PlayerJoinArenaEvent;
 import de.petropia.chickenLeagueHost.events.PlayerQuitArenaEvent;
 import de.petropia.chickenLeagueHost.mysql.MySQLManager;
 import de.petropia.chickenLeagueHost.team.ChickenLeagueTeam;
+import de.petropia.chickenLeagueHost.util.CloudNetAdapter;
 
 public class Arena {
 	
@@ -105,9 +106,9 @@ public class Arena {
 		if(players.size() == maxPlayer) {
 			return false;
 		}
+		players.add(player);
 		PlayerJoinArenaEvent event = new PlayerJoinArenaEvent(this, player);
 		Bukkit.getServer().getPluginManager().callEvent(event);
-		players.add(player);
 		return true;
 	}
 	
@@ -131,7 +132,22 @@ public class Arena {
 		return generatedString;
 	}
 	
+	public void delete() {
+		for(Player player : players) {
+			CloudNetAdapter.sendPlayerToLobbyTask(player);
+		}
+		MySQLManager.deleteArena(name);
+		ARENAS.remove(this);
+		Bukkit.getScheduler().runTaskLater(Constants.plugin, () -> {
+			deleteWorld();
+		}, 20);
+	}
 	
+	private void deleteWorld() {
+		MultiverseCore mvCore = (MultiverseCore) Bukkit.getServer().getPluginManager().getPlugin("Multiverse-Core");
+		MVWorldManager worldManager = mvCore.getMVWorldManager();
+		worldManager.deleteWorld(name);
+	}
 
 	public String getName() {
 		return name;
