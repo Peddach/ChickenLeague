@@ -148,6 +148,10 @@ public class Arena {
 		MVWorldManager worldManager = mvCore.getMVWorldManager();
 		worldManager.deleteWorld(name);
 	}
+	
+	public void teleportToSpawnPoints() {
+		
+	}
 
 	public String getName() {
 		return name;
@@ -173,6 +177,10 @@ public class Arena {
 
 	public static List<Arena> getArenas() {
 		return ARENAS;
+	}
+	
+	public int getMaxPlayers() {
+		return maxPlayer;
 	}
 
 }

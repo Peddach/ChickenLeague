@@ -15,6 +15,9 @@ public class PlayerJoinArenaListener implements Listener {
 	@EventHandler
 	public void onPlayerJoinArena(PlayerJoinArenaEvent event) {
 		MessageSender.INSTANCE.broadcastMessage(event.getArena(), event.getPlayer().name().append(JOIN_MESSAGE));
+		if(event.getArena().getPlayers().size() == event.getArena().getMaxPlayers()) {
+			//TODO Create a game countdown to start arena
+		}
 	}
 	
 }

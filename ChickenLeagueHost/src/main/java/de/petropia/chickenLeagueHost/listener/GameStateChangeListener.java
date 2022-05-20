@@ -35,6 +35,9 @@ public class GameStateChangeListener implements Listener{
 				}
 			}, 0, 20);
 		}
+		if(event.getAfter() == GameState.INGAME) {
+			
+		}
 	}
 
 }
