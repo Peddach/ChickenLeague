@@ -6,6 +6,7 @@ import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -32,6 +33,8 @@ public class Arena {
 	private int maxPlayer;
 	private final ChickenLeagueTeam team1;
 	private final ChickenLeagueTeam team2;
+	private final Location[] team1Spawns;
+	private final Location[] team2Spawns;
 	
 	public Arena(ArenaMode mode) {
 		setGamestate(GameState.WAITING);
@@ -59,8 +62,29 @@ public class Arena {
 		team2 = new ChickenLeagueTeam(maxPlayer);
 		
 		registerArena();
+		
+		team2Spawns = loadSpawns(2);
+		team1Spawns = loadSpawns(1);
 	}
 	
+	private Location[] loadSpawns(int team) {
+		final Location[] spawns = new Location[maxPlayer / 2];
+		for (int i = 0; i < maxPlayer / 2; i++) {
+			final double x = Constants.config.getDouble(arenaMode.name() + ".Team" + team + ".Spawn" + i + ".X");
+			final double y = Constants.config.getDouble(arenaMode.name() + ".Team" + team + ".Spawn" + i + ".Y");
+			final double z = Constants.config.getDouble(arenaMode.name() + ".Team" + team +  ".Spawn" + i + ".Z");
+			final float yaw = Constants.config.getLong(arenaMode.name() + ".Team" + team +  ".Spawn" + i + ".Yaw");
+			final float pitch = Constants.config.getLong(arenaMode.name() +".Team" + team +  ".Spawn" + i + ".Pitch");
+			final Location location = new Location(world, x, y, z, yaw, pitch);
+			spawns[i] = location;
+		}
+		return spawns;
+	}
+	
+	public World getWorld() {
+		return world;
+	}
+
 	private void registerArena() {
 		ARENAS.add(this);
 		MySQLManager.addArena(this);
@@ -150,7 +174,20 @@ public class Arena {
 	}
 	
 	public void teleportToSpawnPoints() {
-		
+		for(int i = 0; i < team1.getPlayers().length; i++) {
+			Player p = team1.getPlayers()[i];
+			if(p == null) {
+				continue;
+			}
+			p.teleport(team1Spawns[i]);
+		}
+		for(int i = 0; i < team2.getPlayers().length; i++) {
+			Player p = team2.getPlayers()[i];
+			if(p == null) {
+				continue;
+			}
+			p.teleport(team2Spawns[i]);
+		}
 	}
 
 	public String getName() {

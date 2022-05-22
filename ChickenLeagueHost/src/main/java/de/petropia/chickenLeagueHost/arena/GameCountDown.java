@@ -34,6 +34,8 @@ public class GameCountDown {
 			if(time <= 0) {
 				cancel(false);
 				arena.setGamestate(GameState.INGAME);
+				arena.teleportToSpawnPoints();
+				arena.assignPlayersToTeams();
 				return;
 			}
 			time--;
