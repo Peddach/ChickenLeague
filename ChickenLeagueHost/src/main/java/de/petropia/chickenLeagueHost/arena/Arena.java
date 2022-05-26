@@ -38,12 +38,13 @@ public class Arena {
 	private final Location[] team1Spawns;
 	private final Location[] team2Spawns;
 	private final Location middle;
+	private final ChickenLeagueBall ball;
 	
 	public Arena(ArenaMode mode) {
 		setGamestate(GameState.WAITING);
 		this.name = getRandomString();
 		this.arenaMode = mode;
-
+		
 		MultiverseCore mvCore = (MultiverseCore) Bukkit.getServer().getPluginManager().getPlugin("Multiverse-Core");
 		MVWorldManager worldManager = mvCore.getMVWorldManager();
 		if (mode == ArenaMode.FIVE_VS_FIVE) {
@@ -64,10 +65,28 @@ public class Arena {
 		team1 = new ChickenLeagueTeam(maxPlayer, Component.text("Team 1").color(NamedTextColor.BLUE));
 		team2 = new ChickenLeagueTeam(maxPlayer, Component.text("Team 2").color(NamedTextColor.RED));
 		
-		registerArena();
-		
 		team2Spawns = loadSpawns(2);
 		team1Spawns = loadSpawns(1);
+		middle = loadMiddleLocation();
+		
+		ball = new ChickenLeagueBall(this);
+		
+		registerArena();
+		
+	}
+	
+	public ChickenLeagueBall getBall() {
+		return ball;
+	}
+
+	private Location loadMiddleLocation() {
+		final double x = Constants.config.getDouble(arenaMode.name() + ".Middle.X");
+		final double y = Constants.config.getDouble(arenaMode.name() + ".Middle.Y");
+		final double z = Constants.config.getDouble(arenaMode.name() + ".Middle.Z");
+		final float yaw = Constants.config.getLong(arenaMode.name() + ".Middle.Yaw");
+		final float pitch = Constants.config.getLong(arenaMode.name() +".Middle.Pitch");
+		final Location location = new Location(world, x, y, z, yaw, pitch);
+		return location;
 	}
 	
 	private Location[] loadSpawns(int team) {

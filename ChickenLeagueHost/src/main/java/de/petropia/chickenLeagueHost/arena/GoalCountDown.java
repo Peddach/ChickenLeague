@@ -26,6 +26,7 @@ public class GoalCountDown {
 		countdown = 5;	//Const
 		arena.getPlayers().forEach(PlayerMoveListener.PLAYERS :: add);
 		arena.teleportToSpawnPoints();
+		arena.getBall().kill();
 		taskid = Bukkit.getScheduler().scheduleSyncRepeatingTask(Constants.plugin, () -> {
 			if(arena.getGameState() != GameState.INGAME) {
 				cancel();
@@ -33,6 +34,7 @@ public class GoalCountDown {
 			MessageSender.INSTANCE.broadcastTitle(arena, currentTitle(), currentSound());
 			if(countdown == 0) {
 				cancel();
+				arena.getBall().spawn();
 			}
 			countdown --;
 		}, 0, 20);
