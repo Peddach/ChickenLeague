@@ -20,6 +20,8 @@ import de.petropia.chickenLeagueHost.events.PlayerQuitArenaEvent;
 import de.petropia.chickenLeagueHost.mysql.MySQLManager;
 import de.petropia.chickenLeagueHost.team.ChickenLeagueTeam;
 import de.petropia.chickenLeagueHost.util.CloudNetAdapter;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 
 public class Arena {
 	
@@ -35,6 +37,7 @@ public class Arena {
 	private final ChickenLeagueTeam team2;
 	private final Location[] team1Spawns;
 	private final Location[] team2Spawns;
+	private final Location middle;
 	
 	public Arena(ArenaMode mode) {
 		setGamestate(GameState.WAITING);
@@ -58,8 +61,8 @@ public class Arena {
 		world = Bukkit.getWorld(name);
 		applyGameRules();
 		
-		team1 = new ChickenLeagueTeam(maxPlayer);
-		team2 = new ChickenLeagueTeam(maxPlayer);
+		team1 = new ChickenLeagueTeam(maxPlayer, Component.text("Team 1").color(NamedTextColor.BLUE));
+		team2 = new ChickenLeagueTeam(maxPlayer, Component.text("Team 2").color(NamedTextColor.RED));
 		
 		registerArena();
 		
@@ -218,6 +221,10 @@ public class Arena {
 	
 	public int getMaxPlayers() {
 		return maxPlayer;
+	}
+
+	public Location getMiddle() {
+		return middle;
 	}
 
 }

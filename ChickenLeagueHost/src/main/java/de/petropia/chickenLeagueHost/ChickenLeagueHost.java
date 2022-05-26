@@ -10,10 +10,12 @@ import com.onarandombox.MultiverseCore.api.MVWorldManager;
 
 import de.petropia.chickenLeagueHost.listener.ChatListener;
 import de.petropia.chickenLeagueHost.listener.GameStateChangeListener;
+import de.petropia.chickenLeagueHost.listener.PlayerGoalListener;
 import de.petropia.chickenLeagueHost.listener.PlayerJoinArenaListener;
 import de.petropia.chickenLeagueHost.listener.PlayerJoinServerListener;
 import de.petropia.chickenLeagueHost.listener.PlayerLeaveArenaListener;
 import de.petropia.chickenLeagueHost.listener.PlayerLeaveServerListener;
+import de.petropia.chickenLeagueHost.listener.PlayerMoveListener;
 import de.petropia.chickenLeagueHost.mysql.MySQLManager;
 import de.petropia.chickenLeagueHost.util.CloudNetAdapter;
 
@@ -51,7 +53,9 @@ public class ChickenLeagueHost extends JavaPlugin{
 		manager.registerEvents(new PlayerJoinServerListener(), this);
 		manager.registerEvents(new PlayerLeaveServerListener(), this);
 		manager.registerEvents(new ChatListener(), this);
-		manager.registerEvents(new GameStateChangeListener(), null);
+		manager.registerEvents(new GameStateChangeListener(), this);
+		manager.registerEvents(new PlayerGoalListener(), this);
+		manager.registerEvents(new PlayerMoveListener(), this);
 	}
 	
 	@Override

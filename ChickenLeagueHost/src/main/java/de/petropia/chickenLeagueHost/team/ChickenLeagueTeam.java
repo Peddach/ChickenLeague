@@ -2,12 +2,16 @@ package de.petropia.chickenLeagueHost.team;
 
 import org.bukkit.entity.Player;
 
+import net.kyori.adventure.text.Component;
+
 public class ChickenLeagueTeam {
 	private final Player[] players;
 	private int score = 0;
+	private final Component name;
 
-	public ChickenLeagueTeam(int teamSize) {
+	public ChickenLeagueTeam(int teamSize, Component name) {
 		players = new Player[teamSize];
+		this.name = name;
 	}
 
 	public boolean addPlayer(Player player) {
@@ -58,5 +62,9 @@ public class ChickenLeagueTeam {
 
 	public void setScore(int score) {
 		this.score = score;
+	}
+
+	public Component getName() {
+		return name;
 	}
 }
