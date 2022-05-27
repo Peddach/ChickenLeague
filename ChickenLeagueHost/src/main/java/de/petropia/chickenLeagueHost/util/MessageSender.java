@@ -1,7 +1,9 @@
 package de.petropia.chickenLeagueHost.util;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import de.petropia.chickenLeagueHost.Constants;
 import de.petropia.chickenLeagueHost.arena.Arena;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.sound.Sound;
@@ -15,6 +17,7 @@ public class MessageSender {
 	private static final Component PREFIX = Component.text("[").color(NamedTextColor.GRAY).append(
 			Component.text("Chicken League").color(NamedTextColor.GOLD).append(
 			Component.text("] ").color(NamedTextColor.GRAY)));
+	private static final Component DEBUG_PREFIX = PREFIX.append(Component.text(" [INFO] ").color(NamedTextColor.GRAY));
 	
 	private MessageSender() {}
 	
@@ -36,6 +39,19 @@ public class MessageSender {
 		Audience audience = Audience.audience(arena.getPlayers());
 		audience.showTitle(title);
 		audience.playSound(sound);
+	}
+	
+	public void showDebugMessage(String message) {
+		if(!Constants.debug) {
+			return;
+		}
+		for(Player player : Bukkit.getServer().getOnlinePlayers()) {
+			if(!player.hasPermission("ChickenLeague.debug")) {
+				continue;
+			}
+			player.sendMessage(DEBUG_PREFIX.append(Component.text(message)));
+		}
+		Constants.plugin.getLogger().info(message);
 	}
 	
 	public Component format(Component component) {

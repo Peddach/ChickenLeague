@@ -11,5 +11,6 @@ public class Constants {
 	public static FileConfiguration config;
 	public static String serverName;
 	public static InputStream setupFile;
+	public static boolean debug;
 	
 }

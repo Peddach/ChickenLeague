@@ -20,6 +20,7 @@ import de.petropia.chickenLeagueHost.events.PlayerQuitArenaEvent;
 import de.petropia.chickenLeagueHost.mysql.MySQLManager;
 import de.petropia.chickenLeagueHost.team.ChickenLeagueTeam;
 import de.petropia.chickenLeagueHost.util.CloudNetAdapter;
+import de.petropia.chickenLeagueHost.util.MessageSender;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
@@ -187,6 +188,7 @@ public class Arena {
 		Bukkit.getScheduler().runTaskLater(Constants.plugin, () -> {
 			deleteWorld();
 		}, 20);
+		MessageSender.INSTANCE.showDebugMessage(name + " deleted!");
 	}
 	
 	private void deleteWorld() {

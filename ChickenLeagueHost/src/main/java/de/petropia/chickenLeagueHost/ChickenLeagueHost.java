@@ -32,6 +32,7 @@ public class ChickenLeagueHost extends JavaPlugin{
 		Constants.config = getConfig();
 		Constants.serverName = CloudNetAdapter.getServerInstanceName();
 		Constants.setupFile = getResource("dbsetup.sql");
+		Constants.debug = getConfig().getBoolean("debug");
 		
 		MultiverseCore mvCore = (MultiverseCore) Bukkit.getServer().getPluginManager().getPlugin("Multiverse-Core");
 		MVWorldManager worldManager = mvCore.getMVWorldManager();
