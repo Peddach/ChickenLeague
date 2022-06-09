@@ -3,7 +3,6 @@ package de.petropia.chickenLeagueHost.events;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.jetbrains.annotations.NotNull;
 
 import de.petropia.chickenLeagueHost.arena.Arena;
 import de.petropia.chickenLeagueHost.team.ChickenLeagueTeam;
