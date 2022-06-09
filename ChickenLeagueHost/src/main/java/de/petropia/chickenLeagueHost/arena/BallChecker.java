@@ -34,6 +34,9 @@ public class BallChecker {
 		}
 		taskID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Constants.plugin, () -> {
 			
+			if(arena.getBall().getChicken() == null || arena.getBall().getChicken().getLocation() == null) {
+				return;
+			}
 			Location chickenLoc = arena.getBall().getChicken().getLocation();
 			double chickenX = chickenLoc.getX();
 			double chickenZ = chickenLoc.getZ();
