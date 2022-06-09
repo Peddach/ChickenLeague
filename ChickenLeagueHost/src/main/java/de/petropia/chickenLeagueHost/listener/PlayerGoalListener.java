@@ -28,6 +28,8 @@ public class PlayerGoalListener implements Listener {
 	public void onPlayerGoal(PlayerGoalEvent event) {
 		final Title title = Title.title(event.getTeam().getName(), event.getPlayer().name().append(SUBTITLE), TIMES);
 		MessageSender.INSTANCE.broadcastTitle(event.getArena(), title, SOUND);
+		event.getArena().getTeam1().getBallChecker().pause();
+		event.getArena().getTeam2().getBallChecker().pause();
 		Bukkit.getScheduler().runTaskLater(Constants.plugin, () -> {
 			 new GoalCountDown(event.getArena());
 		}, 3*20);

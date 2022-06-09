@@ -2,12 +2,14 @@ package de.petropia.chickenLeagueHost.team;
 
 import org.bukkit.entity.Player;
 
+import de.petropia.chickenLeagueHost.arena.BallChecker;
 import net.kyori.adventure.text.Component;
 
 public class ChickenLeagueTeam {
 	private final Player[] players;
 	private int score = 0;
 	private final Component name;
+	private BallChecker ballChecker;
 
 	public ChickenLeagueTeam(int teamSize, Component name) {
 		players = new Player[teamSize];
@@ -66,5 +68,13 @@ public class ChickenLeagueTeam {
 
 	public Component getName() {
 		return name;
+	}
+	
+	public BallChecker getBallChecker() {
+		return ballChecker;
+	}
+
+	public void setBallChecker(BallChecker ballChecker) {
+		this.ballChecker = ballChecker;
 	}
 }

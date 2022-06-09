@@ -5,6 +5,7 @@ import org.bukkit.Location;
 
 import de.petropia.chickenLeagueHost.Constants;
 import de.petropia.chickenLeagueHost.team.ChickenLeagueTeam;
+import de.petropia.chickenLeagueHost.util.MessageSender;
 
 public class BallChecker {
 	
@@ -28,6 +29,7 @@ public class BallChecker {
 	
 	public void start() {
 		if(taskID != -1) {
+			MessageSender.getInstace().showDebugMessage("Failed BallChecker start");
 			return;
 		}
 		taskID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Constants.plugin, () -> {
@@ -38,8 +40,10 @@ public class BallChecker {
 			
 			if(checkCoordinates(x1, x2, (int) chickenX) && checkCoordinates(z1, z2, (int) chickenZ)) {
 				team.setScore(team.getScore() + 1);
+				MessageSender.INSTANCE.showDebugMessage("Goal - " + team.getName());
 			}
 		}, 20, 20);
+		MessageSender.getInstace().showDebugMessage("BallChecker start");
 	}
 	
 	private boolean checkCoordinates(int coord1, int coord2, int loc) {
@@ -49,6 +53,7 @@ public class BallChecker {
 	public void pause() {
 		Bukkit.getScheduler().cancelTask(taskID);
 		taskID = -1;
+		MessageSender.getInstace().showDebugMessage("BallChecker pause");
 	}
 
 }

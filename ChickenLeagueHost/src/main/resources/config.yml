@@ -13,4 +13,169 @@ Spawn:
    Yaw: 0
    Pitch: 0
    World: world
+ONE_VS_ONE:
+   Team1:
+      Goal: 
+         X1: -26
+         Z1: -2
+         X2: -27
+         Z2: 2
+      Spawn1:
+         X: 15.5
+         Y: 65
+         Z: 0.5
+         Yaw: 90
+         Pitch: 0
+   Team2:
+      Goal: 
+         X1: 26
+         Z1: -2
+         X2: 27
+         Z2: 2
+      Spawn1:
+         X: -14.5
+         Y: 65
+         Z: 0.5
+         Yaw: -90
+         Pitch: 0
+   Middle:
+      X: 0.5
+      Y: 65
+      Z: 0.5
+      Pitch: 0 
+      Yaw: 0
+THREE_VS_THREE:
+   Team1:
+      Goal: 
+         X1: 3
+         Z1: -55
+         X2: -3
+         Z2: -55
+      Spawn1:
+         X: 6.5
+         Y: 65
+         Z: -5.5
+         Yaw: 44
+         Pitch: 11
+      Spawn2:
+         X: 0.5
+         Y: 65
+         Z: -8.5
+         Yaw: 0 
+         Pitch: 11 
+      Spawn3:
+         X: -5.5
+         Y: 65
+         Z: -5.5
+         Yaw: -44
+         Pitch: 11
+   Team2:
+      Goal: 
+         X1: 3
+         Z1: 58
+         X2: -3
+         Z2: 58
+      Spawn1:
+         X: 6.5
+         Y: 65
+         Z: 6.5
+         Yaw: 135
+         Pitch: 11
+      Spawn2:
+         X: 0.5
+         Y: 65
+         Z: 9.5
+         Yaw: 180
+         Pitch: 11 
+      Spawn3:
+         X: -5.5
+         Y: 65
+         Z: 6.5
+         Yaw: -134
+         Pitch: 11
+   Middle:
+      X: 0.5
+      Y: 65
+      Z: 0.5
+      Pitch: 0
+      Yaw: 90
+FIVE_VS_FIVE:
+   Team1:
+      Goal: 
+         X1: 3
+         Z1: -55
+         X2: -3
+         Z2: -55
+      Spawn1:
+         X: 6.5
+         Y: 65
+         Z: -5.5
+         Yaw: 44
+         Pitch: 11
+      Spawn2:
+         X: 0.5
+         Y: 65
+         Z: -8.5
+         Yaw: 0 
+         Pitch: 11 
+      Spawn3:
+         X: -5.5
+         Y: 65
+         Z: -5.5
+         Yaw: -44
+         Pitch: 11
+      Spawn4:
+         X: 8.5
+         Y: 65
+         Z: -2.5
+         Yaw: 70
+         Pitch: 11
+      Spawn5:
+         X: -7.5
+         Y: 65
+         Z: -2.5
+         Yaw: 70
+         Pitch: 11
+   Team2:
+      Goal: 
+         X1: 3
+         Z1: 58
+         X2: -3
+         Z2: 58
+      Spawn1:
+         X: 6.5
+         Y: 65
+         Z: 6.5
+         Yaw: 135
+         Pitch: 11
+      Spawn2:
+         X: 0.5
+         Y: 65
+         Z: 9.5
+         Yaw: 180
+         Pitch: 11 
+      Spawn3:
+         X: -5.5
+         Y: 65
+         Z: 6.5
+         Yaw: -134
+         Pitch: 11
+      Spawn4:
+         X: 7.5
+         Y: 65
+         Z: 3.5
+         Yaw:  -110
+         Pitch: 11
+      Spawn5:
+         X: 8.5
+         Y: 65
+         Z: 3.5
+         Yaw: -250
+         Pitch: 11 
+   Middle:
+      X: 0.5
+      Y: 65
+      Z: 0.5
+      Pitch: 0
+      Yaw: 90
    

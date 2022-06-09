@@ -35,6 +35,8 @@ public class GoalCountDown {
 			if(countdown == 0) {
 				cancel();
 				arena.getBall().spawn();
+				arena.getTeam1().getBallChecker().start();
+				arena.getTeam2().getBallChecker().start();
 			}
 			countdown --;
 		}, 0, 20);

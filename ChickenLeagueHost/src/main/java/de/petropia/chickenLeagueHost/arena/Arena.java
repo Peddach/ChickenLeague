@@ -65,6 +65,8 @@ public class Arena {
 		
 		team1 = new ChickenLeagueTeam(maxPlayer, Component.text("Team 1").color(NamedTextColor.BLUE));
 		team2 = new ChickenLeagueTeam(maxPlayer, Component.text("Team 2").color(NamedTextColor.RED));
+		team1.setBallChecker(loadBallChecker(1, team1));
+		team2.setBallChecker(loadBallChecker(2, team2));
 		
 		team2Spawns = loadSpawns(2);
 		team1Spawns = loadSpawns(1);
@@ -76,8 +78,12 @@ public class Arena {
 		
 	}
 	
-	public ChickenLeagueBall getBall() {
-		return ball;
+	private BallChecker loadBallChecker(int teamNumber, ChickenLeagueTeam team) {
+		final int x1 = Constants.config.getInt(arenaMode.name() + ".Team" + team + ".Goal.X1");
+		final int x2 = Constants.config.getInt(arenaMode.name() + ".Team" + team + ".Goal.X2");
+		final int z1 = Constants.config.getInt(arenaMode.name() + ".Team" + team + ".Goal.Z1");
+		final int z2 = Constants.config.getInt(arenaMode.name() + ".Team" + team + ".Goal.X2");
+		return new BallChecker(x1, z1, x2, z2, this, team);
 	}
 
 	private Location loadMiddleLocation() {
@@ -247,5 +253,16 @@ public class Arena {
 	public Location getMiddle() {
 		return middle;
 	}
-
+	
+	public ChickenLeagueBall getBall() {
+		return ball;
+	}
+	
+	public ChickenLeagueTeam getTeam1() {
+		return team1;
+	}
+	
+	public ChickenLeagueTeam getTeam2() {
+		return team2;
+	}
 }

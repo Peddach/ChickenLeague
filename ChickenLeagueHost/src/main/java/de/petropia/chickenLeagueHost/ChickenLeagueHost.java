@@ -8,6 +8,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.MultiverseCore.api.MVWorldManager;
 
+import de.petropia.chickenLeagueHost.arena.Arena;
+import de.petropia.chickenLeagueHost.arena.ArenaMode;
 import de.petropia.chickenLeagueHost.listener.ChatListener;
 import de.petropia.chickenLeagueHost.listener.ChickenDamageListener;
 import de.petropia.chickenLeagueHost.listener.GameStateChangeListener;
@@ -45,7 +47,18 @@ public class ChickenLeagueHost extends JavaPlugin{
 			return;
 		}
 		registerListener();
-		
+		createArenas();
+	}
+	
+	private void createArenas() {
+		int arenas = getConfig().getInt("Arenas");
+		for(int i = 0; i < arenas; i++) {
+			if(i % 2 == 0) {
+				new Arena(ArenaMode.ONE_VS_ONE);
+				continue;
+			}
+			new Arena(ArenaMode.THREE_VS_THREE);
+		}
 	}
 	
 	private void registerListener() {
