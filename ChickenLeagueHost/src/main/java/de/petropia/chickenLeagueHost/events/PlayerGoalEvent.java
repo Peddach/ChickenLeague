@@ -23,7 +23,11 @@ public class PlayerGoalEvent extends Event {
 	}
 	
 	@Override
-	public @NotNull HandlerList getHandlers() {
+	public HandlerList getHandlers() {
+		return HANDLERS;
+	}
+
+	public static HandlerList getHandlerList() {
 		return HANDLERS;
 	}
 
