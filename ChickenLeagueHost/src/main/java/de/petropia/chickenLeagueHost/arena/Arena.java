@@ -49,15 +49,15 @@ public class Arena {
 		MultiverseCore mvCore = (MultiverseCore) Bukkit.getServer().getPluginManager().getPlugin("Multiverse-Core");
 		MVWorldManager worldManager = mvCore.getMVWorldManager();
 		if (mode == ArenaMode.FIVE_VS_FIVE) {
-			worldManager.cloneWorld("Big_Arena", name);
+			worldManager.cloneWorld("FIVE_VS_FIVE", name);
 			maxPlayer = 5+5;
 		}
 		if (mode == ArenaMode.THREE_VS_THREE) {
-			worldManager.cloneWorld("Big_Arena", name);
+			worldManager.cloneWorld("THREE_VS_THREE", name);
 			maxPlayer = 3+3;
 		}
 		if (mode == ArenaMode.ONE_VS_ONE) {
-			worldManager.cloneWorld("Small_Arena", name);
+			worldManager.cloneWorld("ONE_VS_ONE", name);
 			maxPlayer = 1+1;
 		}
 		world = Bukkit.getWorld(name);
