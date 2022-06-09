@@ -39,7 +39,6 @@ public class GameStateChangeListener implements Listener{
 		if(event.getAfter() == GameState.INGAME) {
 			new GoalCountDown(event.getArena());
 		}
-		MessageSender.INSTANCE.showDebugMessage(event.getArena().getName() + " - GameState: " + event.getBefore().name() + "->" + event.getAfter().name());
 	}
 
 }
