@@ -38,8 +38,9 @@ public class ChickenLeagueHost extends JavaPlugin{
 		
 		MultiverseCore mvCore = (MultiverseCore) Bukkit.getServer().getPluginManager().getPlugin("Multiverse-Core");
 		MVWorldManager worldManager = mvCore.getMVWorldManager();
-		worldManager.loadWorld("Big_Arena");
-		worldManager.loadWorld("Small_Arena");
+		worldManager.loadWorld("ONE_VS_ONE");
+		worldManager.loadWorld("THREE_VS_THREE");
+		worldManager.loadWorld("FIVE_VS_FIVE");
 		
 		if(!MySQLManager.setup()) {
 			getLogger().warning("Could not Connect to database!!!");
