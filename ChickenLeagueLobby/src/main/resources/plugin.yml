@@ -1,0 +1,12 @@
+name: ChickenLeagueLobby
+author: Professor_Sam
+api-version: 1.18
+main: de.petropia.chickenLeagueLobby.ChickenLeagueLobby
+commands: 
+   chickenLeagueLobby:
+      description: Verwaltet ChickenLeague
+permissions:
+   chickenLeague.admin:
+      default: false
+   chickenLeague.gui:
+      default: true
