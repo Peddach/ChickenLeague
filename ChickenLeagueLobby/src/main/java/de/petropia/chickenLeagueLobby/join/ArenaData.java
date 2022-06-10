@@ -22,6 +22,7 @@ public class ArenaData {
 	private ArenaRecord current3v3;
 	private ArrayList<ArenaRecord> arenas;
 	private ArrayList<Player> pingList;
+	private static ArenaData instance;
 	
 	public ArenaData() {
 		Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(Constants.plugin, () -> {
@@ -35,6 +36,9 @@ public class ArenaData {
 		}, 100, 3*20);
 	}
 	
+	public static void init() {
+		instance = new ArenaData();
+	}
 	private boolean checkArenaIsValidToJoin(ArenaRecord arena) {
 		if((arena.gameState() != GameState.STARTING) || (arena.gameState() == GameState.WAITING)) {
 			return false;
@@ -73,4 +77,11 @@ public class ArenaData {
 		});
 	}
 	
+	public static ArenaData getInstance() {
+		return instance;
+	}
+	
+	public ArrayList<Player> getPingList(){
+		return pingList;
+	}
 }

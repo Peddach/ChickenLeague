@@ -7,6 +7,7 @@ import de.petropia.chickenLeagueHost.mysql.MySQLManager;
 import de.petropia.chickenLeagueHost.util.CloudNetAdapter;
 import de.petropia.chickenLeagueHost.util.MessageSender;
 import de.petropia.chickenLeagueLobby.commands.ChickenLeagueLobbyCommand;
+import de.petropia.chickenLeagueLobby.join.ArenaData;
 
 public class ChickenLeagueLobby extends JavaPlugin {
 	
@@ -25,6 +26,7 @@ public class ChickenLeagueLobby extends JavaPlugin {
 		}
 		this.getCommand("chickenLeagueLobby").setExecutor(new ChickenLeagueLobbyCommand());
 		this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+		ArenaData.init();
 	}
 	
 	private void setConstants() {
