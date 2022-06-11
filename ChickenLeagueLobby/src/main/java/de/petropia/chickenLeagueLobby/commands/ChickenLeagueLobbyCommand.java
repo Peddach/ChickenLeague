@@ -8,9 +8,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import de.petropia.chickenLeagueHost.arena.Arena;
 import de.petropia.chickenLeagueHost.mysql.ArenaRecord;
 import de.petropia.chickenLeagueHost.util.MessageSender;
 import de.petropia.chickenLeagueLobby.join.ArenaData;
+import de.petropia.chickenLeagueLobby.join.PlayerConnector;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
@@ -61,7 +63,14 @@ public class ChickenLeagueLobbyCommand implements CommandExecutor {
 			if(args.length != 2) {
 				MessageSender.INSTANCE.sendMessage(player, Component.text("Bitte gib einen Arenanamen an").color(NamedTextColor.RED));
 			}
-			//TODO: Implement join command for admins
+			for(ArenaRecord arena : ArenaData.getInstance().getArenas()) {
+				if(!arena.name().equalsIgnoreCase(args[1])) {
+					continue;
+				}
+				new PlayerConnector(player, arena);
+				return true;
+			}
+			MessageSender.getInstace().sendMessage(player, Component.text("Keine Arena gefunden: " + args[1]).color(NamedTextColor.RED));
 		}
 		
 		if(args[0].equalsIgnoreCase("ping") && player.hasPermission("chickenLeague.admin")) {

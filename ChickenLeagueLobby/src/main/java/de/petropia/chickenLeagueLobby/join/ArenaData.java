@@ -40,13 +40,15 @@ public class ArenaData {
 		instance = new ArenaData();
 	}
 	private boolean checkArenaIsValidToJoin(ArenaRecord arena) {
+		if(!arenas.contains(arena)) {
+			return false;
+		}
 		if(arena.gameState() == GameState.ENDING || arena.gameState() == GameState.INGAME) {
 			return false;
 		}
 		if(arena.mode() == ArenaMode.ONE_VS_ONE && arena.players() == 2*1) {
 			return false;
 		}
-		
 		if(arena.mode() == ArenaMode.THREE_VS_THREE && arena.players() == 2*3) {
 			return false;
 		}
