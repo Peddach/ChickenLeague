@@ -21,7 +21,7 @@ public class ArenaData {
 	private ArenaRecord current1v1;
 	private ArenaRecord current3v3;
 	private ArrayList<ArenaRecord> arenas;
-	private ArrayList<Player> pingList;
+	private ArrayList<Player> pingList = new ArrayList<>();
 	private static ArenaData instance;
 	
 	public ArenaData() {
@@ -40,7 +40,7 @@ public class ArenaData {
 		instance = new ArenaData();
 	}
 	private boolean checkArenaIsValidToJoin(ArenaRecord arena) {
-		if((arena.gameState() != GameState.STARTING) || (arena.gameState() == GameState.WAITING)) {
+		if(arena.gameState() == GameState.ENDING || arena.gameState() == GameState.INGAME) {
 			return false;
 		}
 		if(arena.mode() == ArenaMode.ONE_VS_ONE && arena.players() == 2*1) {
@@ -60,6 +60,9 @@ public class ArenaData {
 	@CheckForNull
 	private ArenaRecord chooseNewArena(ArenaMode mode) {
 		for(ArenaRecord arena : arenas) {
+			if(arena.mode() != mode) {
+				continue;
+			}
 			if(!checkArenaIsValidToJoin(arena)) {
 				continue;
 			}
@@ -83,5 +86,17 @@ public class ArenaData {
 	
 	public ArrayList<Player> getPingList(){
 		return pingList;
+	}
+	
+	public ArrayList<ArenaRecord> getArenas() {
+		return arenas;
+	}
+	
+	public ArenaRecord getCurrent1v1() {
+		return current1v1;
+	}
+	
+	public ArenaRecord getCurrent3v3() {
+		return current3v3;
 	}
 }
