@@ -39,13 +39,16 @@ public class PlayerJoinServerListener implements Listener{
 		Bukkit.getScheduler().runTask(Constants.plugin, () -> {
 			for(Arena i : Arena.getArenas()) {
 				if(!i.getName().equalsIgnoreCase(arena)) {
-					break;
+					continue;
 				}
 				if(!i.addPlayer(player)) {
 					MessageSender.INSTANCE.sendMessage(player, ARENA_FULL_OR_STARTED);
 					CloudNetAdapter.sendPlayerToLobbyTask(player);
+					return;
 				}
-				return;
+				else {
+					return;
+				}
 			}
 			MessageSender.INSTANCE.sendMessage(player, DATA_LOADING_ERROR);
 			CloudNetAdapter.sendPlayerToLobbyTask(player);

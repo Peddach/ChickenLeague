@@ -115,9 +115,10 @@ public class Arena {
 	}
 
 	private void registerArena() {
+		MessageSender.getInstace().showDebugMessage("registerArena() call");
 		ARENAS.add(this);
 		MySQLManager.addArena(this);
-		Constants.plugin.getLogger().info("Arena " + name + " registered and added to DB");
+		MessageSender.getInstace().showDebugMessage("Arena " + name + " registered and added to DB");
 	}
 	
 	public void assignPlayersToTeams() {
