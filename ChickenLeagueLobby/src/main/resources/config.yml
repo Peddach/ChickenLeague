@@ -1,0 +1,7 @@
+debug: true
+Database:
+   Host: localhost
+   Port: 3306
+   User: ChickenLeague
+   Password: password
+   Database: ChickenLeague
