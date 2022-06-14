@@ -27,6 +27,7 @@ public class GoalCountDown {
 		arena.getPlayers().forEach(PlayerMoveListener.PLAYERS :: add);
 		arena.teleportToSpawnPoints();
 		arena.getBall().kill();
+		arena.teleportToSpawnPoints();
 		taskid = Bukkit.getScheduler().scheduleSyncRepeatingTask(Constants.plugin, () -> {
 			if(arena.getGameState() != GameState.INGAME) {
 				cancel();
@@ -48,7 +49,7 @@ public class GoalCountDown {
 	}
 	
 	private Title currentTitle() {
-		return Title.title(Component.text(countdown).color(NamedTextColor.GRAY), null, TIMES);
+		return Title.title(Component.text(countdown).color(NamedTextColor.GRAY), Component.text("Sekunden").color(NamedTextColor.GRAY), TIMES);
 	}
 	
 	private Sound currentSound() {

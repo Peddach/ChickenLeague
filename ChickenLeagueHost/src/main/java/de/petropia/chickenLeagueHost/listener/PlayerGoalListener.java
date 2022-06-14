@@ -31,7 +31,7 @@ public class PlayerGoalListener implements Listener {
 		event.getArena().getTeam1().getBallChecker().pause();
 		event.getArena().getTeam2().getBallChecker().pause();
 		Bukkit.getScheduler().runTaskLater(Constants.plugin, () -> {
-			 new GoalCountDown(event.getArena());
+			new GoalCountDown(event.getArena());
 		}, 3*20);
 	}
 	

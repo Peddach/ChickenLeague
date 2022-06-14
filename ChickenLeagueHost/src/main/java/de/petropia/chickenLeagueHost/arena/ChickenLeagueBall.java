@@ -32,6 +32,9 @@ public class ChickenLeagueBall {
 	}
 	
 	public void kill() {
+		if(chicken == null) {
+			return;
+		}
 		if(chicken.isDead()) {
 			return;
 		}
