@@ -8,13 +8,14 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import de.petropia.chickenLeagueHost.arena.Arena;
 import de.petropia.chickenLeagueHost.mysql.ArenaRecord;
 import de.petropia.chickenLeagueHost.util.MessageSender;
 import de.petropia.chickenLeagueLobby.join.ArenaData;
 import de.petropia.chickenLeagueLobby.join.PlayerConnector;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 
 public class ChickenLeagueLobbyCommand implements CommandExecutor {
 
@@ -40,7 +41,9 @@ public class ChickenLeagueLobbyCommand implements CommandExecutor {
 				return true;
 			}
 			for(ArenaRecord arena : ArenaData.getInstance().getArenas()) {
-				MessageSender.getInstace().sendMessage(player, Component.text(arena.name() + " - " + arena.mode().name() + " - " + arena.players()));
+				MessageSender.getInstace().sendMessage(player, Component.text(arena.name() + " - " + arena.mode().name() + " - " + arena.players())
+						.hoverEvent(Component.text("Klicke zum joinen").color(NamedTextColor.GRAY).decorate(TextDecoration.ITALIC))
+						.clickEvent(ClickEvent.runCommand("/chickenleaguelobby join " + arena.name())));
 			}
 		}
 		
