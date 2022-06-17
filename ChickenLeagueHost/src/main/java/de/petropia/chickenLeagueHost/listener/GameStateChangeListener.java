@@ -17,7 +17,9 @@ public class GameStateChangeListener implements Listener{
 	
 	@EventHandler
 	public void onGameStateChangeEvent(GameStateChangeEvent event) {
-		MySQLManager.updateArena(event.getArena());
+		if(event.getArena().isRegistered()) {
+			MySQLManager.updateArena(event.getArena());
+		}
 		
 		if(event.getAfter() == GameState.ENDING) {
 			Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Constants.plugin, new Runnable() {

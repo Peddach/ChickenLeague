@@ -40,6 +40,7 @@ public class Arena {
 	private final Location[] team2Spawns;
 	private final Location middle;
 	private final ChickenLeagueBall ball;
+	private boolean registered = false;
 	
 	public Arena(ArenaMode mode) {
 		setGamestate(GameState.WAITING);
@@ -119,6 +120,7 @@ public class Arena {
 		ARENAS.add(this);
 		MySQLManager.addArena(this);
 		MessageSender.getInstace().showDebugMessage("Arena " + name + " registered and added to DB");
+		registered = true;
 	}
 	
 	public void assignPlayersToTeams() {
@@ -265,5 +267,9 @@ public class Arena {
 	
 	public ChickenLeagueTeam getTeam2() {
 		return team2;
+	}
+
+	public boolean isRegistered() {
+		return registered;
 	}
 }
