@@ -4,7 +4,7 @@ author: Professor_Sam
 softdepend:
 - Multiverse-Core
 version: ${project.version}
-api-version: 1.18
+api-version: 1.19
 commands:
    ChickenLeague:
       description: Manage ChickenLeague
