@@ -21,7 +21,7 @@ public class ChickenLeagueBall {
 			chicken.teleport(arena.getMiddle());
 			return;
 		}
-		arena.getWorld().spawn(arena.getMiddle(), Chicken.class);
+		chicken = arena.getWorld().spawn(arena.getMiddle(), Chicken.class);
 		chicken.setSilent(true);
 		chicken.setAdult();
 		chicken.setGlowing(true);
