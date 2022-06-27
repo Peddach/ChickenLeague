@@ -6,6 +6,8 @@ import org.bukkit.Location;
 import de.petropia.chickenLeagueHost.Constants;
 import de.petropia.chickenLeagueHost.team.ChickenLeagueTeam;
 import de.petropia.chickenLeagueHost.util.MessageSender;
+import io.papermc.paper.text.PaperComponents;
+import net.kyori.adventure.text.Component;
 
 public class BallChecker {
 	
@@ -43,7 +45,7 @@ public class BallChecker {
 			
 			if(checkCoordinates(x1, x2, (int) chickenX) && checkCoordinates(z1, z2, (int) chickenZ)) {
 				team.setScore(team.getScore() + 1);
-				MessageSender.INSTANCE.showDebugMessage("Goal - " + team.getName());
+				MessageSender.INSTANCE.showDebugMessage(Component.text("Goal - ").append(team.getName()));
 			}
 		}, 20, 20);
 		MessageSender.getInstace().showDebugMessage("BallChecker start");

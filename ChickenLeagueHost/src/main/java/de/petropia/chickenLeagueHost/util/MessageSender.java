@@ -42,6 +42,10 @@ public class MessageSender {
 	}
 	
 	public void showDebugMessage(String message) {
+		showDebugMessage(Component.text(message).color(NamedTextColor.GRAY));
+	}
+	
+	public void showDebugMessage(Component message) {
 		if(!Constants.debug) {
 			return;
 		}
@@ -49,9 +53,9 @@ public class MessageSender {
 			if(!player.hasPermission("ChickenLeague.debug")) {
 				continue;
 			}
-			player.sendMessage(DEBUG_PREFIX.append(Component.text(message)));
+			player.sendMessage(DEBUG_PREFIX.append(message));
 		}
-		Constants.plugin.getLogger().info(message);
+		Constants.plugin.getComponentLogger().debug(DEBUG_PREFIX.append(message));
 	}
 	
 	public Component format(Component component) {
