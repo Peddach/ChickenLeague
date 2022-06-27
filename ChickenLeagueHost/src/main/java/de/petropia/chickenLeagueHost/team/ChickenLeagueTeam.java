@@ -12,7 +12,7 @@ public class ChickenLeagueTeam {
 	private BallChecker ballChecker;
 
 	public ChickenLeagueTeam(int teamSize, Component name) {
-		players = new Player[teamSize];
+		players = new Player[teamSize - 1];
 		this.name = name;
 	}
 

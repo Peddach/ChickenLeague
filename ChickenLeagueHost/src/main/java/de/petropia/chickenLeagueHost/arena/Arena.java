@@ -131,16 +131,16 @@ public class Arena {
 		for(Player player : team2.getPlayers()) {
 			playerWithoutTeams.remove(player);
 		}
-		for(int i = 0; i < playerWithoutTeams.size(); i++) {
+		for(Player player : playerWithoutTeams) {
 			for(int a = 0; a < maxPlayer / 2; a++) {
-				if(team1.getPlayers()[i] == null) {
-					team1.addPlayer(playerWithoutTeams.get(i));
+				if(team1.addPlayer(player)) {
 					continue;
 				}
-				if(team1.getPlayers()[i] == null) {
-					team1.addPlayer(playerWithoutTeams.get(i));
+				if(team2.addPlayer(player)) {
 					continue;
 				}
+				MessageSender.INSTANCE.sendMessage(player, Component.text("Du konntest keinen Team zugeordnet werden!").color(NamedTextColor.RED));
+				player.kick();
 			}
 		}
 	}
