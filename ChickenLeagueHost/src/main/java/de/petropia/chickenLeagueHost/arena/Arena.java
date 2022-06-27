@@ -80,10 +80,10 @@ public class Arena {
 	}
 	
 	private BallChecker loadBallChecker(int teamNumber, ChickenLeagueTeam team) {
-		final int x1 = Constants.config.getInt(arenaMode.name() + ".Team" + team + ".Goal.X1");
-		final int x2 = Constants.config.getInt(arenaMode.name() + ".Team" + team + ".Goal.X2");
-		final int z1 = Constants.config.getInt(arenaMode.name() + ".Team" + team + ".Goal.Z1");
-		final int z2 = Constants.config.getInt(arenaMode.name() + ".Team" + team + ".Goal.X2");
+		final int x1 = Constants.config.getInt(arenaMode.name() + ".Team" + teamNumber + ".Goal.X1");
+		final int x2 = Constants.config.getInt(arenaMode.name() + ".Team" + teamNumber + ".Goal.X2");
+		final int z1 = Constants.config.getInt(arenaMode.name() + ".Team" + teamNumber + ".Goal.Z1");
+		final int z2 = Constants.config.getInt(arenaMode.name() + ".Team" + teamNumber + ".Goal.X2");
 		return new BallChecker(x1, z1, x2, z2, this, team);
 	}
 
