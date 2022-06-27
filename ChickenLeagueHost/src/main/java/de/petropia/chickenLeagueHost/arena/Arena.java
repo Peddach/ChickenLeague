@@ -178,6 +178,11 @@ public class Arena {
 		}
 	}
 	
+	//Check if a player is present in this arena instance
+	public boolean isPlayerPresent(Player player) {
+		return players.contains(player);
+	}
+	
 	// Copied the 5th time :/. Dont know author
 	private String getRandomString() {
 		int leftLimit = 97; // letter 'a'
@@ -212,6 +217,7 @@ public class Arena {
 			if(p == null) {
 				continue;
 			}
+			MessageSender.INSTANCE.showDebugMessage(Component.text(i + "Team 1 teleport: ").append(p.name()));
 			p.teleport(team1Spawns[i]);
 		}
 		for(int i = 0; i < team2.getPlayers().length; i++) {
@@ -219,6 +225,7 @@ public class Arena {
 			if(p == null) {
 				continue;
 			}
+			MessageSender.INSTANCE.showDebugMessage(Component.text(i + "Team 2 teleport: ").append(p.name()));
 			p.teleport(team2Spawns[i]);
 		}
 	}
