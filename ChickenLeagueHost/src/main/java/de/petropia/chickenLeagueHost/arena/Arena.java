@@ -100,13 +100,15 @@ public class Arena {
 	private Location[] loadSpawns(int team) {
 		final Location[] spawns = new Location[maxPlayer / 2];
 		for (int i = 0; i < maxPlayer / 2; i++) {
-			final double x = Constants.config.getDouble(arenaMode.name() + ".Team" + team + ".Spawn" + i + ".X");
-			final double y = Constants.config.getDouble(arenaMode.name() + ".Team" + team + ".Spawn" + i + ".Y");
-			final double z = Constants.config.getDouble(arenaMode.name() + ".Team" + team +  ".Spawn" + i + ".Z");
-			final float yaw = Constants.config.getLong(arenaMode.name() + ".Team" + team +  ".Spawn" + i + ".Yaw");
-			final float pitch = Constants.config.getLong(arenaMode.name() +".Team" + team +  ".Spawn" + i + ".Pitch");
+			int spawn = i + 1;
+			final double x = Constants.config.getDouble(arenaMode.name() + ".Team" + team + ".Spawn" + spawn + ".X");
+			final double y = Constants.config.getDouble(arenaMode.name() + ".Team" + team + ".Spawn" + spawn + ".Y");
+			final double z = Constants.config.getDouble(arenaMode.name() + ".Team" + team +  ".Spawn" + spawn + ".Z");
+			final float yaw = Constants.config.getLong(arenaMode.name() + ".Team" + team +  ".Spawn" + spawn + ".Yaw");
+			final float pitch = Constants.config.getLong(arenaMode.name() +".Team" + team +  ".Spawn" + spawn + ".Pitch");
 			final Location location = new Location(world, x, y, z, yaw, pitch);
 			spawns[i] = location;
+			MessageSender.getInstace().showDebugMessage(spawn + " t" + team + " - x" + x + " y" + y + " z" + z+ " pitch" + pitch + " yaw" + yaw + " world" + world.getName());
 		}
 		return spawns;
 	}
@@ -211,22 +213,21 @@ public class Arena {
 		worldManager.deleteWorld(name);
 	}
 	
+	//TODO fix multiple calls
 	public void teleportToSpawnPoints() {
 		for(int i = 0; i < team1.getPlayers().length; i++) {
-			Player p = team1.getPlayers()[i];
-			if(p == null) {
+			Player player = team1.getPlayers()[i];
+			if(player == null) {
 				continue;
 			}
-			MessageSender.INSTANCE.showDebugMessage(Component.text(i + "Team 1 teleport: ").append(p.name()));
-			p.teleport(team1Spawns[i]);
+			player.teleport(team1Spawns[i]);
 		}
 		for(int i = 0; i < team2.getPlayers().length; i++) {
-			Player p = team2.getPlayers()[i];
-			if(p == null) {
+			Player player = team2.getPlayers()[i];
+			if(player == null) {
 				continue;
 			}
-			MessageSender.INSTANCE.showDebugMessage(Component.text(i + "Team 2 teleport: ").append(p.name()));
-			p.teleport(team2Spawns[i]);
+			player.teleport(team2Spawns[i]);
 		}
 	}
 
