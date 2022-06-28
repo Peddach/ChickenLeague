@@ -55,7 +55,7 @@ public class MessageSender {
 			}
 			player.sendMessage(DEBUG_PREFIX.append(message));
 		}
-		Constants.plugin.getComponentLogger().info(DEBUG_PREFIX.append(message));;
+		Constants.plugin.getComponentLogger().info(message);
 	}
 	
 	public Component format(Component component) {
