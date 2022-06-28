@@ -1,6 +1,7 @@
 package de.petropia.chickenLeagueHost.listener;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,10 +25,7 @@ public class PlayerJoinServerListener implements Listener{
 	public void onPlayerJoinServerEvent(PlayerJoinEvent event) {
 		event.joinMessage(null);
 		final Player player = event.getPlayer();
-		for(Player p : Bukkit.getServer().getOnlinePlayers()) {
-			p.hidePlayer(Constants.plugin, event.getPlayer());
-			player.hidePlayer(Constants.plugin, p);
-		}
+		hideAllPlayers(player);
 		Bukkit.getScheduler().runTaskAsynchronously(Constants.plugin, () -> {
 			String arena = MySQLManager.readPlayerTeleport(player);
 			MySQLManager.deletePlayerFromTeleport(player.getName());
@@ -47,11 +45,37 @@ public class PlayerJoinServerListener implements Listener{
 					return;
 				}
 				else {
+					showPlayers(i, player);
+					teleportToSpawn(player);
 					return;
 				}
 			}
 			MessageSender.INSTANCE.sendMessage(player, DATA_LOADING_ERROR);
 			CloudNetAdapter.sendPlayerToLobbyTask(player);
 		});
+	}
+	
+	private void showPlayers(Arena arena, Player player) {
+		arena.getPlayers().forEach(p -> {
+			player.showPlayer(Constants.plugin, p);
+			p.showPlayer(Constants.plugin, player);
+		});
+	}
+	
+	private void hideAllPlayers(Player player) {
+		Bukkit.getServer().getOnlinePlayers().forEach(p -> {
+			p.hidePlayer(Constants.plugin, player);
+			player.hidePlayer(Constants.plugin, p);
+		});
+	}
+	
+	private void teleportToSpawn(Player player) {
+		final double x = Constants.config.getDouble("Spawn.X");
+		final double y = Constants.config.getDouble("Spawn.Y");
+		final double z = Constants.config.getDouble("Spawn.Z");
+		final long yaw = Constants.config.getLong("Spawn.Yaw");
+		final long pitch = Constants.config.getLong("Spawn.Pitch");
+		final Location location = new Location(Bukkit.getWorld("world"), x, y, z, yaw, pitch);
+		player.teleport(location);
 	}
 }
