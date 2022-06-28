@@ -27,7 +27,7 @@ public class ChickenLeagueBall {
 		chicken.setGlowing(true);
 		chicken.setRemoveWhenFarAway(false);
 		chicken.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(999D);
-		chicken.setAI(false);
+		chicken.setAware(false);
 		CHICKENS.add(chicken);
 	}
 	
