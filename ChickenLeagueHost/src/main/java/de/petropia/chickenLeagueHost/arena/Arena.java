@@ -229,6 +229,7 @@ public class Arena {
 			}
 			player.teleport(team2Spawns[i]);
 		}
+		players.forEach(p -> p.setBedSpawnLocation(middle));
 	}
 
 	public String getName() {
