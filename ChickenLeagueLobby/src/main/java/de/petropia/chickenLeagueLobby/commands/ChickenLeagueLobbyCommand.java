@@ -31,7 +31,7 @@ public class ChickenLeagueLobbyCommand implements CommandExecutor {
 			if(!player.hasPermission("ChickenLeague.admin")) {
 				return false;
 			}
-			MessageSender.INSTANCE.sendMessage(player, Component.text("Subcommands: list, join").color(NamedTextColor.GRAY));
+			MessageSender.INSTANCE.sendMessage(player, Component.text("Subcommands: list, join, quick, ping").color(NamedTextColor.GRAY));
 			return false;
 		}
 		
@@ -41,7 +41,7 @@ public class ChickenLeagueLobbyCommand implements CommandExecutor {
 				return true;
 			}
 			for(ArenaRecord arena : ArenaData.getInstance().getArenas()) {
-				MessageSender.getInstace().sendMessage(player, Component.text(arena.name() + " - " + arena.mode().name() + " - " + arena.players())
+				MessageSender.getInstace().sendMessage(player, Component.text(arena.name() + " - " + arena.mode().name() + " - " + arena.gameState().name() + " - " + arena.players())
 						.hoverEvent(Component.text("Klicke zum joinen").color(NamedTextColor.GRAY).decorate(TextDecoration.ITALIC))
 						.clickEvent(ClickEvent.runCommand("/chickenleaguelobby join " + arena.name())));
 			}

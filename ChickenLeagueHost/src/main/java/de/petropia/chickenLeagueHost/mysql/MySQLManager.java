@@ -95,6 +95,9 @@ public class MySQLManager {
 	}
 
 	public static void updateArena(Arena arena) {
+		if(!arena.isRegistered()) {
+			return;
+		}
 		Bukkit.getScheduler().runTaskAsynchronously(Constants.plugin, () -> {
 			try (Connection conn = datasource.getConnection(); PreparedStatement stmt = conn.prepareStatement("REPLACE " + version + "_Arenas(ArenaName, ArenaState, Type, Players, Server) VALUES (?, ?, ?, ?, ?)")) {
 				stmt.setString(1, arena.getName());

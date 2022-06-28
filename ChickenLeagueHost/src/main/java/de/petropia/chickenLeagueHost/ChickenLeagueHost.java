@@ -13,6 +13,7 @@ import de.petropia.chickenLeagueHost.arena.ArenaMode;
 import de.petropia.chickenLeagueHost.commands.ChickenLeagueHostCommand;
 import de.petropia.chickenLeagueHost.listener.ChatListener;
 import de.petropia.chickenLeagueHost.listener.ChickenDamageListener;
+import de.petropia.chickenLeagueHost.listener.DatabaseUpdater;
 import de.petropia.chickenLeagueHost.listener.GameStateChangeListener;
 import de.petropia.chickenLeagueHost.listener.PlayerGoalListener;
 import de.petropia.chickenLeagueHost.listener.PlayerJoinArenaListener;
@@ -79,6 +80,7 @@ public class ChickenLeagueHost extends JavaPlugin{
 		manager.registerEvents(new PlayerGoalListener(), this);
 		manager.registerEvents(new PlayerMoveListener(), this);
 		manager.registerEvents(new ChickenDamageListener(), this);
+		manager.registerEvents(new DatabaseUpdater(), this);
 	}
 	
 	@Override
