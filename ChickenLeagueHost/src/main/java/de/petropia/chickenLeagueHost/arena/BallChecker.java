@@ -1,5 +1,7 @@
 package de.petropia.chickenLeagueHost.arena;
 
+import java.util.Arrays;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
@@ -7,6 +9,7 @@ import de.petropia.chickenLeagueHost.Constants;
 import de.petropia.chickenLeagueHost.team.ChickenLeagueTeam;
 import de.petropia.chickenLeagueHost.util.MessageSender;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 
 public class BallChecker {
 	
@@ -33,25 +36,33 @@ public class BallChecker {
 			MessageSender.getInstace().showDebugMessage("Failed BallChecker start");
 			return;
 		}
-		taskID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Constants.plugin, () -> {
-			
+		taskID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Constants.plugin, () -> {	
 			if(arena.getBall().getChicken() == null || arena.getBall().getChicken().getLocation() == null) {
 				return;
 			}
 			Location chickenLoc = arena.getBall().getChicken().getLocation();
 			double chickenX = chickenLoc.getX();
 			double chickenZ = chickenLoc.getZ();
-			
-			if(checkCoordinates(x1, x2, (int) chickenX) && checkCoordinates(z1, z2, (int) chickenZ)) {
+			if(checkCoordinates(x1, x2, chickenX) & checkCoordinates(z1, z2, chickenZ)) {
 				team.setScore(team.getScore() + 1);
-				MessageSender.INSTANCE.showDebugMessage(Component.text( x1 + " " + z1 + " " + chickenX + " "+ x2 + " " + z2 + " " + chickenZ + " Goal - ").append(team.getName()));
 			}
 		}, 20, 20);
-		MessageSender.getInstace().showDebugMessage("BallChecker start");
+		MessageSender.getInstace().showDebugMessage(Component.text("BallChecker start"));
 	}
 	
-	private boolean checkCoordinates(int coord1, int coord2, int loc) {
-		return(loc >= coord1 && loc <=coord2);
+	private boolean checkCoordinates(int coord1, int coord2, double loc) {
+		int[] coords = new int[2];
+		coords[0] = coord1;
+		coords[1] = coord2;
+		Arrays.sort(coords);
+		boolean goal = ((int)loc >= coords[0] && (int)loc <= coords[1]);
+		if(goal) {
+			return goal;
+		}
+		else {
+			MessageSender.INSTANCE.showDebugMessage(team.getName().append(Component.text(": " + coords[0] + " " + (int) loc + " " + coords[1]).color(NamedTextColor.GRAY)));
+			return goal;
+		}
 	}
 	
 	public void pause() {

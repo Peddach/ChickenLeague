@@ -68,6 +68,8 @@ public class Arena {
 		team2 = new ChickenLeagueTeam(maxPlayer, Component.text("Team 2").color(NamedTextColor.RED));
 		team1.setBallChecker(loadBallChecker(1, team1));
 		team2.setBallChecker(loadBallChecker(2, team2));
+		team1.getBallChecker().pause();
+		team2.getBallChecker().pause();
 		
 		team2Spawns = loadSpawns(2);
 		team1Spawns = loadSpawns(1);
@@ -83,7 +85,7 @@ public class Arena {
 		final int x1 = Constants.config.getInt(arenaMode.name() + ".Team" + teamNumber + ".Goal.X1");
 		final int x2 = Constants.config.getInt(arenaMode.name() + ".Team" + teamNumber + ".Goal.X2");
 		final int z1 = Constants.config.getInt(arenaMode.name() + ".Team" + teamNumber + ".Goal.Z1");
-		final int z2 = Constants.config.getInt(arenaMode.name() + ".Team" + teamNumber + ".Goal.X2");
+		final int z2 = Constants.config.getInt(arenaMode.name() + ".Team" + teamNumber + ".Goal.Z2");
 		return new BallChecker(x1, z1, x2, z2, this, team);
 	}
 
