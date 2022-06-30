@@ -22,7 +22,7 @@ public class PlayerGoalListener implements Listener {
 	
 	private static final Component SUBTITLE = Component.text(" hat ein Tor geschossen").color(NamedTextColor.GRAY).decorate(TextDecoration.ITALIC);
 	private static final Times TIMES = Times.times(Duration.ofMillis(500), Duration.ofMillis(1500), Duration.ofMillis(300));
-	private static final Sound SOUND = Sound.sound(org.bukkit.Sound.EVENT_RAID_HORN.getKey(), Source.NEUTRAL, 200F, 0.9F);
+	private static final Sound SOUND = Sound.sound(org.bukkit.Sound.EVENT_RAID_HORN.getKey(), Source.NEUTRAL, 200F, 1.2F);
 	private Component name = Component.text("-").color(NamedTextColor.GRAY);
 	
 	@EventHandler
@@ -34,6 +34,8 @@ public class PlayerGoalListener implements Listener {
 		MessageSender.INSTANCE.broadcastTitle(event.getArena(), title, SOUND);
 		event.getArena().getTeam1().getBallChecker().pause();
 		event.getArena().getTeam2().getBallChecker().pause();
+		event.getArena().getBall().getChicken().setFireTicks(2*20);
+		event.getArena().getBall().getChicken().setVisualFire(true);
 		Bukkit.getScheduler().runTaskLater(Constants.plugin, () -> {
 			new GoalCountDown(event.getArena());
 		}, 3*20);
