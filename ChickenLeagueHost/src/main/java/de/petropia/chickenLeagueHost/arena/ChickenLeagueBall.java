@@ -21,6 +21,7 @@ public class ChickenLeagueBall {
 	public void spawn() {
 		if(chicken != null) {
 			chicken.teleport(arena.getMiddle());
+			lastHit = null;
 			return;
 		}
 		chicken = arena.getWorld().spawn(arena.getMiddle(), Chicken.class);
