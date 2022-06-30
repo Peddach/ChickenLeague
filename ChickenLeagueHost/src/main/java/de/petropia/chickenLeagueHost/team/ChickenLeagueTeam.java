@@ -53,6 +53,18 @@ public class ChickenLeagueTeam {
 		}
 		return playerCount;
 	}
+	
+	public boolean isPlayerPresent(Player player) {
+		for(Player p : players) {
+			if(p == null) {
+				continue;
+			}
+			if(player == p) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public Player[] getPlayers() {
 		return players;

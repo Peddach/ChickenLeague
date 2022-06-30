@@ -3,6 +3,7 @@ package de.petropia.chickenLeagueHost.listener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
+import de.petropia.chickenLeagueHost.arena.GameState;
 import de.petropia.chickenLeagueHost.events.PlayerQuitArenaEvent;
 import de.petropia.chickenLeagueHost.util.MessageSender;
 import net.kyori.adventure.text.Component;
@@ -16,5 +17,18 @@ public class PlayerLeaveArenaListener implements Listener {
 	@EventHandler
 	public void onPlayerLeaveArena(PlayerQuitArenaEvent event) {
 		MessageSender.INSTANCE.broadcastMessage(event.getArena(), event.getPlayer().name().append(LEAVE_MESSAGE));
+		if(event.getArena().getGameState() != GameState.INGAME) {
+			return;
+		}
+		if(!event.getArena().getTeam1().isPlayerPresent(event.getPlayer())) {
+			if(event.getArena().getTeam1().teamSize() - 1 == 0) {
+				event.getArena().setWinner(event.getArena().getTeam2());
+			}
+		}
+		if(!event.getArena().getTeam2().isPlayerPresent(event.getPlayer())) {
+			if(event.getArena().getTeam2().teamSize() - 1 == 0) {
+				event.getArena().setWinner(event.getArena().getTeam1());
+			}
+		}
 	}
 }

@@ -5,6 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 import de.petropia.chickenLeagueHost.Constants;
+import de.petropia.chickenLeagueHost.arena.Arena;
 import de.petropia.chickenLeagueHost.arena.GameState;
 import de.petropia.chickenLeagueHost.arena.GoalCountDown;
 import de.petropia.chickenLeagueHost.events.GameStateChangeEvent;
@@ -28,6 +29,7 @@ public class GameStateChangeListener implements Listener{
 					}
 					if(i == 0) {
 						event.getArena().delete();
+						new Arena(event.getArena().getArenaMode());
 					}
 					i--;
 				}

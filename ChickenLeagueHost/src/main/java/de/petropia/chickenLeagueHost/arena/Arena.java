@@ -1,8 +1,11 @@
 package de.petropia.chickenLeagueHost.arena;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import javax.annotation.Nullable;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
@@ -21,8 +24,11 @@ import de.petropia.chickenLeagueHost.mysql.MySQLManager;
 import de.petropia.chickenLeagueHost.team.ChickenLeagueTeam;
 import de.petropia.chickenLeagueHost.util.CloudNetAdapter;
 import de.petropia.chickenLeagueHost.util.MessageSender;
+import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.title.Title;
+import net.kyori.adventure.title.Title.Times;
 
 public class Arena {
 	
@@ -185,6 +191,20 @@ public class Arena {
 	//Check if a player is present in this arena instance
 	public boolean isPlayerPresent(Player player) {
 		return players.contains(player);
+	}
+	
+	public void setWinner(@Nullable ChickenLeagueTeam team) {
+		if(gamestate != GameState.INGAME) {
+			return;
+		}
+		final Component subtitle = Component.text("hat gewonnen").color(NamedTextColor.GRAY);
+		Component title = Component.text("Niemand").color(NamedTextColor.RED);
+		Times times = Times.times(Duration.ofMillis(300), Duration.ofMillis(4000), Duration.ofMillis(300));
+		if(team != null) {
+			title = team.getName();
+		}
+		MessageSender.INSTANCE.broadcastTitle(this, Title.title(title, subtitle, times), Sound.sound(org.bukkit.Sound.ITEM_GOAT_HORN_PLAY.key(), Sound.Source.NEUTRAL, 200F, 1F));
+		setGamestate(GameState.ENDING);
 	}
 	
 	// Copied the 5th time :/. Dont know author

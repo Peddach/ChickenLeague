@@ -36,6 +36,10 @@ public class PlayerGoalListener implements Listener {
 		event.getArena().getTeam2().getBallChecker().pause();
 		event.getArena().getBall().getChicken().setFireTicks(2*20);
 		event.getArena().getBall().getChicken().setVisualFire(true);
+		if(event.getTeam().getScore() == 5) {
+			event.getArena().setWinner(event.getTeam());
+			return;
+		}
 		Bukkit.getScheduler().runTaskLater(Constants.plugin, () -> {
 			new GoalCountDown(event.getArena());
 		}, 3*20);
