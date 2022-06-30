@@ -1,16 +1,18 @@
 package de.petropia.chickenLeagueHost.arena;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Chicken;
+import org.bukkit.entity.Player;
 
 public class ChickenLeagueBall {
 	
-	private static final ArrayList<Chicken> CHICKENS = new ArrayList<>();
+	private static final HashMap<Chicken, Arena> CHICKENS = new HashMap<>();
 	private Chicken chicken;
 	private final Arena arena;
+	private Player lastHit = null;
 	
 	public ChickenLeagueBall(Arena arena) {
 		this.arena = arena;
@@ -28,7 +30,8 @@ public class ChickenLeagueBall {
 		chicken.setRemoveWhenFarAway(false);
 		chicken.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(999D);
 		chicken.setAware(false);
-		CHICKENS.add(chicken);
+		CHICKENS.put(chicken, arena);
+		lastHit = null;
 	}
 	
 	public void kill() {
@@ -54,7 +57,15 @@ public class ChickenLeagueBall {
 		return chicken;
 	}
 
-	public static ArrayList<Chicken> getChickens() {
+	public static HashMap<Chicken, Arena> getChickens() {
 		return CHICKENS;
+	}
+
+	public Player getLastHit() {
+		return lastHit;
+	}
+
+	public void setLastHit(Player lastHit) {
+		this.lastHit = lastHit;
 	}
 }

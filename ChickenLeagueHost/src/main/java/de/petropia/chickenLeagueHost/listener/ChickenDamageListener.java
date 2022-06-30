@@ -1,7 +1,9 @@
 package de.petropia.chickenLeagueHost.listener;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 
@@ -15,10 +17,22 @@ public class ChickenDamageListener implements Listener {
 	
 	 @EventHandler
 	 public void onChickenDamage(EntityDamageEvent event) {
-		 if(ChickenLeagueBall.getChickens().contains(event.getEntity())) {
+		 if(ChickenLeagueBall.getChickens().containsKey(event.getEntity())) {
 			 event.setDamage(0);
 			 event.getEntity().getLocation().getNearbyPlayers(5).forEach(player -> player.playSound(SOUND));
 		 }
+	 }
+	 
+	 @EventHandler
+	 public void onPlayerHitChickenEvent(EntityDamageByEntityEvent event) {
+		 if(!ChickenLeagueBall.getChickens().containsKey(event.getEntity())) {
+			 return;
+		 }
+		 if(event.getDamager() instanceof Player == false) {
+			 return;
+		 }
+		 Player player = (Player) event.getDamager();
+		 ChickenLeagueBall.getChickens().get(event.getEntity()).getBall().setLastHit(player);
 	 }
 	 
 	 @EventHandler
