@@ -10,6 +10,8 @@ import de.petropia.chickenLeagueHost.arena.GameState;
 import de.petropia.chickenLeagueHost.arena.GameTime;
 import de.petropia.chickenLeagueHost.arena.GoalCountDown;
 import de.petropia.chickenLeagueHost.events.GameStateChangeEvent;
+import de.petropia.chickenLeagueHost.items.LeaveItem;
+import de.petropia.chickenLeagueHost.util.InventoryUtil;
 import de.petropia.chickenLeagueHost.util.MessageSender;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -36,8 +38,11 @@ public class GameStateChangeListener implements Listener{
 				}
 			}, 0, 20);
 			event.getArena().getGameTime().stop();
+			event.getArena().getPlayers().forEach(p -> InventoryUtil.clearPlayer(p));
+			event.getArena().getPlayers().forEach(p -> LeaveItem.giveItemPlayer(p));
 		}
 		if(event.getAfter() == GameState.INGAME) {
+			event.getArena().getPlayers().forEach(p -> InventoryUtil.clearPlayer(p));
 			new GoalCountDown(event.getArena());
 			event.getArena().setGameTime(new GameTime(event.getArena()));
 		}

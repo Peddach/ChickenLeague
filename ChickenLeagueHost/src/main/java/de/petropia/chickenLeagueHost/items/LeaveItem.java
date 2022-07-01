@@ -42,6 +42,10 @@ public class LeaveItem implements Listener{
 		return item;
 	}
 	
+	public static void giveItemPlayer(Player player) {
+		player.getInventory().setItem(8, ITEM);
+	}
+	
 	@EventHandler
 	public void onPlayerClickLeaveItemEvent(PlayerInteractEvent event) {
 		if(event.getItem() == null) {
