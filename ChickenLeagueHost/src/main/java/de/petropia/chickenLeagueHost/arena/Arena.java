@@ -21,6 +21,7 @@ import de.petropia.chickenLeagueHost.events.GameStateChangeEvent;
 import de.petropia.chickenLeagueHost.events.PlayerJoinArenaEvent;
 import de.petropia.chickenLeagueHost.events.PlayerQuitArenaEvent;
 import de.petropia.chickenLeagueHost.mysql.MySQLManager;
+import de.petropia.chickenLeagueHost.scoreboard.ScoreboardManager;
 import de.petropia.chickenLeagueHost.team.ChickenLeagueTeam;
 import de.petropia.chickenLeagueHost.util.CloudNetAdapter;
 import de.petropia.chickenLeagueHost.util.MessageSender;
@@ -48,6 +49,7 @@ public class Arena {
 	private final ChickenLeagueBall ball;
 	private boolean registered = false;
 	private GameTime gameTime;
+	private final ScoreboardManager scoreboradManager;
 	
 	public Arena(ArenaMode mode) {
 		setGamestate(GameState.WAITING);
@@ -83,6 +85,7 @@ public class Arena {
 		middle = loadMiddleLocation();
 		
 		ball = new ChickenLeagueBall(this);
+		scoreboradManager = new ScoreboardManager(this);
 		
 		registerArena();
 		
@@ -173,7 +176,11 @@ public class Arena {
 		if(players.size() == maxPlayer) {
 			return false;
 		}
+		if(gamestate == GameState.WAITING) {
+			setGamestate(GameState.STARTING);
+		}
 		players.add(player);
+		scoreboradManager.addPlayer(player);
 		PlayerJoinArenaEvent event = new PlayerJoinArenaEvent(this, player);
 		Bukkit.getServer().getPluginManager().callEvent(event);
 		return true;
@@ -184,6 +191,7 @@ public class Arena {
 			PlayerQuitArenaEvent event = new PlayerQuitArenaEvent(this, player);
 			Bukkit.getServer().getPluginManager().callEvent(event);
 			players.remove(player);
+			scoreboradManager.removePlayer(player);
 			team1.removePlayer(player);
 			team2.removePlayer(player);
 		}
@@ -224,6 +232,7 @@ public class Arena {
 		}
 		MySQLManager.deleteArena(name);
 		ARENAS.remove(this);
+		scoreboradManager.deleteScordboardManager();
 		Bukkit.getScheduler().runTaskLater(Constants.plugin, () -> {
 			deleteWorld();
 		}, 20);
