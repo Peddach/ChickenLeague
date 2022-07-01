@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import de.petropia.chickenLeagueHost.Constants;
 import de.petropia.chickenLeagueHost.arena.Arena;
 import de.petropia.chickenLeagueHost.arena.GameState;
+import de.petropia.chickenLeagueHost.arena.GameTime;
 import de.petropia.chickenLeagueHost.arena.GoalCountDown;
 import de.petropia.chickenLeagueHost.events.GameStateChangeEvent;
 import de.petropia.chickenLeagueHost.util.MessageSender;
@@ -34,9 +35,11 @@ public class GameStateChangeListener implements Listener{
 					i--;
 				}
 			}, 0, 20);
+			event.getArena().getGameTime().stop();
 		}
 		if(event.getAfter() == GameState.INGAME) {
 			new GoalCountDown(event.getArena());
+			event.getArena().setGameTime(new GameTime(event.getArena()));
 		}
 	}
 

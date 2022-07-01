@@ -47,6 +47,7 @@ public class Arena {
 	private final Location middle;
 	private final ChickenLeagueBall ball;
 	private boolean registered = false;
+	private GameTime gameTime;
 	
 	public Arena(ArenaMode mode) {
 		setGamestate(GameState.WAITING);
@@ -302,5 +303,13 @@ public class Arena {
 
 	public boolean isRegistered() {
 		return registered;
+	}
+
+	public GameTime getGameTime() {
+		return gameTime;
+	}
+
+	public void setGameTime(GameTime gameTime) {
+		this.gameTime = gameTime;
 	}
 }
