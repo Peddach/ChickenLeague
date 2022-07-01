@@ -34,7 +34,7 @@ public class ScoreboardManager {
 					maxPlayer = 10;
 				}
 				for (FastBoard fastboard : playerBoardMap.values()) {
-					fastboard.updateLines(" ", "§a§lSpieler", "§7>> " + arena.getPlayers().size() + "/" + maxPlayer, " ", "§a§lModus", "§7>> " + arenaModeAsReadableString(arena.getArenaMode()), " ");
+					fastboard.updateLines(" ", "§a§lSpieler", "§7>> " + arena.getPlayers().size() + "/" + maxPlayer, " ", "§a§lModus", "§7>>" + arenaModeAsReadableString(arena.getArenaMode()), " ");
 				}
 			}
 			if (arena.getGameState() == GameState.INGAME) {
@@ -106,7 +106,7 @@ public class ScoreboardManager {
 		for (String string : stringArr) {
 			finalString = finalString + " " + string;
 		}
-		return finalString;
+		return finalString.toLowerCase();
 	}
 
 }
