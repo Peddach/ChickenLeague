@@ -21,7 +21,7 @@ public class GameStateChangeListener implements Listener{
 	@EventHandler
 	public void onGameStateChangeEvent(GameStateChangeEvent event) {
 		if(event.getAfter() == GameState.ENDING) {
-			Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Constants.plugin, new Runnable() {
+			int taskID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Constants.plugin, new Runnable() {
 				
 				int i = 20;
 				
@@ -33,6 +33,7 @@ public class GameStateChangeListener implements Listener{
 					if(i == 0) {
 						event.getArena().delete();
 						new Arena(event.getArena().getArenaMode());
+						Bukkit.getScheduler().cancelTask(taskID);
 					}
 					i--;
 				}
