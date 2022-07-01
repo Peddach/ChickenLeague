@@ -12,6 +12,7 @@ import de.petropia.chickenLeagueHost.arena.Arena;
 import de.petropia.chickenLeagueHost.arena.ArenaMode;
 import de.petropia.chickenLeagueHost.commands.ChickenLeagueHostCommand;
 import de.petropia.chickenLeagueHost.items.LeaveItem;
+import de.petropia.chickenLeagueHost.items.TeamSelectItem;
 import de.petropia.chickenLeagueHost.listener.ChatListener;
 import de.petropia.chickenLeagueHost.listener.ChickenDamageListener;
 import de.petropia.chickenLeagueHost.listener.DatabaseUpdater;
@@ -23,6 +24,7 @@ import de.petropia.chickenLeagueHost.listener.PlayerLeaveArenaListener;
 import de.petropia.chickenLeagueHost.listener.PlayerLeaveServerListener;
 import de.petropia.chickenLeagueHost.listener.PlayerMoveListener;
 import de.petropia.chickenLeagueHost.mysql.MySQLManager;
+import de.petropia.chickenLeagueHost.team.TeamSelectGUI;
 import de.petropia.chickenLeagueHost.util.CloudNetAdapter;
 
 public class ChickenLeagueHost extends JavaPlugin{
@@ -83,6 +85,8 @@ public class ChickenLeagueHost extends JavaPlugin{
 		manager.registerEvents(new ChickenDamageListener(), this);
 		manager.registerEvents(new DatabaseUpdater(), this);
 		manager.registerEvents(new LeaveItem(), this);
+		manager.registerEvents(new TeamSelectItem(), this);
+		manager.registerEvents(new TeamSelectGUI(null), this);
 	}
 	
 	@Override

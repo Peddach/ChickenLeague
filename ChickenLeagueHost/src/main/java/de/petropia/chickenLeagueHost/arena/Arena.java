@@ -23,6 +23,7 @@ import de.petropia.chickenLeagueHost.events.PlayerQuitArenaEvent;
 import de.petropia.chickenLeagueHost.mysql.MySQLManager;
 import de.petropia.chickenLeagueHost.scoreboard.ScoreboardManager;
 import de.petropia.chickenLeagueHost.team.ChickenLeagueTeam;
+import de.petropia.chickenLeagueHost.team.TeamSelectGUI;
 import de.petropia.chickenLeagueHost.util.CloudNetAdapter;
 import de.petropia.chickenLeagueHost.util.MessageSender;
 import net.kyori.adventure.sound.Sound;
@@ -50,6 +51,7 @@ public class Arena {
 	private boolean registered = false;
 	private GameTime gameTime;
 	private final ScoreboardManager scoreboradManager;
+	private final TeamSelectGUI teamSelectGui;
 	
 	public Arena(ArenaMode mode) {
 		setGamestate(GameState.WAITING);
@@ -86,6 +88,7 @@ public class Arena {
 		
 		ball = new ChickenLeagueBall(this);
 		scoreboradManager = new ScoreboardManager(this);
+		teamSelectGui = new TeamSelectGUI(this);
 		
 		registerArena();
 		
@@ -320,5 +323,9 @@ public class Arena {
 
 	public void setGameTime(GameTime gameTime) {
 		this.gameTime = gameTime;
+	}
+
+	public TeamSelectGUI getTeamSelectGui() {
+		return teamSelectGui;
 	}
 }
