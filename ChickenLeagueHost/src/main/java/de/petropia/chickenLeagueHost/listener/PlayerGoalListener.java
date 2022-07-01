@@ -19,6 +19,7 @@ import de.petropia.chickenLeagueHost.arena.Arena;
 import de.petropia.chickenLeagueHost.arena.GoalCountDown;
 import de.petropia.chickenLeagueHost.events.PlayerGoalEvent;
 import de.petropia.chickenLeagueHost.team.ChickenLeagueTeam;
+import de.petropia.chickenLeagueHost.util.ExplodingChicken;
 import de.petropia.chickenLeagueHost.util.MessageSender;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.sound.Sound.Source;
@@ -55,12 +56,20 @@ public class PlayerGoalListener implements Listener {
 				int i = 0;
 				@Override
 				public void run() {
-					if(i == 15) {
+					i++;
+					if(i == 8) {
 						Bukkit.getScheduler().cancelTask(endFireWorkID);
 					}
 					spwanFireWork(event.getArena(), event.getTeam());
+					MessageSender.INSTANCE.showDebugMessage("Spawn Firework " + i);
+					MessageSender.INSTANCE.showDebugMessage("i % 2 == 0 | " + i);
+					for(int a = 0; a < 5; a++) {
+						MessageSender.INSTANCE.showDebugMessage("Chicken: " + a + " | " + i);
+						new ExplodingChicken(event.getArena().getMiddle());
+					}
+					
 				}
-			}, 120, 20);
+			}, 110, 30);
 			return;
 		}
 		Bukkit.getScheduler().runTaskLater(Constants.plugin, () -> {
