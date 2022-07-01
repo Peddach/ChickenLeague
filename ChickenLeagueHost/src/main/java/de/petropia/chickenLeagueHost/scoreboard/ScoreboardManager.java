@@ -68,13 +68,41 @@ public class ScoreboardManager {
 			if (arena.getGameState() == GameState.ENDING) {
 				for (Player player : arena.getPlayers()) {
 					FastBoard fastboard = playerBoardMap.get(player);
-					fastboard.updateLines(" ", "§a§lZeit:", "§7>> " + arena.getGameTime().getTimeAsString(), " ");
+					List<String> lines = new ArrayList<String>();
+					lines.add(" ");
+					lines.add("§a§lSieger");
+					lines.add("§7>> " + getWinner(arena));
+					lines.add(" ");
+					lines.add("§a§lSpielstand");
+					if(arena.getTeam1().isPlayerPresent(player)) {
+						lines.add("§7>> §9" + arena.getTeam1().getScore() + "§7 - §c" + arena.getTeam2().getScore());
+					}
+					if(arena.getTeam2().isPlayerPresent(player)) {
+						lines.add("§7>> §c" + arena.getTeam2().getScore() + " §7-§9 " + arena.getTeam1().getScore());
+					}
+					lines.add(" ");
+					lines.add("§a§lZeit");
+					lines.add("§7>> " + arena.getGameTime().getTimeAsString());
+					lines.add(" ");
+					fastboard.updateLines(lines);
 				}
 			}
 		};
 
 		taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Constants.plugin, updateTask, 20, 20);
 
+	}
+	
+	private String getWinner(Arena arena) {
+		int team1score = arena.getTeam1().getScore();
+		int team2score = arena.getTeam2().getScore();
+		if(team1score > team2score) {
+			return "§9Team 1";
+		}
+		if(team1score < team2score) {
+			return "§cTeam 2";
+		}
+		return "§4§lNiemand";
 	}
 
 	public void addPlayer(Player player) {
