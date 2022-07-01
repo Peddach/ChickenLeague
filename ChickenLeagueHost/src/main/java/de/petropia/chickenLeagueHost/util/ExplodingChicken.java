@@ -21,7 +21,6 @@ public class ExplodingChicken {
 	private final Chicken chicken;
 	
 	public ExplodingChicken(Location location) {
-		MessageSender.INSTANCE.showDebugMessage("Chicken spawned");
 		chicken = location.getWorld().spawn(location, Chicken.class);
 		chicken.setMemory(MemoryKey.HUNTED_RECENTLY, true);
 		chicken.setVelocity(getRandomVector());

@@ -61,10 +61,7 @@ public class PlayerGoalListener implements Listener {
 						Bukkit.getScheduler().cancelTask(endFireWorkID);
 					}
 					spwanFireWork(event.getArena(), event.getTeam());
-					MessageSender.INSTANCE.showDebugMessage("Spawn Firework " + i);
-					MessageSender.INSTANCE.showDebugMessage("i % 2 == 0 | " + i);
 					for(int a = 0; a < 5; a++) {
-						MessageSender.INSTANCE.showDebugMessage("Chicken: " + a + " | " + i);
 						new ExplodingChicken(event.getArena().getMiddle());
 					}
 					
