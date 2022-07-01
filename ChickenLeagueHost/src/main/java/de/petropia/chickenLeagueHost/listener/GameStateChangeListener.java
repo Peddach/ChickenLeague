@@ -18,10 +18,12 @@ import net.kyori.adventure.text.format.NamedTextColor;
 
 public class GameStateChangeListener implements Listener{
 	
+	private int taskID;
+	
 	@EventHandler
 	public void onGameStateChangeEvent(GameStateChangeEvent event) {
 		if(event.getAfter() == GameState.ENDING) {
-			int taskID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Constants.plugin, new Runnable() {
+			taskID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Constants.plugin, new Runnable() {
 				
 				int i = 20;
 				
