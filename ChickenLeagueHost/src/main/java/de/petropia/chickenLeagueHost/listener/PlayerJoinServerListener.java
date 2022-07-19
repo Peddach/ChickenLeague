@@ -2,6 +2,7 @@ package de.petropia.chickenLeagueHost.listener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -25,6 +26,7 @@ public class PlayerJoinServerListener implements Listener{
 	public void onPlayerJoinServerEvent(PlayerJoinEvent event) {
 		event.joinMessage(null);
 		final Player player = event.getPlayer();
+		player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(16);
 		hideAllPlayers(player);
 		Bukkit.getScheduler().runTaskAsynchronously(Constants.plugin, () -> {
 			String arena = MySQLManager.readPlayerTeleport(player);
