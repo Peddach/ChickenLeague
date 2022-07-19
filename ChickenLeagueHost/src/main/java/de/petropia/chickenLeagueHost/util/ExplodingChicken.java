@@ -25,6 +25,7 @@ public class ExplodingChicken {
 		chicken.setMemory(MemoryKey.HUNTED_RECENTLY, true);
 		chicken.setVelocity(getRandomVector());
 		chicken.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(999D);
+		chicken.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.7D);;
 		chicken.setFireTicks(60);
 		chicken.setSilent(true);
 		Bukkit.getScheduler().runTaskLater(Constants.plugin, () -> {
