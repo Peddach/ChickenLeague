@@ -7,6 +7,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 
 import de.petropia.chickenLeagueHost.arena.Arena;
 import de.petropia.chickenLeagueHost.arena.ChickenLeagueBall;
@@ -38,6 +39,12 @@ public class ChickenDamageListener implements Listener {
 		 }
 		 Player player = (Player) event.getDamager();
 		 ChickenLeagueBall.getChickens().get(event.getEntity()).getBall().setLastHit(player);
+		 if(event.getEntity().isOnGround()) {
+			 Vector oldVector = event.getEntity().getVelocity().clone();
+			 Vector addVector = new Vector(0, 1.2, 0);
+			 Vector newVector = oldVector.add(addVector);
+			 event.getEntity().setVelocity(newVector);
+		 }
 		 Arena arena = ChickenLeagueBall.getChickens().get(event.getEntity());
 		 ItemStack handItem = player.getInventory().getItemInMainHand();
 		 if(handItem == null) {
