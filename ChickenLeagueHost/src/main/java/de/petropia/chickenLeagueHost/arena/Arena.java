@@ -77,12 +77,8 @@ public class Arena {
 		world = Bukkit.getWorld(name);
 		applyGameRules();
 		
-		team1 = new ChickenLeagueTeam(maxPlayer, Component.text("Team 1").color(NamedTextColor.BLUE));
-		team2 = new ChickenLeagueTeam(maxPlayer, Component.text("Team 2").color(NamedTextColor.RED));
-		team1.setBallChecker(loadBallChecker(1, team1));
-		team2.setBallChecker(loadBallChecker(2, team2));
-		team1.getBallChecker().pause();
-		team2.getBallChecker().pause();
+		team1 = new ChickenLeagueTeam(maxPlayer, Component.text("Team 1").color(NamedTextColor.BLUE), teamGoalCoord("X1", 1), teamGoalCoord("X2", 1), teamGoalCoord("Z1", 1), teamGoalCoord("Z2", 1));
+		team2 = new ChickenLeagueTeam(maxPlayer, Component.text("Team 2").color(NamedTextColor.RED), teamGoalCoord("X1", 2), teamGoalCoord("X2", 2), teamGoalCoord("Z1", 2), teamGoalCoord("Z2", 2));
 		
 		team2Spawns = loadSpawns(2);
 		team1Spawns = loadSpawns(1);
@@ -92,16 +88,11 @@ public class Arena {
 		scoreboradManager = new ScoreboardManager(this);
 		teamSelectGui = new TeamSelectGUI(this);
 		
-		registerArena();
-		
+		registerArena();		
 	}
 	
-	private BallChecker loadBallChecker(int teamNumber, ChickenLeagueTeam team) {
-		final int x1 = Constants.config.getInt(arenaMode.name() + ".Team" + teamNumber + ".Goal.X1");
-		final int x2 = Constants.config.getInt(arenaMode.name() + ".Team" + teamNumber + ".Goal.X2");
-		final int z1 = Constants.config.getInt(arenaMode.name() + ".Team" + teamNumber + ".Goal.Z1");
-		final int z2 = Constants.config.getInt(arenaMode.name() + ".Team" + teamNumber + ".Goal.Z2");
-		return new BallChecker(x1, z1, x2, z2, this, team);
+	private int teamGoalCoord(String coordinate, int teamNumber) {
+		return Constants.config.getInt(arenaMode.name() + ".Team" + teamNumber + ".Goal." + coordinate);
 	}
 
 	private Location loadMiddleLocation() {
@@ -250,7 +241,6 @@ public class Arena {
 		worldManager.deleteWorld(name);
 	}
 	
-	//TODO fix multiple calls
 	public void teleportToSpawnPoints() {
 		for(int i = 0; i < team1.getPlayers().length; i++) {
 			Player player = team1.getPlayers()[i];

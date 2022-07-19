@@ -8,11 +8,11 @@ Database:
 Arenas: 4
 Bats:
    Wood:
-      Speed: 0.4
-   Gold:
       Speed: 0.3
+   Gold:
+      Speed: 0.22
    Diamond:
-      Speed: 0.2
+      Speed: 0.15
 Spawn:
    X: 100
    Y: 100
@@ -51,6 +51,13 @@ ONE_VS_ONE:
       Z: 0.5
       Pitch: 0 
       Yaw: 0
+   Edges:
+      First:
+         X: -24
+         Z: 15
+      Second:
+         X: 25
+         Z: -14
 THREE_VS_THREE:
    Team1:
       Goal: 
@@ -106,6 +113,13 @@ THREE_VS_THREE:
       Z: 0.5
       Pitch: 0
       Yaw: 90
+   Edges:
+      First:
+         X: -44
+         Z: 56
+      Second:
+         X: 45
+         Z: -53
 FIVE_VS_FIVE:
    Team1:
       Goal: 
@@ -185,4 +199,11 @@ FIVE_VS_FIVE:
       Z: 0.5
       Pitch: 0
       Yaw: 90
+   Edges:
+      First:
+         X: -45
+         Z: 57
+      Second:
+         X: 46
+         Z: -54
    

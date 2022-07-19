@@ -2,18 +2,24 @@ package de.petropia.chickenLeagueHost.team;
 
 import org.bukkit.entity.Player;
 
-import de.petropia.chickenLeagueHost.arena.BallChecker;
 import net.kyori.adventure.text.Component;
 
 public class ChickenLeagueTeam {
 	private final Player[] players;
 	private int score = 0;
 	private final Component name;
-	private BallChecker ballChecker;
+	private final int x1;
+	private final int x2;
+	private final int z1;
+	private final int z2;
 
-	public ChickenLeagueTeam(int teamSize, Component name) {
+	public ChickenLeagueTeam(int teamSize, Component name, int x1, int x2, int z1, int z2) {
 		players = new Player[teamSize - 1];
 		this.name = name;
+		this.x1 = x1;
+		this.x2 = x2;
+		this.z1 = z1;
+		this.z2 = z2;
 	}
 
 	public boolean addPlayer(Player player) {
@@ -66,6 +72,22 @@ public class ChickenLeagueTeam {
 		return false;
 	}
 
+	public int getX1() {
+		return x1;
+	}
+
+	public int getX2() {
+		return x2;
+	}
+
+	public int getZ1() {
+		return z1;
+	}
+
+	public int getZ2() {
+		return z2;
+	}
+	
 	public Player[] getPlayers() {
 		return players;
 	}
@@ -80,13 +102,5 @@ public class ChickenLeagueTeam {
 
 	public Component getName() {
 		return name;
-	}
-	
-	public BallChecker getBallChecker() {
-		return ballChecker;
-	}
-
-	public void setBallChecker(BallChecker ballChecker) {
-		this.ballChecker = ballChecker;
 	}
 }
