@@ -6,6 +6,13 @@ Database:
    Password: password
    Database: ChickenLeague
 Arenas: 4
+Bats:
+   Wood:
+      Speed: 0.4
+   Gold:
+      Speed: 0.3
+   Diamond:
+      Speed: 0.2
 Spawn:
    X: 100
    Y: 100

@@ -9,6 +9,9 @@ import de.petropia.chickenLeagueHost.arena.Arena;
 import de.petropia.chickenLeagueHost.arena.GameState;
 import de.petropia.chickenLeagueHost.arena.GameTime;
 import de.petropia.chickenLeagueHost.arena.GoalCountDown;
+import de.petropia.chickenLeagueHost.chickenbats.DiamondBat;
+import de.petropia.chickenLeagueHost.chickenbats.GoldenBat;
+import de.petropia.chickenLeagueHost.chickenbats.WoodenBat;
 import de.petropia.chickenLeagueHost.events.GameStateChangeEvent;
 import de.petropia.chickenLeagueHost.items.LeaveItem;
 import de.petropia.chickenLeagueHost.util.InventoryUtil;
@@ -23,6 +26,7 @@ public class GameStateChangeListener implements Listener{
 	@EventHandler
 	public void onGameStateChangeEvent(GameStateChangeEvent event) {
 		if(event.getAfter() == GameState.ENDING) {
+			event.getArena().getBatManager().resetAllBuffs();
 			taskID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Constants.plugin, new Runnable() {
 				
 				int i = 20;
@@ -48,6 +52,11 @@ public class GameStateChangeListener implements Listener{
 			event.getArena().getPlayers().forEach(p -> InventoryUtil.clearPlayer(p));
 			new GoalCountDown(event.getArena());
 			event.getArena().setGameTime(new GameTime(event.getArena()));
+			event.getArena().getPlayers().forEach(p -> {
+				p.getInventory().setItem(0, WoodenBat.getInstance().getItem());
+				p.getInventory().setItem(1, GoldenBat.getInstance().getItem());
+				p.getInventory().setItem(2, DiamondBat.getInstance().getItem());
+			});
 		}
 	}
 

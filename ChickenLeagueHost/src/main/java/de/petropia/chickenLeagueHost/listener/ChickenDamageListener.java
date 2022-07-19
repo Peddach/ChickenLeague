@@ -6,8 +6,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.inventory.ItemStack;
 
+import de.petropia.chickenLeagueHost.arena.Arena;
 import de.petropia.chickenLeagueHost.arena.ChickenLeagueBall;
+import de.petropia.chickenLeagueHost.chickenbats.DiamondBat;
+import de.petropia.chickenLeagueHost.chickenbats.GoldenBat;
+import de.petropia.chickenLeagueHost.chickenbats.WoodenBat;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.sound.Sound.Source;
 
@@ -33,6 +38,20 @@ public class ChickenDamageListener implements Listener {
 		 }
 		 Player player = (Player) event.getDamager();
 		 ChickenLeagueBall.getChickens().get(event.getEntity()).getBall().setLastHit(player);
+		 Arena arena = ChickenLeagueBall.getChickens().get(event.getEntity());
+		 ItemStack handItem = player.getInventory().getItemInMainHand();
+		 if(handItem == null) {
+			 return;
+		 }
+		 if(handItem.equals(WoodenBat.getInstance().getItem())) {
+			 arena.getBatManager().speedBuffPlayer(player, WoodenBat.getInstance().getSpeedBuff());
+		 }
+		 if(handItem.equals(GoldenBat.getInstance().getItem())) {
+			 arena.getBatManager().speedBuffPlayer(player, GoldenBat.getInstance().getSpeedBuff());
+		 }
+		 if(handItem.equals(DiamondBat.getInstance().getItem())) {
+			 arena.getBatManager().speedBuffPlayer(player, DiamondBat.getInstance().getSpeedBuff());
+		 }
 	 }
 	 
 	 @EventHandler

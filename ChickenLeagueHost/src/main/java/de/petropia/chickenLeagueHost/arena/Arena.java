@@ -17,6 +17,7 @@ import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.MultiverseCore.api.MVWorldManager;
 
 import de.petropia.chickenLeagueHost.Constants;
+import de.petropia.chickenLeagueHost.chickenbats.BatManager;
 import de.petropia.chickenLeagueHost.events.GameStateChangeEvent;
 import de.petropia.chickenLeagueHost.events.PlayerJoinArenaEvent;
 import de.petropia.chickenLeagueHost.events.PlayerQuitArenaEvent;
@@ -52,6 +53,7 @@ public class Arena {
 	private GameTime gameTime;
 	private final ScoreboardManager scoreboradManager;
 	private final TeamSelectGUI teamSelectGui;
+	private final BatManager batManager = new BatManager();
 	
 	public Arena(ArenaMode mode) {
 		setGamestate(GameState.WAITING);
@@ -327,5 +329,9 @@ public class Arena {
 
 	public TeamSelectGUI getTeamSelectGui() {
 		return teamSelectGui;
+	}
+
+	public BatManager getBatManager() {
+		return batManager;
 	}
 }

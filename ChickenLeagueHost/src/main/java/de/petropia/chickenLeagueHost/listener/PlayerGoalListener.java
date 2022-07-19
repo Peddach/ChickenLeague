@@ -49,6 +49,7 @@ public class PlayerGoalListener implements Listener {
 		event.getArena().getTeam2().getBallChecker().pause();
 		event.getArena().getBall().getChicken().setFireTicks(2*20);
 		event.getArena().getBall().getChicken().setVisualFire(true);
+		event.getArena().getBatManager().resetAllBuffs();
 		if(event.getTeam().getScore() == 5) {
 			event.getArena().setWinner(event.getTeam());
 			showEffects(event.getArena(), event.getTeam());
