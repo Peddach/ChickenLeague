@@ -208,6 +208,7 @@ public class Arena {
 		if(team != null) {
 			title = team.getName();
 		}
+		ball.kill();
 		MessageSender.INSTANCE.broadcastTitle(this, Title.title(title, subtitle, times), Sound.sound(org.bukkit.Sound.ITEM_GOAT_HORN_PLAY.key(), Sound.Source.NEUTRAL, 200F, 1F));
 		setGamestate(GameState.ENDING);
 	}
