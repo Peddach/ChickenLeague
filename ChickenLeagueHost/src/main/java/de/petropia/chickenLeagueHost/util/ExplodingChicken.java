@@ -25,7 +25,7 @@ public class ExplodingChicken {
 		chicken.setMemory(MemoryKey.HUNTED_RECENTLY, true);
 		chicken.setVelocity(getRandomVector());
 		chicken.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(999D);
-		chicken.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.7D);;
+		chicken.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.5D);;
 		chicken.setFireTicks(60);
 		chicken.setSilent(true);
 		Bukkit.getScheduler().runTaskLater(Constants.plugin, () -> {
@@ -41,7 +41,7 @@ public class ExplodingChicken {
 					player.playSound(chicken.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 0.7F, 1F);
 				}
 			});
-		}, 60);
+		}, 90);
 	}
 	
 	private Vector getRandomVector() {
