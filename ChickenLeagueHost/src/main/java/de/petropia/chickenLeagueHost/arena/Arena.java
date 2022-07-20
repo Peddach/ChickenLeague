@@ -23,6 +23,7 @@ import de.petropia.chickenLeagueHost.events.PlayerJoinArenaEvent;
 import de.petropia.chickenLeagueHost.events.PlayerQuitArenaEvent;
 import de.petropia.chickenLeagueHost.mysql.MySQLManager;
 import de.petropia.chickenLeagueHost.scoreboard.ScoreboardManager;
+import de.petropia.chickenLeagueHost.specialItem.SpecialItemManager;
 import de.petropia.chickenLeagueHost.team.ChickenLeagueTeam;
 import de.petropia.chickenLeagueHost.team.TeamSelectGUI;
 import de.petropia.chickenLeagueHost.util.CloudNetAdapter;
@@ -54,6 +55,7 @@ public class Arena {
 	private final ScoreboardManager scoreboradManager;
 	private final TeamSelectGUI teamSelectGui;
 	private final BatManager batManager = new BatManager();
+	private final SpecialItemManager specialItemManager;
 	
 	public Arena(ArenaMode mode) {
 		setGamestate(GameState.WAITING);
@@ -87,6 +89,7 @@ public class Arena {
 		ball = new ChickenLeagueBall(this);
 		scoreboradManager = new ScoreboardManager(this);
 		teamSelectGui = new TeamSelectGUI(this);
+		specialItemManager = new SpecialItemManager(this);
 		
 		registerArena();		
 	}
@@ -324,5 +327,9 @@ public class Arena {
 
 	public BatManager getBatManager() {
 		return batManager;
+	}
+
+	public SpecialItemManager getSpecialItemManager() {
+		return specialItemManager;
 	}
 }

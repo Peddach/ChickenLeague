@@ -52,6 +52,7 @@ public class GameStateChangeListener implements Listener{
 			event.getArena().getPlayers().forEach(p -> InventoryUtil.clearPlayer(p));
 			new GoalCountDown(event.getArena());
 			event.getArena().setGameTime(new GameTime(event.getArena()));
+			event.getArena().getSpecialItemManager().start();
 			event.getArena().getPlayers().forEach(p -> {
 				p.getInventory().setItem(0, WoodenBat.getInstance().getItem());
 				p.getInventory().setItem(1, GoldenBat.getInstance().getItem());

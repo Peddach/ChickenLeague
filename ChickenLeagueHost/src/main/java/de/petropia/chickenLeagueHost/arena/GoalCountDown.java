@@ -36,6 +36,7 @@ public class GoalCountDown {
 			if(countdown == 0) {
 				cancel();
 				arena.getBall().spawn();
+				arena.getSpecialItemManager().start();
 			}
 			countdown --;
 		}, 0, 20);

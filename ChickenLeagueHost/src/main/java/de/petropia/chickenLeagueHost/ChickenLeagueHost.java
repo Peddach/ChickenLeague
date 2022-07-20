@@ -26,6 +26,8 @@ import de.petropia.chickenLeagueHost.listener.PlayerLeaveArenaListener;
 import de.petropia.chickenLeagueHost.listener.PlayerLeaveServerListener;
 import de.petropia.chickenLeagueHost.listener.PlayerMoveListener;
 import de.petropia.chickenLeagueHost.mysql.MySQLManager;
+import de.petropia.chickenLeagueHost.specialItem.SpecialItemManager;
+import de.petropia.chickenLeagueHost.specialItem.items.NetheriteBat;
 import de.petropia.chickenLeagueHost.team.TeamSelectGUI;
 import de.petropia.chickenLeagueHost.util.CloudNetAdapter;
 
@@ -56,6 +58,7 @@ public class ChickenLeagueHost extends JavaPlugin{
 		}
 		registerCommands();
 		registerListener();
+		registerSpecialItems();
 		createArenas();
 	}
 	
@@ -72,6 +75,10 @@ public class ChickenLeagueHost extends JavaPlugin{
 			}
 			new Arena(ArenaMode.THREE_VS_THREE);
 		}
+	}
+	
+	private void registerSpecialItems() {
+		SpecialItemManager.registerItem(new NetheriteBat());
 	}
 	
 	private void registerListener() {

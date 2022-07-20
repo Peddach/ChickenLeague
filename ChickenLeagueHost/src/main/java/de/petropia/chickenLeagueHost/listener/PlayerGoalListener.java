@@ -49,6 +49,7 @@ public class PlayerGoalListener implements Listener {
 		final Title title = Title.title(event.getTeam().getName(), name.append(SUBTITLE), TIMES);
 		MessageSender.INSTANCE.broadcastTitle(event.getArena(), title, SOUND);
 		event.getArena().getBatManager().resetAllBuffs();
+		event.getArena().getSpecialItemManager().stop();
 		if(event.getTeam().getScore() == 5) {
 			endFireWorkID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Constants.plugin, new Runnable() {
 				int i = 0;
