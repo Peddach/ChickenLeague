@@ -1,5 +1,6 @@
 package de.petropia.chickenLeagueHost.listener;
 
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,6 +27,9 @@ public class ChickenDamageListener implements Listener {
 		 if(ChickenLeagueBall.getChickens().containsKey(event.getEntity())) {
 			 event.setDamage(0);
 			 event.getEntity().getLocation().getNearbyPlayers(5).forEach(player -> player.playSound(SOUND));
+			 if(event.getEntity() instanceof LivingEntity livingEntity) {
+				 livingEntity.setNoDamageTicks(5);
+			 }
 		 }
 	 }
 	 
