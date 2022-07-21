@@ -14,6 +14,7 @@ import org.bukkit.util.Vector;
 
 import de.petropia.chickenLeagueHost.specialItem.SpecialItem;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 
@@ -33,7 +34,7 @@ public class NetheriteBat extends SpecialItem {
 			meta.displayName(Component.text("Superschläger").color(TextColor.fromCSSHexString("#8c0e12")).decorate(TextDecoration.BOLD));
 			final List<Component> lore = new ArrayList<>();
 			lore.add(Component.text(" "));
-			lore.add(Component.text("Schlage das Huhn mit Knockback 12"));
+			lore.add(Component.text("Schlage das Huhn mit Knockback 12").color(NamedTextColor.GRAY));
 			lore.add(Component.text(" "));
 			meta.lore(lore);
 			meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_DESTROYS);
@@ -55,9 +56,9 @@ public class NetheriteBat extends SpecialItem {
 		}
 		player.getInventory().setItem(8, new ItemStack(Material.AIR));
 		Vector oldVector = player.getLocation().getDirection().clone();
-		Vector multiplay = new Vector(-1, 1, -1);
-		Vector add = new Vector(0, 0.4, 0);
-		Vector newVector = oldVector.multiply(multiplay).add(add).multiply(7);
+		Vector multiplay = new Vector(-2, 1, -2);
+		Vector add = new Vector(0, 1.4, 0);
+		Vector newVector = oldVector.multiply(multiplay).multiply(7).add(add);
 		player.setVelocity(newVector);
 	}
 }

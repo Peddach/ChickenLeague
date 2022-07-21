@@ -29,7 +29,6 @@ public class ChickenMoveListener implements Listener {
 	private static final int E_TVT_X_2 = Constants.config.getInt("THREE_VS_THREE.Edges.Second.X");
 	private static final int E_TVT_Z_1 = Constants.config.getInt("THREE_VS_THREE.Edges.First.Z");
 	private static final int E_TVT_Z_2 = Constants.config.getInt("THREE_VS_THREE.Edges.Second.Z");
-
 	
 	@EventHandler
 	public void onChickenMoveEvent(EntityMoveEvent event) {

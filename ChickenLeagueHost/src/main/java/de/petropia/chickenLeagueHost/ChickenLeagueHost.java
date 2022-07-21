@@ -26,7 +26,9 @@ import de.petropia.chickenLeagueHost.listener.PlayerLeaveArenaListener;
 import de.petropia.chickenLeagueHost.listener.PlayerLeaveServerListener;
 import de.petropia.chickenLeagueHost.listener.PlayerMoveListener;
 import de.petropia.chickenLeagueHost.mysql.MySQLManager;
+import de.petropia.chickenLeagueHost.specialItem.MysteryChestListener;
 import de.petropia.chickenLeagueHost.specialItem.SpecialItemManager;
+import de.petropia.chickenLeagueHost.specialItem.items.Enderpearl;
 import de.petropia.chickenLeagueHost.specialItem.items.NetheriteBat;
 import de.petropia.chickenLeagueHost.team.TeamSelectGUI;
 import de.petropia.chickenLeagueHost.util.CloudNetAdapter;
@@ -79,6 +81,7 @@ public class ChickenLeagueHost extends JavaPlugin{
 	
 	private void registerSpecialItems() {
 		SpecialItemManager.registerItem(new NetheriteBat());
+		SpecialItemManager.registerItem(new Enderpearl());
 	}
 	
 	private void registerListener() {
@@ -98,6 +101,7 @@ public class ChickenLeagueHost extends JavaPlugin{
 		manager.registerEvents(new TeamSelectGUI(null), this);
 		manager.registerEvents(new ArenaProtectionListener(), this);
 		manager.registerEvents(new ChickenMoveListener(), this);
+		manager.registerEvents(new MysteryChestListener(), this);
 	}
 	
 	@Override
