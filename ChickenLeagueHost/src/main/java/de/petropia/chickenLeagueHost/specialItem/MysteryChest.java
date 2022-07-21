@@ -8,11 +8,11 @@ import org.bukkit.Particle;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 
 import com.destroystokyo.paper.ParticleBuilder;
 
 import de.petropia.chickenLeagueHost.Constants;
-import de.petropia.chickenLeagueHost.util.MessageSender;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -28,12 +28,18 @@ public class MysteryChest{
 	public MysteryChest(Location location, SpecialItem item) {
 		this.item = item;
 		this.location = location;
-		itemEntity = location.getWorld().dropItem(location, CHEST);
+		Location spawnLoc = new Location(location.getWorld(), location.getX(), location.getY() + 0.1, location.getZ());
+		itemEntity = spawnLoc.getWorld().spawn(location, Item.class);
+		itemEntity.setItemStack(CHEST);
 		itemEntity.customName(Component.text("Special Item").color(NamedTextColor.GOLD).decorate(TextDecoration.BOLD));
 		itemEntity.setCustomNameVisible(true);
 		taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Constants.plugin, () -> {
 			showParticle();
 		}, 1, 5);
+		Bukkit.getScheduler().runTaskLater(Constants.plugin, () -> {
+			itemEntity.setVelocity(new Vector(0, 0, 0));
+			itemEntity.teleport(spawnLoc);
+		}, 1);
 	}
 	
 	public void showParticle() {
@@ -52,7 +58,6 @@ public class MysteryChest{
 	}
 	
 	public void remove() {
-		MessageSender.INSTANCE.showDebugMessage("Removing");
 		itemEntity.setHealth(0);
 		itemEntity.remove();
 		Bukkit.getScheduler().cancelTask(taskID);
