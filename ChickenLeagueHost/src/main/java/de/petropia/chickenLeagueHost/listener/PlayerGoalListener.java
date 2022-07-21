@@ -7,10 +7,12 @@ import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.FireworkEffect.Type;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.entity.Firework;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 
 import com.destroystokyo.paper.ParticleBuilder;
@@ -50,6 +52,10 @@ public class PlayerGoalListener implements Listener {
 		MessageSender.INSTANCE.broadcastTitle(event.getArena(), title, SOUND);
 		event.getArena().getBatManager().resetAllBuffs();
 		event.getArena().getSpecialItemManager().stop();
+		event.getArena().getPlayers().forEach(p -> {
+			p.getInventory().setItem(8, new ItemStack(Material.AIR));
+			p.getInventory().setItem(9, new ItemStack(Material.AIR));
+		});
 		if(event.getTeam().getScore() == 5) {
 			endFireWorkID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Constants.plugin, new Runnable() {
 				int i = 0;
