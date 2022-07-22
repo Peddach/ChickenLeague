@@ -1,12 +1,15 @@
 package de.petropia.chickenLeagueHost.listener;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Egg;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -55,8 +58,19 @@ public class ArenaProtectionListener implements Listener {
 		if(event.getPlayer().getInventory().getHeldItemSlot() <= 3){
 			event.setCancelled(true);
 		}
-		if(event.getPlayer().getInventory().getHeldItemSlot() == 8 && event.getPlayer().getInventory().getItemInMainHand().getType() == Material.NETHERITE_SWORD) {
+		if(event.getPlayer().getInventory().getHeldItemSlot() == 8 && event.getPlayer().getInventory().getItemInMainHand().getType() == Material.NETHERITE_SHOVEL) {
 			event.setCancelled(true);
 		}
+	}
+	
+	@EventHandler
+	public void onChickenLayEgg(EntitySpawnEvent event) {
+		if(event.getEntity() instanceof Egg == false) {
+			return;
+		}
+		if(((Item) event.getEntity()).getItemStack().getType() != Material.EGG) {
+			return;
+		}
+		event.setCancelled(true);
 	}
 }
