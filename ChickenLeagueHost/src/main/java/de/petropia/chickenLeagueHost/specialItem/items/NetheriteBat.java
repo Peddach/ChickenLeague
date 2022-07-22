@@ -29,12 +29,12 @@ public class NetheriteBat extends SpecialItem {
 
 	private static ItemStack createItemStack() {
 		ItemStack item = new ItemStack(Material.NETHERITE_SHOVEL);
-		item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 12);
+		item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 9);
 		item.editMeta(meta -> {
 			meta.displayName(Component.text("Superschläger").color(TextColor.fromCSSHexString("#8c0e12")).decorate(TextDecoration.BOLD));
 			final List<Component> lore = new ArrayList<>();
 			lore.add(Component.text(" "));
-			lore.add(Component.text("Schlage das Huhn mit Knockback 12").color(NamedTextColor.GRAY));
+			lore.add(Component.text("Schlage das Huhn mit Knockback 9").color(NamedTextColor.GRAY));
 			lore.add(Component.text(" "));
 			meta.lore(lore);
 			meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_DESTROYS);
@@ -54,10 +54,13 @@ public class NetheriteBat extends SpecialItem {
 		if(!player.getInventory().getItem(8).equals(ITEM)) {
 			return;
 		}
+		if(!player.getInventory().getItemInMainHand().equals(ITEM)) {
+			return;
+		}
 		player.getInventory().setItem(8, new ItemStack(Material.AIR));
 		Vector oldVector = player.getLocation().getDirection().clone();
 		Vector multiplay = new Vector(-2, 1, -2);
-		Vector add = new Vector(0, 1.4, 0);
+		Vector add = new Vector(0, 1.7, 0);
 		Vector newVector = oldVector.multiply(multiplay).multiply(7).add(add);
 		player.setVelocity(newVector);
 	}
