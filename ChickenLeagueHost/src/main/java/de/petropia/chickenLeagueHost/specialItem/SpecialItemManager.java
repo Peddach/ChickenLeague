@@ -99,4 +99,8 @@ public class SpecialItemManager {
 	public HashMap<Location, MysteryChest> getChests(){
 		return chests;
 	}
+	
+	public List<Location> getLocations() {
+		return locations;
+	}
 }

@@ -1,17 +1,25 @@
 package de.petropia.chickenLeagueHost.specialItem;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.ItemDespawnEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.petropia.chickenLeagueHost.Constants;
 import de.petropia.chickenLeagueHost.arena.Arena;
 
 public class MysteryChestListener implements Listener {
 	
+	private static final List<Player> BOOST_BLACK_LIST = new ArrayList<>();
 	private final ItemStack chest = MysteryChest.getChest();
 	
 	@EventHandler
@@ -50,6 +58,38 @@ public class MysteryChestListener implements Listener {
 	public void onItemDespawn(ItemDespawnEvent event) {
 		if(event.getEntity().getItemStack().equals(chest)) {
 			event.setCancelled(true);
+		}
+	}
+	
+	@EventHandler
+	public void onPlayerMoveEvent(PlayerMoveEvent event) {
+		Player player = event.getPlayer();
+		if(BOOST_BLACK_LIST.contains(player)) {
+			return;
+		}
+		Arena arena = null;
+		for(Arena i : Arena.getArenas()) {
+			if(!i.isPlayerPresent(player)) {
+				continue;
+			}
+			arena = i;
+			break;
+		}
+		if(arena == null) {
+			return;
+		}
+		int x = (int) player.getLocation().getX();
+		int z = (int) player.getLocation().getZ();
+		for(Location loc : arena.getSpecialItemManager().getLocations()) {
+			int locX = (int) loc.getX();
+			int locZ = (int) loc.getZ();
+			if (locX == x && locZ == z && loc.getWorld() == player.getLocation().getWorld()) {
+				arena.getBatManager().speedBuffPlayer(player, 0.25);
+				BOOST_BLACK_LIST.add(player);
+				Bukkit.getScheduler().runTaskLater(Constants.plugin, () -> {
+					BOOST_BLACK_LIST.remove(player);
+				}, 20);
+			}
 		}
 	}
 }
