@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -37,6 +36,9 @@ public class NetheriteSword extends SpecialItem implements Listener {
 			if(player.getInventory().getItemInMainHand().equals(ITEM)) {
 				event.setCancelled(true);
 			}
+		}
+		else {
+			return;
 		}
 		if(event.getEntity() instanceof Player == false) {
 			return;
