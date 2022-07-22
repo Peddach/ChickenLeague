@@ -37,6 +37,9 @@ public class ArenaProtectionListener implements Listener {
 	
 	@EventHandler
 	public void onPlayerSwapItem(PlayerSwapHandItemsEvent event) {
+		if(event.getPlayer().getInventory().getHeldItemSlot() == 8) {
+			event.getPlayer().getInventory().clear(8);
+		}
 		event.setCancelled(true);
 	}
 	
