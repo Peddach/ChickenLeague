@@ -103,4 +103,8 @@ public class SpecialItemManager {
 	public List<Location> getLocations() {
 		return locations;
 	}
+	
+	public static List<SpecialItem> getSpecialItems(){
+		return SPECIAL_ITEMS;
+	}
 }
