@@ -12,6 +12,8 @@ import org.jetbrains.annotations.NotNull;
 
 import de.petropia.chickenLeagueHost.arena.Arena;
 import de.petropia.chickenLeagueHost.specialItem.MysteryChest;
+import de.petropia.chickenLeagueHost.specialItem.SpecialItem;
+import de.petropia.chickenLeagueHost.specialItem.SpecialItemManager;
 import de.petropia.chickenLeagueHost.util.MessageSender;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -95,6 +97,17 @@ public class ChickenLeagueHostCommand implements CommandExecutor {
 				}
 				break;
 			}
+		}
+		
+		if(args.length == 2 && args[0].equalsIgnoreCase("Specialitem")) {
+			int i = Integer.parseInt(args[1]);
+			if(i > SpecialItemManager.getSpecialItems().size()) {
+				MessageSender.INSTANCE.sendMessage(player, Component.text("Out of Range"));
+				return false;
+			}
+			SpecialItem item = SpecialItemManager.getSpecialItems().get(i);
+			item.activate(player);
+			return true;
 		}
 		return false;
 	}
