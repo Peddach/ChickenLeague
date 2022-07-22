@@ -3,6 +3,7 @@ package de.petropia.chickenLeagueHost.listener;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -33,7 +34,7 @@ public class ChickenDamageListener implements Listener {
 		 }
 	 }
 	 
-	 @EventHandler
+	 @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	 public void onPlayerHitChickenEvent(EntityDamageByEntityEvent event) {
 		 if(!ChickenLeagueBall.getChickens().containsKey(event.getEntity())) {
 			 return;

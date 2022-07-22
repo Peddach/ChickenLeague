@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemFlag;
@@ -30,7 +31,7 @@ public class NetheriteSword extends SpecialItem implements Listener {
 		player.getInventory().setItem(8, ITEM);
 	}
 	
-	@EventHandler
+	@EventHandler(priority = EventPriority.LOW)
 	public void onHit(EntityDamageByEntityEvent event) {
 		if(event.getDamager() instanceof Player player){
 			if(player.getInventory().getItemInMainHand().equals(ITEM)) {
