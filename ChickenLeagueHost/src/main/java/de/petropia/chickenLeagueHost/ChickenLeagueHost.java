@@ -32,6 +32,7 @@ import de.petropia.chickenLeagueHost.specialItem.items.EggWall;
 import de.petropia.chickenLeagueHost.specialItem.items.Enderpearl;
 import de.petropia.chickenLeagueHost.specialItem.items.NetheriteBat;
 import de.petropia.chickenLeagueHost.specialItem.items.NetheriteSword;
+import de.petropia.chickenLeagueHost.specialItem.items.Rod;
 import de.petropia.chickenLeagueHost.team.TeamSelectGUI;
 import de.petropia.chickenLeagueHost.util.CloudNetAdapter;
 
@@ -86,6 +87,7 @@ public class ChickenLeagueHost extends JavaPlugin{
 		SpecialItemManager.registerItem(new Enderpearl());
 		SpecialItemManager.registerItem(new NetheriteSword());
 		SpecialItemManager.registerItem(new EggWall());
+		SpecialItemManager.registerItem(new Rod());
 	}
 	
 	private void registerListener() {
