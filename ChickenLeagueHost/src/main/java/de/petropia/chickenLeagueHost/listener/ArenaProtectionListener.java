@@ -9,6 +9,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
@@ -17,6 +18,15 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 
 public class ArenaProtectionListener implements Listener {
+	
+	@EventHandler
+	public void onPlayerDamage(EntityDamageEvent event) {
+		if(event.getEntity() instanceof Player player) {
+			event.setDamage(0);
+			player.setHealth(20);
+		}
+		
+	}
 	
 	@EventHandler
 	public void onPlayerBreakBlock(BlockBreakEvent event) {
