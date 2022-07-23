@@ -11,12 +11,14 @@ import de.petropia.chickenLeagueHost.Constants;
 import de.petropia.chickenLeagueHost.arena.Arena;
 import de.petropia.chickenLeagueHost.arena.ArenaMode;
 import de.petropia.chickenLeagueHost.arena.GameState;
+import de.petropia.chickenLeagueHost.team.ChickenLeagueTeam;
 import fr.mrmicky.fastboard.FastBoard;
 
 public class ScoreboardManager {
 
 	private HashMap<Player, FastBoard> playerBoardMap = new HashMap<>();
 	private int taskID;
+	private ChickenLeagueTeam winnerTeam;
 
 	public ScoreboardManager(final Arena arena) {
 		Runnable updateTask = () -> {
@@ -38,7 +40,7 @@ public class ScoreboardManager {
 				}
 			}
 			if (arena.getGameState() == GameState.INGAME) {
-				for (Player player : arena.getPlayers()){
+				for (Player player : arena.getPlayers()) {
 					if (player == null) {
 						continue;
 					}
@@ -46,13 +48,13 @@ public class ScoreboardManager {
 					List<String> lines = new ArrayList<>();
 					lines.add(" ");
 					lines.add("§a§lDein Team");
-					if(arena.getTeam1().isPlayerPresent(player)) {
+					if (arena.getTeam1().isPlayerPresent(player)) {
 						lines.add("§7>> " + "§9Team 1");
 						lines.add(" ");
 						lines.add("§a§lSpielstand");
 						lines.add("§7>> §9" + arena.getTeam1().getScore() + "§7 - §c" + arena.getTeam2().getScore());
 					}
-					if(arena.getTeam2().isPlayerPresent(player)) {
+					if (arena.getTeam2().isPlayerPresent(player)) {
 						lines.add("§7>> " + "§cTeam 2");
 						lines.add(" ");
 						lines.add("§a§lSpielstand");
@@ -74,10 +76,10 @@ public class ScoreboardManager {
 					lines.add("§7>> " + getWinner(arena));
 					lines.add(" ");
 					lines.add("§a§lSpielstand");
-					if(arena.getTeam1().isPlayerPresent(player)) {
+					if (arena.getTeam1().isPlayerPresent(player)) {
 						lines.add("§7>> §9" + arena.getTeam1().getScore() + "§7 - §c" + arena.getTeam2().getScore());
 					}
-					if(arena.getTeam2().isPlayerPresent(player)) {
+					if (arena.getTeam2().isPlayerPresent(player)) {
 						lines.add("§7>> §c" + arena.getTeam2().getScore() + " §7-§9 " + arena.getTeam1().getScore());
 					}
 					lines.add(" ");
@@ -88,18 +90,17 @@ public class ScoreboardManager {
 				}
 			}
 		};
-
 		taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Constants.plugin, updateTask, 20, 20);
-
 	}
-	
+
 	private String getWinner(Arena arena) {
-		int team1score = arena.getTeam1().getScore();
-		int team2score = arena.getTeam2().getScore();
-		if(team1score > team2score) {
+		if (winnerTeam == null) {
+			return "§4§lNiemand";
+		}
+		if (winnerTeam == arena.getTeam1()) {
 			return "§9Team 1";
 		}
-		if(team1score < team2score) {
+		if (winnerTeam == arena.getTeam2()) {
 			return "§cTeam 2";
 		}
 		return "§4§lNiemand";
@@ -135,6 +136,10 @@ public class ScoreboardManager {
 			finalString = finalString + " " + string;
 		}
 		return finalString.toLowerCase();
+	}
+
+	public void setWinnerTeam(ChickenLeagueTeam team) {
+		winnerTeam = team;
 	}
 
 }

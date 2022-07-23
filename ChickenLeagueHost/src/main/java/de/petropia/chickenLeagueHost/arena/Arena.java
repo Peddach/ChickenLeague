@@ -21,6 +21,7 @@ import de.petropia.chickenLeagueHost.chickenbats.BatManager;
 import de.petropia.chickenLeagueHost.events.GameStateChangeEvent;
 import de.petropia.chickenLeagueHost.events.PlayerJoinArenaEvent;
 import de.petropia.chickenLeagueHost.events.PlayerQuitArenaEvent;
+import de.petropia.chickenLeagueHost.firework.GoalFireWork;
 import de.petropia.chickenLeagueHost.mysql.MySQLManager;
 import de.petropia.chickenLeagueHost.scoreboard.ScoreboardManager;
 import de.petropia.chickenLeagueHost.specialItem.SpecialItemManager;
@@ -205,12 +206,14 @@ public class Arena {
 		if(gamestate != GameState.INGAME) {
 			return;
 		}
+		scoreboradManager.setWinnerTeam(team);
 		final Component subtitle = Component.text("hat gewonnen").color(NamedTextColor.GRAY);
 		Component title = Component.text("Niemand").color(NamedTextColor.RED);
 		Times times = Times.times(Duration.ofMillis(300), Duration.ofMillis(4000), Duration.ofMillis(300));
 		if(team != null) {
 			title = team.getName();
 		}
+		new GoalFireWork(this, team, true);
 		ball.kill();
 		MessageSender.INSTANCE.broadcastTitle(this, Title.title(title, subtitle, times), Sound.sound(org.bukkit.Sound.ITEM_GOAT_HORN_PLAY.key(), Sound.Source.NEUTRAL, 200F, 1F));
 		setGamestate(GameState.ENDING);
