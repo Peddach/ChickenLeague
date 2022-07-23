@@ -31,6 +31,7 @@ import de.petropia.chickenLeagueHost.specialItem.SpecialItemManager;
 import de.petropia.chickenLeagueHost.specialItem.items.EggWall;
 import de.petropia.chickenLeagueHost.specialItem.items.Enderpearl;
 import de.petropia.chickenLeagueHost.specialItem.items.ImposterBall;
+import de.petropia.chickenLeagueHost.specialItem.items.LevitationCrossbow;
 import de.petropia.chickenLeagueHost.specialItem.items.KnockbackCrossbow;
 import de.petropia.chickenLeagueHost.specialItem.items.NetheriteBat;
 import de.petropia.chickenLeagueHost.specialItem.items.NetheriteSword;
@@ -96,6 +97,7 @@ public class ChickenLeagueHost extends JavaPlugin{
 		SpecialItemManager.registerItem(new Trap());
 		SpecialItemManager.registerItem(new ImposterBall());
 		SpecialItemManager.registerItem(new KnockbackCrossbow());
+		SpecialItemManager.registerItem(new LevitationCrossbow());
 	}
 	
 	private void registerListener() {
