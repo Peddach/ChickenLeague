@@ -28,6 +28,7 @@ import de.petropia.chickenLeagueHost.listener.PlayerMoveListener;
 import de.petropia.chickenLeagueHost.mysql.MySQLManager;
 import de.petropia.chickenLeagueHost.specialItem.MysteryChestListener;
 import de.petropia.chickenLeagueHost.specialItem.SpecialItemManager;
+import de.petropia.chickenLeagueHost.specialItem.items.BlindnessCrossbow;
 import de.petropia.chickenLeagueHost.specialItem.items.EggWall;
 import de.petropia.chickenLeagueHost.specialItem.items.Enderpearl;
 import de.petropia.chickenLeagueHost.specialItem.items.ImposterBall;
@@ -98,6 +99,7 @@ public class ChickenLeagueHost extends JavaPlugin{
 		SpecialItemManager.registerItem(new ImposterBall());
 		SpecialItemManager.registerItem(new KnockbackCrossbow());
 		SpecialItemManager.registerItem(new LevitationCrossbow());
+		SpecialItemManager.registerItem(new BlindnessCrossbow());
 	}
 	
 	private void registerListener() {
