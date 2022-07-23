@@ -19,7 +19,6 @@ import org.bukkit.inventory.ItemStack;
 
 import de.petropia.chickenLeagueHost.specialItem.SnowSurface;
 import de.petropia.chickenLeagueHost.specialItem.SpecialItem;
-import de.petropia.chickenLeagueHost.specialItem.Wall;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
