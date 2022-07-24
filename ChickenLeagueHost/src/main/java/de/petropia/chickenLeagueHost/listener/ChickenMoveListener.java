@@ -32,9 +32,6 @@ public class ChickenMoveListener implements Listener {
 	
 	@EventHandler
 	public void onChickenMoveEvent(EntityMoveEvent event) {
-		if(event.getEntity() instanceof Chicken == false) {
-			return;
-		}
 		if(!ChickenLeagueBall.getChickens().keySet().contains(event.getEntity())) {
 			return;
 		}

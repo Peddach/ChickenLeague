@@ -2,17 +2,26 @@ package de.petropia.chickenLeagueHost.arena;
 
 import java.util.HashMap;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.attribute.Attributable;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Chicken;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitTask;
+
+import de.petropia.chickenLeagueHost.Constants;
 
 public class ChickenLeagueBall {
 	
-	private static final HashMap<Chicken, Arena> CHICKENS = new HashMap<>();
-	private Chicken chicken;
+	private static final HashMap<Entity, Arena> CHICKENS = new HashMap<>();
+	private Entity chicken;
 	private final Arena arena;
 	private Player lastHit = null;
+	private BukkitTask changeTask;
 	
 	public ChickenLeagueBall(Arena arena) {
 		this.arena = arena;
@@ -24,15 +33,55 @@ public class ChickenLeagueBall {
 			lastHit = null;
 			return;
 		}
-		chicken = arena.getWorld().spawn(arena.getMiddle(), Chicken.class);
+		Chicken chicken = arena.getWorld().spawn(arena.getMiddle(), Chicken.class);
 		chicken.setSilent(true);
 		chicken.setAdult();
 		chicken.setGlowing(true);
 		chicken.setRemoveWhenFarAway(false);
 		chicken.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(999D);
 		chicken.setAware(false);
+		this.chicken = chicken;
 		CHICKENS.put(chicken, arena);
 		lastHit = null;
+	}
+	
+	public void changeEntity(EntityType entityType) {
+		if(chicken == null) {
+			return;
+		}
+		if(changeTask != null) {
+			changeTask.cancel();
+			changeTask = null;
+		}
+		Location chickenLoc = chicken.getLocation();
+		kill();
+		chicken = chickenLoc.getWorld().spawnEntity(chickenLoc, entityType);
+		if(chicken instanceof LivingEntity livingChicken) {
+			livingChicken.setRemoveWhenFarAway(false);
+		}
+		chicken.setGlowing(true);
+		chicken.setSilent(true);
+		if(chicken instanceof Attributable attributableChicken) {
+			attributableChicken.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.1D);
+			attributableChicken.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(999D);;
+		}
+		CHICKENS.put(chicken, arena);
+		changeTask = Bukkit.getScheduler().runTaskLater(Constants.plugin, () -> {
+			Location reverseLocation = chicken.getLocation();
+			chicken.remove();
+			chicken = null;
+			CHICKENS.remove(chicken);
+			Chicken chicken = arena.getWorld().spawn(reverseLocation, Chicken.class);
+			chicken.setSilent(true);
+			chicken.setAdult();
+			chicken.setGlowing(true);
+			chicken.setRemoveWhenFarAway(false);
+			chicken.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(999D);
+			chicken.setAware(false);
+			this.chicken = chicken;
+			CHICKENS.put(chicken, arena);
+			changeTask = null;
+		}, 5*20);
 	}
 	
 	public void kill() {
@@ -42,8 +91,12 @@ public class ChickenLeagueBall {
 		if(chicken.isDead()) {
 			return;
 		}
+		if(changeTask != null) {
+			changeTask.cancel();
+			changeTask = null;
+		}
 		CHICKENS.remove(chicken);
-		chicken.setHealth(0);
+		chicken.remove();
 		chicken = null;
 	}
 	
@@ -54,11 +107,11 @@ public class ChickenLeagueBall {
 		return chicken.getLocation();
 	}
 
-	public Chicken getChicken() {
+	public Entity getChicken() {
 		return chicken;
 	}
 
-	public static HashMap<Chicken, Arena> getChickens() {
+	public static HashMap<Entity, Arena> getChickens() {
 		return CHICKENS;
 	}
 
