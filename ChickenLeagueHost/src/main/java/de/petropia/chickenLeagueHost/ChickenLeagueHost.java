@@ -11,6 +11,7 @@ import com.onarandombox.MultiverseCore.api.MVWorldManager;
 import de.petropia.chickenLeagueHost.arena.Arena;
 import de.petropia.chickenLeagueHost.arena.ArenaMode;
 import de.petropia.chickenLeagueHost.commands.ChickenLeagueHostCommand;
+import de.petropia.chickenLeagueHost.commands.StartCommand;
 import de.petropia.chickenLeagueHost.items.LeaveItem;
 import de.petropia.chickenLeagueHost.items.TeamSelectItem;
 import de.petropia.chickenLeagueHost.listener.ArenaProtectionListener;
@@ -75,6 +76,7 @@ public class ChickenLeagueHost extends JavaPlugin{
 	
 	private void registerCommands() {
 		this.getCommand("ChickenLeague").setExecutor(new ChickenLeagueHostCommand());
+		this.getCommand("start").setExecutor(new StartCommand());
 	}
 
 	private void createArenas() {

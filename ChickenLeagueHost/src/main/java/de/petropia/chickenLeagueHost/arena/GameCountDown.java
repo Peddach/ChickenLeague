@@ -21,12 +21,12 @@ public class GameCountDown {
 	private int time;
 	private final BukkitTask task;
 	private final Arena arena;
-
-	public GameCountDown(int count, Arena arena) {
+	
+	public GameCountDown(int count, Arena arena, boolean force) {
 		this.time = count;
 		this.arena = arena;
 		task = Bukkit.getScheduler().runTaskTimer(Constants.plugin, () -> {
-			if(arena.getPlayers().size() != arena.getMaxPlayers()) {
+			if(arena.getPlayers().size() != arena.getMaxPlayers() && force == false) {
 				cancel(true);
 				return;
 			}

@@ -8,5 +8,8 @@ api-version: 1.19
 commands:
    ChickenLeague:
       description: Manage ChickenLeague
-   Start:
+   start:
       description: Startet das Spiel
+permissions:
+   chickenleague.start:
+      default: false

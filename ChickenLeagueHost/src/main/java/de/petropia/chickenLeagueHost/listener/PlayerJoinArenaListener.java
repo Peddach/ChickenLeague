@@ -17,7 +17,7 @@ public class PlayerJoinArenaListener implements Listener {
 	public void onPlayerJoinArena(PlayerJoinArenaEvent event) {
 		MessageSender.INSTANCE.broadcastMessage(event.getArena(), event.getPlayer().name().append(JOIN_MESSAGE));
 		if(event.getArena().getPlayers().size() == event.getArena().getMaxPlayers()) {
-			new GameCountDown(10, event.getArena());
+			new GameCountDown(10, event.getArena(), false);
 		}
 	}
 	
