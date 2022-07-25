@@ -11,6 +11,7 @@ import org.bukkit.Location;
 
 import de.petropia.chickenLeagueHost.Constants;
 import de.petropia.chickenLeagueHost.arena.Arena;
+import de.petropia.chickenLeagueHost.arena.ArenaMode;
 
 public class SpecialItemManager {
 	
@@ -19,6 +20,7 @@ public class SpecialItemManager {
 	private final HashMap<Location, MysteryChest> chests = new HashMap<>(); 
 	private final Runnable spawnNewItem;
 	private int taskID = -1;
+	private int delay;
 	
 	/**
 	 * Spawns new item every X second on every orange carpet from config
@@ -31,6 +33,12 @@ public class SpecialItemManager {
 			double y = Double.valueOf(string[1]);
 			double z = Double.valueOf(string[2]);
 			locations.add(new Location(arena.getWorld(), x, y + 0.3, z));
+			if(arena.getArenaMode() == ArenaMode.ONE_VS_ONE) {
+				delay = 10*20;
+			}
+			else {
+				delay = 5*20;
+			}
 		}
 		spawnNewItem = () -> {
 			List<Location> randomLocations = new ArrayList<>(locations);
@@ -78,7 +86,7 @@ public class SpecialItemManager {
 		if(taskID != -1) {
 			return;
 		}
-		taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Constants.plugin, spawnNewItem, 10*20, 11*20);
+		taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Constants.plugin, spawnNewItem, 10*20, delay);
 	}
 	
 	/**
