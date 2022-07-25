@@ -30,6 +30,7 @@ public class GameCountDown {
 				cancel(true);
 				return;
 			}
+			arena.getPlayers().forEach(p -> p.setLevel(time));
 			showTitle();
 			if(time <= 0) {
 				cancel(false);
