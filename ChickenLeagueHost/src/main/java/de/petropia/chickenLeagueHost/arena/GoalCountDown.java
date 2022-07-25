@@ -24,7 +24,7 @@ public class GoalCountDown {
 	public GoalCountDown(Arena arena) {
 		this.arena = arena;
 		countdown = 5;	//Const
-		arena.getPlayers().forEach(PlayerMoveListener.PLAYERS :: add);
+		arena.getPlayers().forEach(PlayerMoveListener :: add);
 		arena.teleportToSpawnPoints();
 		arena.getBall().kill();
 		arena.teleportToSpawnPoints();
@@ -44,7 +44,7 @@ public class GoalCountDown {
 	
 	private void cancel() {
 		Bukkit.getScheduler().cancelTask(taskid);
-		arena.getPlayers().forEach(PlayerMoveListener.PLAYERS :: remove);
+		arena.getPlayers().forEach(PlayerMoveListener :: remove);
 	}
 	
 	private Title currentTitle() {

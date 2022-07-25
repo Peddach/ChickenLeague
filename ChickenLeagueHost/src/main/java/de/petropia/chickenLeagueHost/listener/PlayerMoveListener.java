@@ -10,11 +10,10 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerMoveListener implements Listener {
 	
-	public static final ArrayList<Player> PLAYERS = new ArrayList<>();
+	private static final ArrayList<Player> PLAYERS = new ArrayList<>();
 	
 	@EventHandler
 	public void onPlayerMoveEvent(PlayerMoveEvent event) {
-		//TODO canel via velocity not moveevent
 		if(!PLAYERS.contains(event.getPlayer())) {
 			return;
 		}
@@ -28,7 +27,17 @@ public class PlayerMoveListener implements Listener {
 		if(!PLAYERS.contains(event.getPlayer())) {
 			return;
 		}
-		PLAYERS.remove(event.getPlayer());
+		remove(event.getPlayer());
+	}
+	
+	public static void add(Player player) {
+		PLAYERS.add(player);
+		player.setWalkSpeed(0);
+	}
+	
+	public static void remove(Player player) {
+		PLAYERS.remove(player);
+		player.setWalkSpeed(0.2F);
 	}
 
 }
