@@ -27,6 +27,7 @@ public class GameStateChangeListener implements Listener{
 	public void onGameStateChangeEvent(GameStateChangeEvent event) {
 		if(event.getAfter() == GameState.ENDING) {
 			event.getArena().getBatManager().resetAllBuffs();
+			event.getArena().getSpecialItemManager().stop();
 			taskID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Constants.plugin, new Runnable() {
 				
 				int i = 20;
