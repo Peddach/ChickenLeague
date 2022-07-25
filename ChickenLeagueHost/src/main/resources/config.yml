@@ -6,6 +6,7 @@ Database:
    Password: password
    Database: ChickenLeague
 Arenas: 4
+Description: "Nutze die Schaufeln in deiner Hotbar, welche verschiedene Knockbackverzauberungen haben, um ins gegnerische Tor zu treffen. Die orangenen Teppiche geben dir Speed und besondere Items"
 Bats:
    Wood:
       Speed: 0.3
