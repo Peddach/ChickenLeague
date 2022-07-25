@@ -10,10 +10,17 @@ import net.kyori.adventure.text.format.NamedTextColor;
 public class GameTime {
 	
 	private int time;
+	private int maxTime;
 	private int taskID = -1;
 	private final Arena arena;
 	
 	public GameTime(Arena arena) {
+		if(arena.getArenaMode() == ArenaMode.ONE_VS_ONE) {
+			maxTime = 10*60; // 10 Minutes * 60 Seconds
+		}
+		else {
+			maxTime = 15*60; // 15 Minutes * 60 Seconds
+		}
 		time = 0;
 		this.arena = arena;
 		start();
@@ -21,7 +28,7 @@ public class GameTime {
 	
 	public void start() {
 		taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Constants.plugin, () -> {
-			if(time >= 10*60) {
+			if(time >= maxTime) {
 				stop();
 				int team1 = arena.getTeam1().getScore();
 				int team2 = arena.getTeam2().getScore();
