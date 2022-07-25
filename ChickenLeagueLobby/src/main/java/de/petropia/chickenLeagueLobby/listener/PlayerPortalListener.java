@@ -39,6 +39,9 @@ public class PlayerPortalListener implements Listener {
 			return;
 		}
 		Player player = (Player) event.getEntity();
+		if(BLACKLIST.contains(player)) {
+			return;
+		}
 		BLACKLIST.add(player);
 		removeDelayedFromBlacklist(player);
 		double playerX = player.getLocation().getX();
