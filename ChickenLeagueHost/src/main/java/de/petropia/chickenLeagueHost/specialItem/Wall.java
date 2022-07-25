@@ -15,6 +15,10 @@ public class Wall {
 	private final HashMap<Location, Material> placedBlocks = new HashMap<>();
 	private final List<Location> blocks;
 
+	/**
+	 * Instance create wall out of Honey, scult, bricks or cobweb and replace air, light and orange carpet
+	 * @param blocks
+	 */
 	public Wall(List<Location> blocks) {
 		this.blocks = blocks;
 		Random rand = new Random();
@@ -33,6 +37,11 @@ public class Wall {
 		}
 	}
 
+	/**
+	 * Place the wall and but dont replace forbidden blocks
+	 * @param material Material of wall
+	 * @param seconds Seconds to stand
+	 */
 	private void placeWall(Material material, int seconds) {
 		for(Location loc : blocks) {
 			if(loc.getBlock().getType() != Material.AIR && loc.getBlock().getType() != Material.ORANGE_CARPET && loc.getBlock().getType() != Material.LIGHT) {

@@ -14,6 +14,9 @@ import net.kyori.adventure.text.format.NamedTextColor;
 
 public class StartCommand implements CommandExecutor {
 
+	/**
+	 * Command to forcestart game
+	 */
 	@Override
 	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 		if(sender instanceof Player == false) {

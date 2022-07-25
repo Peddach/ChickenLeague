@@ -22,6 +22,13 @@ public class GameCountDown {
 	private final BukkitTask task;
 	private final Arena arena;
 	
+	/**
+	 * First Coundown before game starts. Afterwards create a GoalCountdown which teleports players to spawnpoints
+	 * 
+	 * @param count How long the countdown should be
+	 * @param arena Arena to start
+	 * @param force if false, arena must be full to start
+	 */
 	public GameCountDown(int count, Arena arena, boolean force) {
 		this.time = count;
 		this.arena = arena;
@@ -43,6 +50,11 @@ public class GameCountDown {
 		}, 20, 20);
 	}
 	
+	/**
+	 * Cancel the countdown
+	 * 
+	 * @param showTitle true, players will see that countdown was canceled.
+	 */
 	public void cancel(boolean showTitle) {
 		task.cancel();
 		if(!showTitle) {
@@ -55,6 +67,9 @@ public class GameCountDown {
 		MessageSender.INSTANCE.broadcastTitle(arena, Title.title(title, subtitle, times), sound);
 	}
 
+	/**
+	 * Show a title and play a sound based on current time
+	 */
 	private void showTitle() {
 		final Component subtitle = Component.text("Sekunden").color(NamedTextColor.GRAY);
 		final Component title = Component.text(time).color(NamedTextColor.GOLD);
@@ -77,6 +92,12 @@ public class GameCountDown {
 		}
 	}
 	
+	/**
+	 * Create cowbell sound
+	 * 
+	 * @param pitch Pitch of cowbell
+	 * @return Sound
+	 */
 	private final Sound sound(float pitch) {
 		return Sound.sound(Key.key("block.note_block.cow_bell"), Source.NEUTRAL, 1, pitch);
 	}

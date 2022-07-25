@@ -12,6 +12,11 @@ public class PlayerQuitArenaEvent extends Event{
 	private Arena arena;
 	private Player player;
 
+	/**
+	 * Event which fires when a player quits arena
+	 * @param arena
+	 * @param player
+	 */
 	public PlayerQuitArenaEvent(Arena arena, Player player){
 		this.player = player;
 		this.arena = arena;

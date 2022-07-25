@@ -13,6 +13,10 @@ public class SnowSurface {
 	
 	private final HashMap<Location, Material> placedBlocks = new HashMap<>();
 	
+	/**
+	 * create snow surface
+	 * @param blocks
+	 */
 	public SnowSurface(List<Location> blocks) {
 		for(Location loc : blocks) {
 			if(loc.getBlock().getType() != Material.AIR && loc.getBlock().getType() != Material.ORANGE_CARPET && loc.getBlock().getType() != Material.LIGHT) {

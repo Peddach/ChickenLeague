@@ -28,11 +28,21 @@ public class TeamSelectGUI implements Listener {
 		updateInv(arena);
 	}
 	
+	/**
+	 * Update the gui when ex. player join team
+	 * @param arena
+	 */
 	public void updateInv(Arena arena) {
 		inv.setItem(0, getBedForTeam(arena.getTeam1(), Material.BLUE_BED));
 		inv.setItem(1, getBedForTeam(arena.getTeam2(), Material.RED_BED));
 	}
 	
+	/**
+	 * Get bed with playernames in team as lore
+	 * @param team
+	 * @param material
+	 * @return
+	 */
 	private ItemStack getBedForTeam(ChickenLeagueTeam team, Material material) {
 		if(isTeamEmpty(team)) {
 			ItemStack item = new ItemStack(material);

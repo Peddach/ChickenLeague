@@ -24,10 +24,18 @@ public class ChickenLeagueBall {
 	private Player lastHit = null;
 	private BukkitTask changeTask;
 	
+	/**
+	 * Object to control behavior of the ball
+	 *
+	 * @param arena Arena for ball
+	 */
 	public ChickenLeagueBall(Arena arena) {
 		this.arena = arena;
 	}
 	
+	/**
+	 * Spawn the ball as chicken in middle of arena
+	 */
 	public void spawn() {
 		if(chicken != null) {
 			chicken.teleport(arena.getMiddle());
@@ -46,6 +54,11 @@ public class ChickenLeagueBall {
 		lastHit = null;
 	}
 	
+	/**
+	 * Change the chicken to a different entity for 5 seconds. 
+	 * 
+	 * @param entityType Type of new entity
+	 */
 	public void changeEntity(EntityType entityType) {
 		if(chicken == null) {
 			return;
@@ -86,6 +99,9 @@ public class ChickenLeagueBall {
 		}, 5*20);
 	}
 	
+	/**
+	 * Remove the ball and reset it
+	 */
 	public void kill() {
 		if(chicken == null) {
 			return;
@@ -102,6 +118,11 @@ public class ChickenLeagueBall {
 		chicken = null;
 	}
 	
+	/**
+	 * Location of ball
+	 *  
+	 * @return Location of ball
+	 */
 	public Location chickenLocation() {
 		if(chicken.isDead()) {
 			return null;

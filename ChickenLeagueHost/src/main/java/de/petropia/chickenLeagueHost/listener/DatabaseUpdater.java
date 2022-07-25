@@ -9,6 +9,9 @@ import de.petropia.chickenLeagueHost.events.PlayerJoinArenaEvent;
 import de.petropia.chickenLeagueHost.events.PlayerQuitArenaEvent;
 import de.petropia.chickenLeagueHost.mysql.MySQLManager;
 
+/**
+ * Listener to update database when arena changes
+ */
 public class DatabaseUpdater implements Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR)

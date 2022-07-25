@@ -19,10 +19,16 @@ import de.petropia.chickenLeagueHost.chickenbats.WoodenBat;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.sound.Sound.Source;
 
+/**
+ * Listener to give the ball custom behavior
+ * @author Professor_Sam
+ *
+ */
 public class ChickenDamageListener implements Listener {
 
 	private final static Sound SOUND = Sound.sound(org.bukkit.Sound.ENTITY_CHICKEN_HURT, Source.NEUTRAL, 1, 1.3F);
 	
+	//Play hurt sound and remove damage
 	 @EventHandler
 	 public void onChickenDamage(EntityDamageEvent event) {
 		 if(ChickenLeagueBall.getChickens().containsKey(event.getEntity())) {
@@ -34,6 +40,7 @@ public class ChickenDamageListener implements Listener {
 		 }
 	 }
 	 
+	 //Let chicken jump a bit on hit and give player speedbuff depending on the bat
 	 @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	 public void onPlayerHitChickenEvent(EntityDamageByEntityEvent event) {
 		 if(!ChickenLeagueBall.getChickens().containsKey(event.getEntity())) {
@@ -48,13 +55,14 @@ public class ChickenDamageListener implements Listener {
 			 Vector oldVector = event.getEntity().getVelocity().clone();
 			 Vector addVector = new Vector(0, 1.2, 0);
 			 Vector newVector = oldVector.add(addVector);
-			 event.getEntity().setVelocity(newVector);
+			 event.getEntity().setVelocity(newVector);	//Boost chicken up if its on ground
 		 }
 		 Arena arena = ChickenLeagueBall.getChickens().get(event.getEntity());
 		 ItemStack handItem = player.getInventory().getItemInMainHand();
 		 if(handItem == null) {
 			 return;
 		 }
+		 //speedbuffing player
 		 if(handItem.equals(WoodenBat.getInstance().getItem())) {
 			 arena.getBatManager().speedBuffPlayer(player, WoodenBat.getInstance().getSpeedBuff());
 		 }
@@ -66,11 +74,12 @@ public class ChickenDamageListener implements Listener {
 			 Vector oldVector = player.getLocation().getDirection().clone();
 			 Vector multiply = new Vector(-1.6, 1, -1.6);
 			 Vector add = new Vector(0, 0.6, 0);
-			 Vector newVector = oldVector.multiply(multiply).add(add);
-			 player.setVelocity(newVector);
+			 Vector newVector = oldVector.multiply(multiply).add(add);	
+			 player.setVelocity(newVector);	//give player knockback when hitting with diamond bat
 		 }
 	 }
 	 
+	 //remove drops from dead entities
 	 @EventHandler
 	 public void onChickenDieEvent(EntityDeathEvent event) {
 		 event.setDroppedExp(0);

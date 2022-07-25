@@ -6,8 +6,11 @@ import org.bukkit.event.Listener;
 import de.petropia.chickenLeagueHost.arena.Arena;
 import io.papermc.paper.event.player.AsyncChatEvent;
 
+/**
+ * Listener to broadcast messages only to players in arena
+ */
 public class ChatListener implements Listener {
-	
+
 	@EventHandler
 	public void onPlayerChatEvent(AsyncChatEvent event) {
 		Player player = event.getPlayer();

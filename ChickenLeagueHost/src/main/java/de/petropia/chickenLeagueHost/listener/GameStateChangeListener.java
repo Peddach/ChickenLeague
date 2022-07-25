@@ -19,6 +19,9 @@ import de.petropia.chickenLeagueHost.util.MessageSender;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
+/**
+ * Listener which does misc stuff on gamestate change ex. deleteing arena<
+ */
 public class GameStateChangeListener implements Listener{
 	
 	private int taskID;

@@ -20,6 +20,10 @@ public class ExplodingChicken {
 	
 	private final Chicken chicken;
 	
+	/**
+	 * Create chicken with random velocity which explodes after 5 seconds
+	 * @param location
+	 */
 	public ExplodingChicken(Location location) {
 		chicken = location.getWorld().spawn(location, Chicken.class);
 		chicken.setMemory(MemoryKey.HUNTED_RECENTLY, true);
@@ -44,6 +48,9 @@ public class ExplodingChicken {
 		}, 90);
 	}
 	
+	/**
+	 * create a random vector
+	 */
 	private Vector getRandomVector() {
 		return new Vector(getRandomDouble(), 0.7D, getRandomDouble());
 	}

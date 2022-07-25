@@ -25,6 +25,9 @@ public class LeaveItem implements Listener{
 	
 	private static final ItemStack ITEM = createLeaveItem();
 	
+	/**
+	 * @return Item to leave the game and get back to lobby
+	 */
 	private static ItemStack createLeaveItem() {
 		ItemStack item = new ItemStack(Material.FIREWORK_STAR, 1);
 		item.editMeta(meta -> {
@@ -42,10 +45,16 @@ public class LeaveItem implements Listener{
 		return item;
 	}
 	
+	/**
+	 * Gives the leave item a player
+	 * 
+	 * @param player Player
+	 */
 	public static void giveItemPlayer(Player player) {
 		player.getInventory().setItem(8, ITEM);
 	}
-	
+
+	//Listen if player clicks the item
 	@EventHandler
 	public void onPlayerClickLeaveItemEvent(PlayerInteractEvent event) {
 		if(event.getItem() == null) {
@@ -57,6 +66,7 @@ public class LeaveItem implements Listener{
 		CloudNetAdapter.sendPlayerToLobbyTask(event.getPlayer());
 	}
 	
+	//listen if player clicks the item in inventory
 	@EventHandler
 	public void onPlayerClickLeaveItem(InventoryClickEvent event) {
 		if(event.getCurrentItem() == null) {
@@ -68,6 +78,7 @@ public class LeaveItem implements Listener{
 		CloudNetAdapter.sendPlayerToLobbyTask((Player) event.getWhoClicked());
 	}
 	
+	//Gives the item players who joins
 	@EventHandler
 	public void onPlayerJoinArenaEvent(PlayerJoinArenaEvent event) {
 		if(event.getArena().getGameState() == GameState.WAITING || event.getArena().getGameState() == GameState.STARTING) {

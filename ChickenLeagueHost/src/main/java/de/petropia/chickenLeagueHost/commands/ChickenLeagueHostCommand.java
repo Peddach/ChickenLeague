@@ -20,16 +20,21 @@ import net.kyori.adventure.text.format.NamedTextColor;
 
 public class ChickenLeagueHostCommand implements CommandExecutor {
 
+	/**
+	 * Command for the chickenleague host
+	 */
 	@Override
 	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 		if (!(sender instanceof Player)) {
 			return false;
 		}
+		//Permission check
 		Player player = (Player) sender;
 		if (!player.hasPermission("chickenLeague.admin")) {
 			MessageSender.getInstace().sendMessage(player, Component.text("Leider darfst du diesen Command nicht ausführen"));
 			return false;
 		}
+		//teams subcommand to display players in different teams
 		if (args.length == 1 && args[0].equalsIgnoreCase("teams")) {
 			for (Arena arena : Arena.getArenas()) {
 				if (!arena.isPlayerPresent(player)) {
@@ -54,6 +59,7 @@ public class ChickenLeagueHostCommand implements CommandExecutor {
 			MessageSender.getInstace().sendMessage(player, Component.text("Du bist in keiner Arena!"));
 			return false;
 		}
+		//time subcommand to get human readable ingame time
 		if (args.length == 1 && args[0].equalsIgnoreCase("time")) {
 			for (Arena arena : Arena.getArenas()) {
 				if (!arena.isPlayerPresent(player)) {
@@ -67,6 +73,7 @@ public class ChickenLeagueHostCommand implements CommandExecutor {
 				
 			}
 		}
+		//Show all mysteryChests in chat
 		if(args.length == 1 && args[0].equalsIgnoreCase("mysterychests")) {
 			for (Arena arena : Arena.getArenas()) {
 				if(!arena.isPlayerPresent(player)) {
@@ -82,6 +89,7 @@ public class ChickenLeagueHostCommand implements CommandExecutor {
 				}
 			}
 		}
+		//delete all mysterychests
 		if(args.length == 1 && args[0].equalsIgnoreCase("clearmysterychests")) {
 			for (Arena arena : Arena.getArenas()) {
 				if(!arena.isPlayerPresent(player)) {
@@ -98,7 +106,7 @@ public class ChickenLeagueHostCommand implements CommandExecutor {
 				break;
 			}
 		}
-		
+		//give a special item to player based on indexed number
 		if(args.length == 2 && args[0].equalsIgnoreCase("Specialitem")) {
 			int i = Integer.parseInt(args[1]);
 			if(i > SpecialItemManager.getSpecialItems().size()) {

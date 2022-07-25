@@ -58,11 +58,17 @@ public class Arena {
 	private final BatManager batManager = new BatManager();
 	private final SpecialItemManager specialItemManager;
 	
+	/**
+	 * Create and register arena right after new instance
+	 * 
+	 * @param mode Mode of arena
+	 */
 	public Arena(ArenaMode mode) {
 		setGamestate(GameState.WAITING);
 		this.name = getRandomString();
 		this.arenaMode = mode;
 		
+		//Cloning worlds
 		MultiverseCore mvCore = (MultiverseCore) Bukkit.getServer().getPluginManager().getPlugin("Multiverse-Core");
 		MVWorldManager worldManager = mvCore.getMVWorldManager();
 		if (mode == ArenaMode.FIVE_VS_FIVE) {
@@ -80,25 +86,41 @@ public class Arena {
 		world = Bukkit.getWorld(name);
 		applyGameRules();
 		
+		//init teams
 		team1 = new ChickenLeagueTeam(maxPlayer, Component.text("Team 1").color(NamedTextColor.BLUE), teamGoalCoord("X1", 1), teamGoalCoord("X2", 1), teamGoalCoord("Z1", 1), teamGoalCoord("Z2", 1));
 		team2 = new ChickenLeagueTeam(maxPlayer, Component.text("Team 2").color(NamedTextColor.RED), teamGoalCoord("X1", 2), teamGoalCoord("X2", 2), teamGoalCoord("Z1", 2), teamGoalCoord("Z2", 2));
 		
+		//spawns init
 		team2Spawns = loadSpawns(2);
 		team1Spawns = loadSpawns(1);
 		middle = loadMiddleLocation();
 		
+		//misc init
 		ball = new ChickenLeagueBall(this);
 		scoreboradManager = new ScoreboardManager(this);
 		teamSelectGui = new TeamSelectGUI(this);
 		specialItemManager = new SpecialItemManager(this);
 		
+		//register arena in db and Arenas list
 		registerArena();		
 	}
 	
+	/**
+	 * Get the coordinates of the team goal
+	 * 
+	 * @param coordinate Coordinate like x1, z2 etc
+	 * @param teamNumber Number of team (1 or 2)
+	 * @return Coordinate as int
+	 */
 	private int teamGoalCoord(String coordinate, int teamNumber) {
 		return Constants.config.getInt(arenaMode.name() + ".Team" + teamNumber + ".Goal." + coordinate);
 	}
 
+	/**
+	 * Lead the middle of arena from config
+	 * 
+	 * @return Location of the middle
+	 */
 	private Location loadMiddleLocation() {
 		final double x = Constants.config.getDouble(arenaMode.name() + ".Middle.X");
 		final double y = Constants.config.getDouble(arenaMode.name() + ".Middle.Y");
@@ -109,6 +131,12 @@ public class Arena {
 		return location;
 	}
 	
+	/**
+	 * Loading spawns for team
+	 * 
+	 * @param team Team number (1 or 2)
+	 * @return Array of spawn locations
+	 */
 	private Location[] loadSpawns(int team) {
 		final Location[] spawns = new Location[maxPlayer / 2];
 		for (int i = 0; i < maxPlayer / 2; i++) {
@@ -128,12 +156,18 @@ public class Arena {
 		return world;
 	}
 
+	/**
+	 * Add arena to arenas list and register in db
+	 */
 	private void registerArena() {
 		ARENAS.add(this);
 		MySQLManager.addArena(this);
 		registered = true;
 	}
 	
+	/**
+	 * Assign every player who doesnt have a team a team and kick the rest
+	 */
 	public void assignPlayersToTeams() {
 		List<Player> playerWithoutTeams = new ArrayList<>(players);
 		for(Player player : team1.getPlayers()) {
@@ -156,6 +190,9 @@ public class Arena {
 		}
 	}
 	
+	/**
+	 * Apply gamerules to the arena world
+	 */
 	private void applyGameRules() {
 		world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
 		world.setGameRule(GameRule.DO_MOB_SPAWNING, false);
@@ -169,6 +206,12 @@ public class Arena {
 		world.setTime(12000);
 	}
 	
+	/**
+	 * Add a player to the arena and fire PlayerJoinArenaEvent 
+	 * 
+	 * @param player Player who sould join
+	 * @return true is join is sucess<
+	 */
 	public boolean addPlayer(Player player) {
 		if(players.size() == maxPlayer) {
 			return false;
@@ -183,6 +226,11 @@ public class Arena {
 		return true;
 	}
 	
+	/**
+	 * Remove player from arena and send back to lobby
+	 * 
+	 * @param player Player to remove
+	 */
 	public void removePlayer(Player player) {
 		if(players.contains(player)) {
 			PlayerQuitArenaEvent event = new PlayerQuitArenaEvent(this, player);
@@ -194,11 +242,21 @@ public class Arena {
 		}
 	}
 	
-	//Check if a player is present in this arena instance
+	/**
+	 * Check if player is present in arena
+	 * 
+	 * @param player Player to check
+	 * @return true if present
+	 */
 	public boolean isPlayerPresent(Player player) {
 		return players.contains(player);
 	}
 	
+	/**
+	 * Set the winnerteam of arena and trigger firework and gamestatechange
+	 * 
+	 * @param team Team who won
+	 */
 	public void setWinner(@Nullable ChickenLeagueTeam team) {
 		if(gamestate != GameState.INGAME) {
 			return;
@@ -216,7 +274,11 @@ public class Arena {
 		setGamestate(GameState.ENDING);
 	}
 	
-	// Copied the 5th time :/. Dont know author
+	/**
+	 * Generate a random 5 char String for naming and as id
+	 * 
+	 * @return random string
+	 */
 	private String getRandomString() {
 		int leftLimit = 97; // letter 'a'
 		int rightLimit = 122; // letter 'z'
@@ -226,6 +288,9 @@ public class Arena {
 		return generatedString;
 	}
 	
+	/**
+	 * Delete Arena from db and arena world
+	 */
 	public void delete() {
 		for(Player player : players) {
 			CloudNetAdapter.sendPlayerToLobbyTask(player);
@@ -238,12 +303,18 @@ public class Arena {
 		}, 20);
 	}
 	
+	/**
+	 * Remove the arena world from Bukkit and server directory
+	 */
 	private void deleteWorld() {
 		MultiverseCore mvCore = (MultiverseCore) Bukkit.getServer().getPluginManager().getPlugin("Multiverse-Core");
 		MVWorldManager worldManager = mvCore.getMVWorldManager();
 		worldManager.deleteWorld(name);
 	}
 	
+	/**
+	 * Teleport every player to their spawnpoint based on teams
+	 */
 	public void teleportToSpawnPoints() {
 		for(int i = 0; i < team1.getPlayers().length; i++) {
 			Player player = team1.getPlayers()[i];
@@ -270,6 +341,11 @@ public class Arena {
 		return gamestate;
 	}
 
+	/**
+	 * Set the gamestate and trigger GameStateChangeEvent
+	 * 
+	 * @param gamestate
+	 */
 	public void setGamestate(GameState gamestate) {
 		GameStateChangeEvent event = new GameStateChangeEvent(this, this.gamestate, gamestate);
 		Bukkit.getServer().getPluginManager().callEvent(event);

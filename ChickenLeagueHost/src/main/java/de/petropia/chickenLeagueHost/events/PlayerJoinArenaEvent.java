@@ -12,6 +12,12 @@ public class PlayerJoinArenaEvent extends Event{
 	private Arena arena;
 	private Player player;
 	
+	/**
+	 * Event which fires when player join a arena
+	 * 
+	 * @param arena
+	 * @param player
+	 */
 	public PlayerJoinArenaEvent(Arena arena, Player player){
 		this.player = player;
 		this.arena = arena;

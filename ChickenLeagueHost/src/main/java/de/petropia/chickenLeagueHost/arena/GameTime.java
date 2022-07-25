@@ -14,6 +14,11 @@ public class GameTime {
 	private int taskID = -1;
 	private final Arena arena;
 	
+	/**
+	 * Count how long the arena is ingame 
+	 * 
+	 * @param arena Arena
+	 */
 	public GameTime(Arena arena) {
 		if(arena.getArenaMode() == ArenaMode.ONE_VS_ONE) {
 			maxTime = 10*60; // 10 Minutes * 60 Seconds
@@ -26,6 +31,9 @@ public class GameTime {
 		start();
 	}
 	
+	/**
+	 * Start the time to count. When max time is exceeded, winner will be set
+	 */
 	public void start() {
 		taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Constants.plugin, () -> {
 			if(time >= maxTime) {
@@ -48,6 +56,9 @@ public class GameTime {
 		}, 20, 20);
 	}
 	
+	/**
+	 * Stop the time to count up
+	 */
 	public void stop() {
 		if(taskID == -1) {
 			return;
@@ -60,6 +71,11 @@ public class GameTime {
 		return time;
 	}
 	
+	/**
+	 * Return time as human readable String
+	 * 
+	 * @return human redable representation
+	 */
 	public String getTimeAsString() {
 		int seconds = time % 60;
 	    int minutes = (time / 60) % 60;

@@ -21,36 +21,51 @@ public class GoalCountDown {
 	private final int taskid;
 	private static final Times TIMES = Times.times(Duration.ofMillis(100), Duration.ofMillis(850), Duration.ofMillis(50));
 	
+	/**
+	 * Countdown after every goal. Teleports players back to spawn points
+	 * 
+	 * @param arena Arena
+	 */
 	public GoalCountDown(Arena arena) {
 		this.arena = arena;
 		countdown = 5;	//Const
-		arena.getPlayers().forEach(PlayerMoveListener :: add);
+		arena.getPlayers().forEach(PlayerMoveListener :: add); //Dont lets players move away
 		arena.teleportToSpawnPoints();
 		arena.getBall().kill();
 		arena.teleportToSpawnPoints();
 		taskid = Bukkit.getScheduler().scheduleSyncRepeatingTask(Constants.plugin, () -> {
 			if(arena.getGameState() != GameState.INGAME) {
-				cancel();
+				cancel(); //Cancel if time is exceeded
 			}
 			MessageSender.INSTANCE.broadcastTitle(arena, currentTitle(), currentSound());
 			if(countdown == 0) {
-				cancel();
+				cancel(); //Cancel if countdown is at 0
 				arena.getBall().spawn();
-				arena.getSpecialItemManager().start();
+				arena.getSpecialItemManager().start(); //start spawning special items
 			}
 			countdown --;
 		}, 0, 20);
 	}
 	
+	/**
+	 * cancel the countdown and let players move again
+	 */
 	private void cancel() {
 		Bukkit.getScheduler().cancelTask(taskid);
 		arena.getPlayers().forEach(PlayerMoveListener :: remove);
 	}
 	
+	/**
+	 * return a title to display to players based on time
+	 * @return
+	 */
 	private Title currentTitle() {
 		return Title.title(Component.text(countdown).color(NamedTextColor.GRAY), Component.text("Sekunden").color(NamedTextColor.GRAY), TIMES);
 	}
 	
+	/**
+	 * @return Pitched Sound based on current time
+	 */
 	private Sound currentSound() {
 		Sound sound = null;
 		if(countdown == 5) {

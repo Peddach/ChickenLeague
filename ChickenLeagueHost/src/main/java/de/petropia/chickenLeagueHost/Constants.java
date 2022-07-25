@@ -7,6 +7,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Constants {
 	
+	/**
+	 * Different constant values for lobby and host plugin
+	 */
 	public static JavaPlugin plugin;
 	public static FileConfiguration config;
 	public static String serverName;

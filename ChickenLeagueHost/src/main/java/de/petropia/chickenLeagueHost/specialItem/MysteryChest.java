@@ -25,6 +25,11 @@ public class MysteryChest{
 	private final Location location;
 	private int taskID;
 	
+	/**
+	 * New instace of Mysterychest spawns enderchest on location and particle
+	 * @param location Location
+	 * @param item specialitem
+	 */
 	public MysteryChest(Location location, SpecialItem item) {
 		this.item = item;
 		this.location = location;
@@ -42,6 +47,9 @@ public class MysteryChest{
 		}, 1);
 	}
 	
+	/**
+	 * Show circle around item
+	 */
 	public void showParticle() {
 		ParticleBuilder builder = new ParticleBuilder(Particle.REDSTONE)
 				.count(1)
@@ -57,6 +65,9 @@ public class MysteryChest{
 	    }
 	}
 	
+	/**
+	 * Remove the item and particle
+	 */
 	public void remove() {
 		itemEntity.setHealth(0);
 		itemEntity.remove();

@@ -20,6 +20,10 @@ public class ScoreboardManager {
 	private int taskID;
 	private ChickenLeagueTeam winnerTeam;
 
+	/**
+	 * Simple class to manage the scorebord in differend gamestates with FastBord
+	 * @param arena
+	 */
 	public ScoreboardManager(final Arena arena) {
 		Runnable updateTask = () -> {
 			if (arena.getGameState() == GameState.WAITING) {
@@ -93,6 +97,11 @@ public class ScoreboardManager {
 		taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Constants.plugin, updateTask, 20, 20);
 	}
 
+	/**
+	 * Get colored string of winnerteam
+	 * @param arena
+	 * @return
+	 */
 	private String getWinner(Arena arena) {
 		if (winnerTeam == null) {
 			return "§4§lNiemand";
@@ -106,12 +115,20 @@ public class ScoreboardManager {
 		return "§4§lNiemand";
 	}
 
+	/**
+	 * Add player to scoreboard
+	 * @param player
+	 */
 	public void addPlayer(Player player) {
 		FastBoard fastboard = new FastBoard(player);
 		fastboard.updateTitle("§6§lPetropia.de");
 		playerBoardMap.put(player, fastboard);
 	}
 
+	/**
+	 * remove player from scoreboard
+	 * @param player
+	 */
 	public void removePlayer(Player player) {
 		if (!playerBoardMap.get(player).isDeleted()) {
 			playerBoardMap.get(player).delete();
@@ -119,6 +136,9 @@ public class ScoreboardManager {
 		playerBoardMap.remove(player);
 	}
 
+	/**
+	 * Delete
+	 */
 	public void deleteScordboardManager() {
 		Bukkit.getScheduler().cancelTask(taskID);
 		for (FastBoard fastboard : playerBoardMap.values()) {
@@ -129,6 +149,11 @@ public class ScoreboardManager {
 		playerBoardMap.clear();
 	}
 
+	/**
+	 * Convert mode enum to human readable String
+	 * @param mode
+	 * @return
+	 */
 	private String arenaModeAsReadableString(ArenaMode mode) {
 		String[] stringArr = mode.name().split("_");
 		String finalString = "";

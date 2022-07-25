@@ -17,8 +17,11 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 
+/**
+ * Listener to protect the arena from damage and players from damaging theirself
+ */
 public class ArenaProtectionListener implements Listener {
-	
+
 	@EventHandler
 	public void onPlayerDamage(EntityDamageEvent event) {
 		if(event.getEntity() instanceof Player player) {

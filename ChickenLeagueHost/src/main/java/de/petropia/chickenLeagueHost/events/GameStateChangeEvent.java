@@ -12,6 +12,13 @@ public class GameStateChangeEvent extends Event{
 	private final GameState before;
 	private final GameState after;
 
+	/**
+	 * Event which fires when the gamestate of a arena changes
+	 * 
+	 * @param arena Changed Arena
+	 * @param before gamestate before change
+	 * @param after gamestate after change
+	 */
 	public GameStateChangeEvent(Arena arena, GameState before, GameState after){
 		this.arena = arena;
 		this.before = before;

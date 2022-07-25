@@ -20,6 +20,10 @@ public class SpecialItemManager {
 	private final Runnable spawnNewItem;
 	private int taskID = -1;
 	
+	/**
+	 * Spawns new item every X second on every orange carpet from config
+	 * @param arena
+	 */
 	public SpecialItemManager(Arena arena) {
 		for(Object obj  : Constants.config.getList(arena.getArenaMode().name() + ".ItemSpawns")){
 			String[] string = ((String) obj).split("/");
@@ -49,6 +53,9 @@ public class SpecialItemManager {
 		};
 	}
 	
+	/**
+	 * Remove every special item on every orange carpet
+	 */
 	public void stop(){
 		List<MysteryChest> chestList = new ArrayList<>(chests.values()); 
 		for(int i = 0; i < chests.values().size(); i++) {
@@ -64,6 +71,9 @@ public class SpecialItemManager {
 		}
 	}
 	
+	/**
+	 * start creating special items on every carpet
+	 */
 	public void start() {
 		if(taskID != -1) {
 			return;
@@ -71,11 +81,19 @@ public class SpecialItemManager {
 		taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Constants.plugin, spawnNewItem, 10*20, 11*20);
 	}
 	
+	/**
+	 * Register an item as special item and register Bukkit listener
+	 * @param item {@link SpecialItem} to register
+	 */
 	public static void registerItem(SpecialItem item) {
 		SPECIAL_ITEMS.add(item);
 		Bukkit.getServer().getPluginManager().registerEvents(item, Constants.plugin);
 	}
 	
+	/**
+	 * @param location {@link Location} to check
+	 * @return MysteryChest on this location or null
+	 */
 	public MysteryChest getMysteryChestByLocation(Location location) {
 		for(Location loc : chests.keySet()) {
 			if((int) loc.getX() == (int) location.getX() && (int) loc.getZ() == (int) location.getZ()) {
@@ -85,6 +103,9 @@ public class SpecialItemManager {
 		return null;
 	}
 	
+	/**
+	 * Remove a specific MysteryChest
+	 */
 	public void removeMysteryChest(MysteryChest chest) {
 		List<Location> keys = new ArrayList<>(chests.keySet());
 		for(Location loc : keys) {

@@ -46,24 +46,31 @@ import de.petropia.chickenLeagueHost.util.CloudNetAdapter;
 
 public class ChickenLeagueHost extends JavaPlugin{
 	
+	/**
+	 * Entry point of plugin
+	 */
 	@Override
 	public void onEnable() {
+		//load config
 		saveDefaultConfig();
 		saveConfig();
 		reloadConfig();
 		
+		//setting constants
 		Constants.plugin = this;
 		Constants.config = getConfig();
 		Constants.serverName = CloudNetAdapter.getServerInstanceName();
 		Constants.setupFile = getResource("dbsetup.sql");
 		Constants.debug = getConfig().getBoolean("debug");
 		
+		//loading worlds as templates for arenas
 		MultiverseCore mvCore = (MultiverseCore) Bukkit.getServer().getPluginManager().getPlugin("Multiverse-Core");
 		MVWorldManager worldManager = mvCore.getMVWorldManager();
 		worldManager.loadWorld("ONE_VS_ONE");
 		worldManager.loadWorld("THREE_VS_THREE");
 		worldManager.loadWorld("FIVE_VS_FIVE");
 		
+		//connnecting to Database
 		if(!MySQLManager.setup()) {
 			getLogger().warning("Could not Connect to database!!!");
 			getServer().getPluginManager().disablePlugin(this);
@@ -75,11 +82,17 @@ public class ChickenLeagueHost extends JavaPlugin{
 		createArenas();
 	}
 	
+	/**
+	 * register commands and setting executor
+	 */
 	private void registerCommands() {
 		this.getCommand("ChickenLeague").setExecutor(new ChickenLeagueHostCommand());
 		this.getCommand("start").setExecutor(new StartCommand());
 	}
 
+	/**
+	 * Creating Arenas specified in config. Every even number is a 1vs1, every odd a 3vs3
+	 */
 	private void createArenas() {
 		int arenas = getConfig().getInt("Arenas");
 		for(int i = 0; i < arenas; i++) {
@@ -91,6 +104,9 @@ public class ChickenLeagueHost extends JavaPlugin{
 		}
 	}
 	
+	/**
+	 * Register special Items with new instance of item
+	 */
 	private void registerSpecialItems() {
 		SpecialItemManager.registerItem(new NetheriteBat());
 		SpecialItemManager.registerItem(new Enderpearl());
@@ -106,6 +122,9 @@ public class ChickenLeagueHost extends JavaPlugin{
 		SpecialItemManager.registerItem(new ChangeBall());
 	}
 	
+	/**
+	 * Register Listener
+	 */
 	private void registerListener() {
 		final PluginManager manager = Bukkit.getServer().getPluginManager();
 		manager.registerEvents(new PlayerJoinArenaListener(), this);
@@ -126,6 +145,9 @@ public class ChickenLeagueHost extends JavaPlugin{
 		manager.registerEvents(new MysteryChestListener(), this);
 	}
 	
+	/**
+	 * Purge Database on shutdown
+	 */
 	@Override
 	public void onDisable() {
 		MySQLManager.purgeDatabase();

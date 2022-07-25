@@ -5,6 +5,10 @@ import org.bukkit.util.Vector;
 
 public class InventoryUtil {
 	
+	/**
+	 * Clear everything from a player (like a reset)
+	 * @param player Player
+	 */
 	public static void clearPlayer(Player player) {
 		player.getInventory().clear();
 		player.getActivePotionEffects().clear();

@@ -20,6 +20,9 @@ import net.kyori.adventure.text.format.NamedTextColor;
 public class TeamSelectItem implements Listener {
 	private final static ItemStack BED = createBedItem();
 	
+	/**
+	 * @return Instance of the item to open the gui
+	 */
 	private static ItemStack createBedItem() {
 		ItemStack item = new ItemStack(Material.GREEN_BED);
 		item.editMeta(meta -> {
@@ -33,6 +36,7 @@ public class TeamSelectItem implements Listener {
 		return item;
 	}
 
+	//Listen if player clicks item
 	@EventHandler
 	public void onPlayerClickEvent(InventoryClickEvent event) {
 		if(event.getCurrentItem() == null) {
@@ -52,6 +56,7 @@ public class TeamSelectItem implements Listener {
 		}
 	}
 	
+	//Listen if player clicks item
 	@EventHandler
 	public void onPlayerInteractEvent(PlayerInteractEvent event) {
 		if(event.getItem() == null) {
@@ -71,6 +76,7 @@ public class TeamSelectItem implements Listener {
 		}
 	}
 	
+	//Give player item on join
 	@EventHandler
 	public void onPlayerJoinArena(PlayerJoinArenaEvent event){
 		if(!(event.getArena().getGameState() == GameState.WAITING || event.getArena().getGameState() == GameState.STARTING)) {

@@ -25,6 +25,10 @@ public class MySQLManager {
 	private static InputStream setupFile;
 	private static String version = "1_1_1";
 
+	/**
+	 * Setting up the database with tables and creating connection
+	 * @return true if it is sucess
+	 */
 	public static Boolean setup() {
 		Constants.plugin.getLogger().info("§2Starting Database Setup");
 		setupFile = Constants.setupFile;
@@ -37,8 +41,11 @@ public class MySQLManager {
 		return true;
 	}
 
+	/**
+	 * Connect to database with credentails from config
+	 * @throws SQLException When connection fails
+	 */
 	private static void connect() throws SQLException {
-
 		if (Constants.plugin.getConfig().getBoolean("debug") == true) {
 			Constants.plugin.getLogger().info("MySqlCredentails [Host: " + Constants.config.getString("Database.Host") + " Port: " + Constants.config.getInt("Database.Port") + " Database: " + Constants.config.getString("Database.Database") + " User: " + Constants.config.getString("Database.User")
 					+ " Password: " + Constants.config.getString("Database.Password") + "]");
@@ -69,6 +76,12 @@ public class MySQLManager {
 
 	}
 
+	/**
+	 * Creating tables
+	 * 
+	 * @throws IOException dbsetup.sql not in jar or not accessible
+	 * @throws SQLException When sql code is wrong
+	 */
 	private static void setupDB() throws IOException, SQLException {
 		String setup;
 		try (InputStream in = setupFile) {
@@ -89,11 +102,18 @@ public class MySQLManager {
 		Constants.plugin.getLogger().info("§2Database setup complete.");
 	}
 
+	/**
+	 * Disable plugin when connection fails
+	 */
 	private static void disableplugin() {
 		Constants.plugin.getLogger().warning("Disableing plugins because of a SQL-Exception!");
 		Bukkit.getPluginManager().disablePlugin(Constants.plugin);
 	}
 
+	/**
+	 * Update arena in Database
+	 * @param arena Arena to update
+	 */
 	public static void updateArena(Arena arena) {
 		if(!arena.isRegistered()) {
 			return;
@@ -112,6 +132,10 @@ public class MySQLManager {
 		});
 	}
 
+	/**
+	 * Add Arena to db
+	 * @param arena Arena to add
+	 */
 	public static void addArena(Arena arena) {
 		Bukkit.getScheduler().runTaskAsynchronously(Constants.plugin, () -> {
 			try (Connection conn = datasource.getConnection(); PreparedStatement stmt = conn.prepareStatement("INSERT INTO " + version + "_Arenas(ArenaName, ArenaState, Type, Players, Server) VALUES (?, ?, ?, ?, ?)")) {
@@ -127,6 +151,10 @@ public class MySQLManager {
 		});
 	}
 
+	/**
+	 * Delete Arena from db based on name
+	 * @param arenaUUID Arena name
+	 */
 	public static void deleteArena(String arenaUUID) {
 		Bukkit.getScheduler().runTaskAsynchronously(Constants.plugin, () -> {
 			try (Connection conn = datasource.getConnection(); PreparedStatement stmt = conn.prepareStatement("DELETE FROM " + version + "_Arenas WHERE ArenaName = ?;")) {
@@ -138,6 +166,9 @@ public class MySQLManager {
 		});
 	}
 
+	/**
+	 * Delete every entry from the current server in db
+	 */
 	public static void purgeDatabase() {
 		try (Connection conn = datasource.getConnection(); PreparedStatement stmt = conn.prepareStatement("DELETE FROM " + version + "_Arenas WHERE Server = ?;")) {
 			stmt.setString(1, Constants.serverName);
@@ -153,6 +184,10 @@ public class MySQLManager {
 		}
 	}
 
+	/**
+	 * Read all arenas from database and represent as ArenaRecord
+	 * @return {@link ArenaRecord} of Arena in db
+	 */
 	public static ArrayList<ArenaRecord> readArenas() {
 		try (Connection conn = datasource.getConnection(); PreparedStatement stmt = conn.prepareStatement("SELECT ArenaName, ArenaState, Players, Type, Server FROM " + version + "_Arenas;")) {
 			ResultSet resultSet = stmt.executeQuery();
@@ -172,6 +207,11 @@ public class MySQLManager {
 		}
 	}
 
+	/**
+	 * Read the player to add to which arena
+	 * @param player Player to read
+	 * @return {@link String} of Arena or null if not found
+	 */
 	public static @Nullable String readPlayerTeleport(Player player) {
 		try (Connection conn = datasource.getConnection(); PreparedStatement stmt = conn.prepareStatement("SELECT ArenaName FROM " + version + "_Teleport WHERE PlayerName = ?;")) {
 			stmt.setString(1, player.getName());
@@ -191,6 +231,10 @@ public class MySQLManager {
 		}
 	}
 
+	/**
+	 * Delete player from teleport table when teleport is sucessful
+	 * @param player Player
+	 */
 	public static void deletePlayerFromTeleport(String player) {
 		Bukkit.getScheduler().runTaskAsynchronously(Constants.plugin, () -> {
 			try (Connection conn = datasource.getConnection(); PreparedStatement stmt = conn.prepareStatement("DELETE FROM " + version + "_Teleport WHERE PlayerName = ?;")) {
@@ -202,6 +246,12 @@ public class MySQLManager {
 		});
 	}
 
+	/**
+	 * Add player to teleport table to tell host server to which arena to add the joining player
+	 * @param player Player
+	 * @param arena Arena
+	 * @param server Host server
+	 */
 	public static void addPlayerToTeleport(String player, String arena, String server) {
 		Bukkit.getScheduler().runTaskAsynchronously(Constants.plugin, () -> {
 			try (Connection conn = datasource.getConnection(); PreparedStatement stmt = conn.prepareStatement("INSERT INTO " + version + "_Teleport(PlayerName, ArenaName, Server) VALUES (?, ?, ?)")) {

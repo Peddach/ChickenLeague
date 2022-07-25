@@ -17,6 +17,9 @@ import de.petropia.chickenLeagueHost.events.PlayerGoalEvent;
 import de.petropia.chickenLeagueHost.team.ChickenLeagueTeam;
 import io.papermc.paper.event.entity.EntityMoveEvent;
 
+/**
+ * Listener to check if chicken is in goal and fire playerGoalEvent and bounce chicken from white border line
+ */
 public class ChickenMoveListener implements Listener {
 	
 	private static final int E_OVO_X_1 = Constants.config.getInt("ONE_VS_ONE.Edges.First.X");
@@ -36,9 +39,11 @@ public class ChickenMoveListener implements Listener {
 		}
 		Arena arena = ChickenLeagueBall.getChickens().get(event.getEntity());
 		Location chickenLoc = event.getEntity().getLocation();
+		//First check if goal
 		if(checkTeamGoal(arena.getTeam1(), chickenLoc, arena) | checkTeamGoal(arena.getTeam2(), chickenLoc, arena)) {
 			return;
 		}
+		//than check if it should bounce of wall
 		if(arena.getArenaMode() == ArenaMode.THREE_VS_THREE || arena.getArenaMode() == ArenaMode.FIVE_VS_FIVE) {
 			if(!checkCoordinates(E_TVT_X_1, E_TVT_X_2, chickenLoc.getX())) {
 				bounceX(event.getEntity());
@@ -63,6 +68,14 @@ public class ChickenMoveListener implements Listener {
 		}
 	}
 	
+	/**
+	 * Check if ball is in team goal
+	 * 
+	 * @param team Team to check
+	 * @param chickenLoc Location of ball
+	 * @param arena Arena
+	 * @return true if in goal
+	 */
 	private boolean checkTeamGoal(ChickenLeagueTeam team, Location chickenLoc, Arena arena) {
 		if(checkCoordinates(team.getX1(), team.getX2(), chickenLoc.getX()) & checkCoordinates(team.getZ1(), team.getZ2(), chickenLoc.getZ())) {
 			team.setScore(team.getScore() + 1);
@@ -71,6 +84,11 @@ public class ChickenMoveListener implements Listener {
 		}
 		return false;
 	}
+	
+	/**
+	 * Bounce chicken from if over max x coord
+	 * @param entity ball
+	 */
 	private void bounceX(Entity entity) {
 		Vector chickenVector = entity.getVelocity().clone();
 		Vector bounceVector = new Vector(-1, 1, 1);
@@ -78,6 +96,10 @@ public class ChickenMoveListener implements Listener {
 		entity.setVelocity(newVector);
 	}
 	
+	/**
+	 * Bounce chicken from if over max z coord
+	 * @param entity ball
+	 */
 	private void bounceZ(Entity entity) {
 		Vector chickenVector = entity.getVelocity().clone();
 		Vector bounceVector = new Vector(1, 1, -1);
@@ -85,6 +107,14 @@ public class ChickenMoveListener implements Listener {
 		entity.setVelocity(newVector);
 	}
 	
+	/**
+	 * Check if entity is over max angle
+	 * 
+	 * @param coord1
+	 * @param coord2
+	 * @param loc
+	 * @return
+	 */
 	private boolean checkCoordinates(int coord1, int coord2, double loc) {
 		int[] coords = new int[2];
 		coords[0] = coord1;

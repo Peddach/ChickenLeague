@@ -17,6 +17,10 @@ import org.bukkit.inventory.ItemStack;
 import de.petropia.chickenLeagueHost.Constants;
 import de.petropia.chickenLeagueHost.arena.Arena;
 
+/**
+ * Listener to active the special item on pickup and speedbuff player on organge carpet
+ *
+ */
 public class MysteryChestListener implements Listener {
 	
 	private static final List<Player> BOOST_BLACK_LIST = new ArrayList<>();

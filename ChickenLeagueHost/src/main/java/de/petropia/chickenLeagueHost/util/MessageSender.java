@@ -21,30 +21,59 @@ public class MessageSender {
 	
 	private MessageSender() {}
 	
+	/**
+	 * Send Message to player
+	 * @param player
+	 * @param component
+	 */
 	public void sendMessage(Player player, Component component) {
 		player.sendMessage(format(component));
 	}
 	
+	/**
+	 * Broadcast message in arena
+	 * @param arena
+	 * @param component
+	 */
 	public void broadcastMessage(Arena arena, Component component) {
 		Audience audience = Audience.audience(arena.getPlayers());
 		audience.sendMessage(format(component));
 	}
 	
+	/**
+	 * Broadcast title to arena
+	 * @param arena
+	 * @param title
+	 */
 	public void broadcastTitle(Arena arena, Title title) {
 		Audience audience = Audience.audience(arena.getPlayers());
 		audience.showTitle(title);
 	}
 	
+	/**
+	 * Broadcast title to arena with sound
+	 * @param arena
+	 * @param title
+	 * @param sound
+	 */
 	public void broadcastTitle(Arena arena, Title title, Sound sound) {
 		Audience audience = Audience.audience(arena.getPlayers());
 		audience.showTitle(title);
 		audience.playSound(sound);
 	}
 	
+	/**
+	 * Show a debug message in debug mode
+	 * @param message
+	 */
 	public void showDebugMessage(String message) {
 		showDebugMessage(Component.text(message).color(NamedTextColor.GRAY));
 	}
 	
+	/**
+	 * Show a debug message in debug mode
+	 * @param message
+	 */
 	public void showDebugMessage(Component message) {
 		if(!Constants.debug) {
 			return;
@@ -58,6 +87,11 @@ public class MessageSender {
 		Constants.plugin.getComponentLogger().info(message);
 	}
 	
+	/**
+	 * Add prefix to message
+	 * @param component
+	 * @return
+	 */
 	public Component format(Component component) {
 		return PREFIX.append(component);
 	}

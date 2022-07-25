@@ -15,6 +15,13 @@ public class PlayerGoalEvent extends Event {
 	private final Player player;
 	private final ChickenLeagueTeam team;
 	
+	/**
+	 * Event which gets fired when a player do a goal
+	 * 
+	 * @param arena
+	 * @param player
+	 * @param team
+	 */
 	public PlayerGoalEvent(Arena arena, Player player, ChickenLeagueTeam team) {
 		this.arena = arena;
 		this.team = team;
