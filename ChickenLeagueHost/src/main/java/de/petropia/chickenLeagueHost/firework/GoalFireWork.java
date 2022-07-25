@@ -21,7 +21,6 @@ public class GoalFireWork {
 	private int endFireWorkID;
 
 	public GoalFireWork(Arena arena, ChickenLeagueTeam goalTeam, boolean endFireWork) {
-		MessageSender.INSTANCE.showDebugMessage("GoalFireWork! End: " + endFireWork);
 		this.arena = arena;
 		this.goalTeam = goalTeam;
 		showFirework();

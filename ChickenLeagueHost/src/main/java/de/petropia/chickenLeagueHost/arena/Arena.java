@@ -120,7 +120,6 @@ public class Arena {
 			final float pitch = Constants.config.getLong(arenaMode.name() +".Team" + team +  ".Spawn" + spawn + ".Pitch");
 			final Location location = new Location(world, x, y, z, yaw, pitch);
 			spawns[i] = location;
-			MessageSender.getInstace().showDebugMessage(spawn + " t" + team + " - x" + x + " y" + y + " z" + z+ " pitch" + pitch + " yaw" + yaw + " world" + world.getName());
 		}
 		return spawns;
 	}
@@ -130,10 +129,8 @@ public class Arena {
 	}
 
 	private void registerArena() {
-		MessageSender.getInstace().showDebugMessage("registerArena() call");
 		ARENAS.add(this);
 		MySQLManager.addArena(this);
-		MessageSender.getInstace().showDebugMessage("Arena " + name + " registered and added to DB");
 		registered = true;
 	}
 	
@@ -239,7 +236,6 @@ public class Arena {
 		Bukkit.getScheduler().runTaskLater(Constants.plugin, () -> {
 			deleteWorld();
 		}, 20);
-		MessageSender.INSTANCE.showDebugMessage(name + " deleted!");
 	}
 	
 	private void deleteWorld() {

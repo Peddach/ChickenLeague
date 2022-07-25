@@ -5,7 +5,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import de.petropia.chickenLeagueHost.Constants;
 import de.petropia.chickenLeagueHost.mysql.MySQLManager;
 import de.petropia.chickenLeagueHost.util.CloudNetAdapter;
-import de.petropia.chickenLeagueHost.util.MessageSender;
 import de.petropia.chickenLeagueLobby.commands.ChickenLeagueLobbyCommand;
 import de.petropia.chickenLeagueLobby.join.ArenaData;
 import de.petropia.chickenLeagueLobby.listener.PlayerPortalListener;
@@ -22,7 +21,6 @@ public class ChickenLeagueLobby extends JavaPlugin {
 		reloadConfig();
 		setConstants();
 		if(!MySQLManager.setup()) {
-			MessageSender.getInstace().showDebugMessage("Keine Verbindung zu Datenband! Stoppe Plugin");
 			this.getServer().getPluginManager().disablePlugin(this);
 		}
 		this.getCommand("chickenLeagueLobby").setExecutor(new ChickenLeagueLobbyCommand());
