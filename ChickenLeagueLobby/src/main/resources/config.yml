@@ -5,3 +5,14 @@ Database:
    User: ChickenLeague
    Password: password
    Database: ChickenLeague
+Portal:
+   ONE_VS_ONE:
+      X1: -93
+      Z1: -84
+      X2: -93
+      Z2: -88
+   THREE_VS_THREE:
+      X1: -69
+      Z1: -84
+      X2: -69
+      Z2: -88
