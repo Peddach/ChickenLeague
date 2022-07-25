@@ -34,7 +34,7 @@ public class TeamSelectGUI implements Listener {
 	}
 	
 	private ItemStack getBedForTeam(ChickenLeagueTeam team, Material material) {
-		if(!team.isFull()) {
+		if(isTeamEmpty(team)) {
 			ItemStack item = new ItemStack(material);
 			item.editMeta(meta -> {
 				meta.displayName(team.getName());
@@ -108,6 +108,15 @@ public class TeamSelectGUI implements Listener {
 		MessageSender.getInstace().sendMessage(player, Component.text("Du hast ").color(NamedTextColor.GRAY).append(team.getName()).append(Component.text(" betreten").color(NamedTextColor.GRAY)));
 		arena.getTeamSelectGui().updateInv(arena);
 		return;
+	}
+	
+	private boolean isTeamEmpty(ChickenLeagueTeam team) {
+		for(Player player : team.getPlayers()) {
+			if(player != null) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	public void openForPlayer(Player player) {
