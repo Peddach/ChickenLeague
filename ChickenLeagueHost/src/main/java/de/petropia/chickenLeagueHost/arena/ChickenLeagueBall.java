@@ -12,6 +12,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.util.Vector;
 
 import de.petropia.chickenLeagueHost.Constants;
 
@@ -67,6 +68,7 @@ public class ChickenLeagueBall {
 		CHICKENS.put(chicken, arena);
 		changeTask = Bukkit.getScheduler().runTaskLater(Constants.plugin, () -> {
 			Location reverseLocation = chicken.getLocation();
+			Vector chickenVelocity = chicken.getVelocity();
 			chicken.remove();
 			chicken = null;
 			CHICKENS.remove(chicken);
@@ -77,6 +79,7 @@ public class ChickenLeagueBall {
 			chicken.setRemoveWhenFarAway(false);
 			chicken.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(999D);
 			chicken.setAware(false);
+			chicken.setVelocity(chickenVelocity);
 			this.chicken = chicken;
 			CHICKENS.put(chicken, arena);
 			changeTask = null;
