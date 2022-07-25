@@ -62,7 +62,6 @@ public class ChickenLeagueBall {
 		chicken.setGlowing(true);
 		chicken.setSilent(true);
 		if(chicken instanceof Attributable attributableChicken) {
-			attributableChicken.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.1D);
 			attributableChicken.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(999D);;
 		}
 		CHICKENS.put(chicken, arena);

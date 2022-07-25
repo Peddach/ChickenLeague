@@ -28,13 +28,14 @@ public class ChangeBall extends SpecialItem implements Listener {
 			EntityType.BAT,
 			EntityType.MUSHROOM_COW,
 			EntityType.GOAT,
-			EntityType.COD,
+			EntityType.SALMON,
 			EntityType.FOX,
-			EntityType.PIG,
-			EntityType.SHEEP,
-			EntityType.CAT,
-			EntityType.WOLF,
-			EntityType.FROG};
+			EntityType.VILLAGER,
+			EntityType.OCELOT,
+			EntityType.RABBIT,
+			EntityType.FROG,
+			EntityType.TURTLE,
+			EntityType.BEE};
 	
 	@Override
 	public void activate(Player player) {

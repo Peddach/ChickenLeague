@@ -123,15 +123,22 @@ class Imposter {
 					Bukkit.getScheduler().cancelTask(taskID);
 					return;
 				}
-				showCircle(team.getPlayers(), imposter.getLocation(), Color.RED, imposter.getHeight());
-				showCircle(team.getPlayers(), ball.getLocation(), Color.GREEN, ball.getHeight());	
+				List<Player> players = new ArrayList<>();
+				for(Player player : team.getPlayers()) {
+					if(player == null) {
+						continue;
+					}
+					players.add(player);
+				}
+				showCircle(players, imposter.getLocation(), Color.RED, imposter.getHeight());
+				showCircle(players, ball.getLocation(), Color.GREEN, ball.getHeight());	
 			}	
 		}, 5, 5);
 		ball.setVelocity(getRandomVector());
 		imposter.setVelocity(getRandomVector());
 	}
 	
-	private void showCircle(Player[] players, Location location, Color color, double height) {
+	private void showCircle(List<Player> players, Location location, Color color, double height) {
 		ParticleBuilder builder = new ParticleBuilder(Particle.REDSTONE)
 				.count(1)
 				.color(color)

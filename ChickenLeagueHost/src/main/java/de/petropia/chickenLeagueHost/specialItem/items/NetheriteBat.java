@@ -29,12 +29,12 @@ public class NetheriteBat extends SpecialItem {
 
 	private static ItemStack createItemStack() {
 		ItemStack item = new ItemStack(Material.NETHERITE_SHOVEL);
-		item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 9);
+		item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 8);
 		item.editMeta(meta -> {
 			meta.displayName(Component.text("Superschläger").color(TextColor.fromCSSHexString("#8c0e12")).decorate(TextDecoration.BOLD));
 			final List<Component> lore = new ArrayList<>();
 			lore.add(Component.text(" "));
-			lore.add(Component.text("Schlage das Huhn mit Knockback 9").color(NamedTextColor.GRAY));
+			lore.add(Component.text("Schlage das Huhn mit Knockback 8").color(NamedTextColor.GRAY));
 			lore.add(Component.text(" "));
 			meta.lore(lore);
 			meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_DESTROYS);

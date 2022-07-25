@@ -41,7 +41,7 @@ public class Rod extends SpecialItem implements Listener {
 		event.getPlayer().getInventory().setItem(8, new ItemStack(Material.AIR));
 		Bukkit.getScheduler().runTaskLater(Constants.plugin, () -> {
 			Vector oldVector = event.getCaught().getVelocity().clone();
-			Vector newVector = oldVector.multiply(3).add(new Vector(0, 1, 0));
+			Vector newVector = oldVector.multiply(2.5).add(new Vector(0, 1, 0));
 			event.getCaught().setVelocity(newVector);	
 		}, 1);
 	}

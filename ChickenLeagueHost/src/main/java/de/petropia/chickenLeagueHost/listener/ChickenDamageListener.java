@@ -64,8 +64,8 @@ public class ChickenDamageListener implements Listener {
 		 if(handItem.equals(DiamondBat.getInstance().getItem())) {
 			 arena.getBatManager().speedBuffPlayer(player, DiamondBat.getInstance().getSpeedBuff());
 			 Vector oldVector = player.getLocation().getDirection().clone();
-			 Vector multiply = new Vector(-1.5, 1, -1.5);
-			 Vector add = new Vector(0, 0.3, 0);
+			 Vector multiply = new Vector(-1.6, 1, -1.6);
+			 Vector add = new Vector(0, 0.5, 0);
 			 Vector newVector = oldVector.multiply(multiply).add(add);
 			 player.setVelocity(newVector);
 		 }
