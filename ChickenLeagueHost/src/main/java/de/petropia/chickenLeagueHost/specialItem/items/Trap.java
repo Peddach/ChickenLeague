@@ -33,6 +33,7 @@ public class Trap extends SpecialItem {
 
 	private static final ItemStack ITEM = createItemStack();
 	private static final List<Player> TRAPED_PLAYERS = new ArrayList<>();
+	private static final List<Player> BLOCKED_PLAYERS = new ArrayList<>();
 	
 	@Override
 	public void activate(Player player) {
@@ -45,7 +46,11 @@ public class Trap extends SpecialItem {
 			if(!TRAPED_PLAYERS.contains(player)) {
 				return;
 			}
+			player.getInventory().clear(8);
 			TRAPED_PLAYERS.remove(player);
+			if(BLOCKED_PLAYERS.contains(player)) {
+				return;
+			}
 			Arena arena = null;
 			for(Arena i : Arena.getArenas()) {
 				if(!i.isPlayerPresent(player)) {
@@ -62,12 +67,15 @@ public class Trap extends SpecialItem {
 			Location loc = arena.getSpecialItemManager().getLocations().get(randInt);
 			player.teleport(loc);
 			player.playSound(Sound.sound(org.bukkit.Sound.ENTITY_ENDERMAN_TELEPORT, Source.NEUTRAL, 1F, 1F));
-			player.getInventory().clear(8);
 		}, 30);
 	}
 	
 	@EventHandler
 	public void onGoal(PlayerGoalEvent event) {
+		BLOCKED_PLAYERS.addAll(event.getArena().getPlayers());
+		Bukkit.getScheduler().runTaskLater(Constants.plugin, () -> {
+			BLOCKED_PLAYERS.removeAll(event.getArena().getPlayers());
+		}, 5*20);
 		if(event.getPlayer() == null) {
 			return;
 		}

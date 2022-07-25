@@ -49,8 +49,8 @@ public class PlayerGoalListener implements Listener {
 		}
 		Bukkit.getScheduler().runTaskLater(Constants.plugin, () -> {
 			new GoalCountDown(event.getArena());
+			event.getArena().getSpecialItemManager().stop();
 		}, 4*20);
-		event.getArena().getSpecialItemManager().stop();
 		showExplosion(event.getArena(), chickenLocataion);
 		new GoalFireWork(event.getArena(), event.getTeam(), false);
 	}
