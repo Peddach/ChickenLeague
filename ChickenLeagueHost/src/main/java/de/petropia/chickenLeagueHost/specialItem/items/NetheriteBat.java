@@ -3,6 +3,7 @@ package de.petropia.chickenLeagueHost.specialItem.items;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -12,7 +13,10 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
+import de.petropia.chickenLeagueHost.Constants;
+import de.petropia.chickenLeagueHost.events.PlayerGoalEvent;
 import de.petropia.chickenLeagueHost.specialItem.SpecialItem;
+import de.petropia.chickenLeagueHost.util.MessageSender;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
@@ -21,6 +25,7 @@ import net.kyori.adventure.text.format.TextDecoration;
 public class NetheriteBat extends SpecialItem {
 
 	private static final ItemStack ITEM = createItemStack();
+	private static final List<Player> BLACKLIST = new ArrayList<>();
 	
 	@Override
 	public void activate(Player player) {
@@ -43,6 +48,14 @@ public class NetheriteBat extends SpecialItem {
 	}
 	
 	@EventHandler
+	public void onGoalEvent(PlayerGoalEvent event) {
+		BLACKLIST.addAll(event.getArena().getPlayers());
+		Bukkit.getScheduler().runTaskLater(Constants.plugin, () -> {
+			BLACKLIST.removeAll(event.getArena().getPlayers());
+		}, 20*14);
+	}
+	
+	@EventHandler
 	public void onItemUse(EntityDamageByEntityEvent event) {
 		if(event.getDamager() instanceof Player == false || event.getEntity() instanceof Player) {
 			return;
@@ -57,7 +70,12 @@ public class NetheriteBat extends SpecialItem {
 		if(!player.getInventory().getItemInMainHand().equals(ITEM)) {
 			return;
 		}
-		player.getInventory().setItem(8, new ItemStack(Material.AIR));
+		if(BLACKLIST.contains(player)) {
+			event.setCancelled(true);
+			MessageSender.INSTANCE.sendMessage(player, Component.text("Der Superschläger ist grade deaktiviert").color(NamedTextColor.RED));
+			return;
+		}
+		player.getInventory().clear(8);
 		Vector oldVector = player.getLocation().getDirection().clone();
 		Vector multiplay = new Vector(-2, 1, -2);
 		Vector add = new Vector(0, 1.7, 0);

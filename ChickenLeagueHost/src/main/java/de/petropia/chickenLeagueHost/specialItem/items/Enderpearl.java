@@ -3,6 +3,7 @@ package de.petropia.chickenLeagueHost.specialItem.items;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
@@ -14,7 +15,10 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.spigotmc.event.entity.EntityDismountEvent;
 
+import de.petropia.chickenLeagueHost.Constants;
+import de.petropia.chickenLeagueHost.events.PlayerGoalEvent;
 import de.petropia.chickenLeagueHost.specialItem.SpecialItem;
+import de.petropia.chickenLeagueHost.util.MessageSender;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
@@ -23,7 +27,8 @@ import net.kyori.adventure.text.format.TextDecoration;
 public class Enderpearl extends SpecialItem {
 
 	private final ItemStack item = createItemStack();
-	private static final List<Player> boundPlayer = new ArrayList<>();
+	private static final List<Player> BOUND_PLAYERS = new ArrayList<>();
+	private static final List<Player> BLACKLIST = new ArrayList<>();
 	
 	@Override
 	public void activate(Player player) {
@@ -46,6 +51,14 @@ public class Enderpearl extends SpecialItem {
 	}
 	
 	@EventHandler
+	public void onGoalEvent(PlayerGoalEvent event) {
+		BLACKLIST.addAll(event.getArena().getPlayers());
+		Bukkit.getScheduler().runTaskLater(Constants.plugin, () -> {
+			BLACKLIST.removeAll(event.getArena().getPlayers());
+		}, 20*10);
+	}
+	
+	@EventHandler
 	public void onProjectileLaunch(ProjectileLaunchEvent event) {
 		if(event.getEntityType() != EntityType.ENDER_PEARL) {
 			return;
@@ -54,7 +67,12 @@ public class Enderpearl extends SpecialItem {
 			return;
 		}
 		Player player = (Player) event.getEntity().getShooter();
-		boundPlayer.add(player);
+		if(BLACKLIST.contains(player)) {
+			event.setCancelled(true);
+			MessageSender.INSTANCE.sendMessage(player, Component.text("Die Enderperle ist grade deaktiviert").color(NamedTextColor.RED));
+			return;
+		}
+		BOUND_PLAYERS.add(player);
 		event.getEntity().addPassenger(player);
 	}
 	
@@ -64,7 +82,7 @@ public class Enderpearl extends SpecialItem {
 			return;
 		}
 		Player player = (Player) event.getEntity();
-		if(!boundPlayer.contains(player)) {
+		if(!BOUND_PLAYERS.contains(player)) {
 			return;
 		}
 		event.setCancelled(true);
@@ -76,8 +94,8 @@ public class Enderpearl extends SpecialItem {
 			return;
 		}
 		Player player = (Player) event.getEntity().getShooter();
-		if(boundPlayer.contains(player)) {
-			boundPlayer.remove(player);
+		if(BOUND_PLAYERS.contains(player)) {
+			BOUND_PLAYERS.remove(player);
 		}
 	}
 }
