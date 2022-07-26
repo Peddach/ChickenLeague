@@ -15,6 +15,8 @@ import org.bukkit.entity.Player;
 
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.MultiverseCore.api.MVWorldManager;
+import com.xxmicloxx.NoteBlockAPI.model.Song;
+import com.xxmicloxx.NoteBlockAPI.songplayer.RadioSongPlayer;
 
 import de.petropia.chickenLeagueHost.Constants;
 import de.petropia.chickenLeagueHost.chickenbats.BatManager;
@@ -24,6 +26,7 @@ import de.petropia.chickenLeagueHost.events.PlayerQuitArenaEvent;
 import de.petropia.chickenLeagueHost.firework.GoalFireWork;
 import de.petropia.chickenLeagueHost.mysql.MySQLManager;
 import de.petropia.chickenLeagueHost.scoreboard.ScoreboardManager;
+import de.petropia.chickenLeagueHost.song.SongList;
 import de.petropia.chickenLeagueHost.specialItem.SpecialItemManager;
 import de.petropia.chickenLeagueHost.team.ChickenLeagueTeam;
 import de.petropia.chickenLeagueHost.team.TeamSelectGUI;
@@ -270,8 +273,21 @@ public class Arena {
 		}
 		new GoalFireWork(this, team, true);
 		ball.kill();
+		playSong();
 		MessageSender.INSTANCE.broadcastTitle(this, Title.title(title, subtitle, times), Sound.sound(org.bukkit.Sound.ITEM_GOAT_HORN_PLAY.key(), Sound.Source.NEUTRAL, 200F, 1F));
 		setGamestate(GameState.ENDING);
+	}
+	
+	/**
+	 * Play random song from {@link SongList} for all players
+	 */
+	private void playSong() {
+		Random random = new Random();
+		int randInt = random.nextInt(SongList.INSTANCE.getSongs().size());
+		Song song = SongList.INSTANCE.getSongs().get(randInt);
+		RadioSongPlayer radio = new RadioSongPlayer(song);
+		players.forEach(radio :: addPlayer);
+		radio.setPlaying(true);
 	}
 	
 	/**
