@@ -16,7 +16,6 @@ import org.bukkit.util.Vector;
 import de.petropia.chickenLeagueHost.Constants;
 import de.petropia.chickenLeagueHost.events.PlayerGoalEvent;
 import de.petropia.chickenLeagueHost.specialItem.SpecialItem;
-import de.petropia.chickenLeagueHost.util.MessageSender;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
@@ -72,7 +71,7 @@ public class NetheriteBat extends SpecialItem {
 		}
 		if(BLACKLIST.contains(player)) {
 			event.setCancelled(true);
-			MessageSender.INSTANCE.sendMessage(player, Component.text("Der Superschläger ist grade deaktiviert").color(NamedTextColor.RED));
+			Constants.plugin.getMessageSender().sendMessage(player, Component.text("Der Superschläger ist grade deaktiviert").color(NamedTextColor.RED));
 			return;
 		}
 		player.getInventory().clear(8);

@@ -1,8 +1,10 @@
-name: ChickenLeagueHost
+name: ChickenLeague
 main: de.petropia.chickenLeagueHost.ChickenLeagueHost
 author: Professor_Sam
 softdepend:
 - Multiverse-Core
+depend:
+   - TurtleServer
 version: ${project.version}
 api-version: 1.19
 commands:

@@ -1,5 +1,7 @@
 package de.petropia.chickenLeagueHost.commands;
 
+import de.petropia.chickenLeagueHost.Constants;
+import net.kyori.adventure.audience.Audience;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -8,7 +10,6 @@ import org.jetbrains.annotations.NotNull;
 
 import de.petropia.chickenLeagueHost.arena.Arena;
 import de.petropia.chickenLeagueHost.arena.GameCountDown;
-import de.petropia.chickenLeagueHost.util.MessageSender;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
@@ -24,7 +25,7 @@ public class StartCommand implements CommandExecutor {
 		}
 		Player player = (Player) sender;
 		if(!player.hasPermission("chickenleague.start")) {
-			MessageSender.INSTANCE.sendMessage(player, Component.text("Dieser Command ist Teammitgliedern in Chickenleague vorbehalten"));
+			Constants.plugin.getMessageSender().sendMessage(player, Component.text("Dieser Command ist Teammitgliedern in Chickenleague vorbehalten"));
 			return false;
 		}
 		Arena arena = null;
@@ -35,7 +36,7 @@ public class StartCommand implements CommandExecutor {
 			arena = i;
 			break;
 		}
-		MessageSender.INSTANCE.broadcastMessage(arena, player.name().append(Component.text(" hat das Spiel gestartet").color(NamedTextColor.GRAY)));
+		Constants.plugin.getMessageSender().broadcastMessage(Audience.audience(arena.getPlayers()), player.name().append(Component.text(" hat das Spiel gestartet").color(NamedTextColor.GRAY)));
 		new GameCountDown(10, arena, true);
 		return true;
 	}

@@ -3,6 +3,8 @@ author: Professor_Sam
 api-version: 1.19
 version: 0.0.1
 main: de.petropia.chickenLeagueLobby.ChickenLeagueLobby
+depend:
+   - TurtleServer
 commands: 
    chickenLeagueLobby:
       description: Verwaltet ChickenLeague

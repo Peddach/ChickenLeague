@@ -12,7 +12,6 @@ import de.petropia.chickenLeagueHost.Constants;
 import de.petropia.chickenLeagueHost.arena.Arena;
 import de.petropia.chickenLeagueHost.mysql.MySQLManager;
 import de.petropia.chickenLeagueHost.util.CloudNetAdapter;
-import de.petropia.chickenLeagueHost.util.MessageSender;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -42,17 +41,16 @@ public class PlayerJoinServerListener implements Listener{
 					continue;
 				}
 				if(!i.addPlayer(player)) {
-					MessageSender.INSTANCE.sendMessage(player, ARENA_FULL_OR_STARTED);
+					Constants.plugin.getMessageSender().sendMessage(player, ARENA_FULL_OR_STARTED);
 					CloudNetAdapter.sendPlayerToLobbyTask(player);
-					return;
 				}
 				else {
 					showPlayers(i, player);
 					teleportToSpawn(player);
-					return;
 				}
+				return;
 			}
-			MessageSender.INSTANCE.sendMessage(player, DATA_LOADING_ERROR);
+			Constants.plugin.getMessageSender().sendMessage(player, DATA_LOADING_ERROR);
 			CloudNetAdapter.sendPlayerToLobbyTask(player);
 		});
 	}

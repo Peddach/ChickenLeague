@@ -1,5 +1,6 @@
 package de.petropia.chickenLeagueHost.listener;
 
+import net.kyori.adventure.audience.Audience;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,7 +16,6 @@ import de.petropia.chickenLeagueHost.chickenbats.WoodenBat;
 import de.petropia.chickenLeagueHost.events.GameStateChangeEvent;
 import de.petropia.chickenLeagueHost.items.LeaveItem;
 import de.petropia.chickenLeagueHost.util.InventoryUtil;
-import de.petropia.chickenLeagueHost.util.MessageSender;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
@@ -38,7 +38,7 @@ public class GameStateChangeListener implements Listener{
 				@Override
 				public void run() {
 					if(i % 5 == 0) {
-						MessageSender.INSTANCE.broadcastMessage(event.getArena(), Component.text("Der Server stoppt in " + i + " Sekunden!").color(NamedTextColor.RED));
+						Constants.plugin.getMessageSender().broadcastMessage(Audience.audience(event.getArena().getPlayers()), Component.text("Der Server stoppt in " + i + " Sekunden!").color(NamedTextColor.RED));
 					}
 					if(i == 0) {
 						event.getArena().delete();

@@ -13,7 +13,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import de.petropia.chickenLeagueHost.Constants;
-import de.petropia.chickenLeagueHost.util.MessageSender;
 import de.petropia.chickenLeagueLobby.join.ArenaData;
 import de.petropia.chickenLeagueLobby.join.PlayerConnector;
 import net.kyori.adventure.text.Component;
@@ -48,7 +47,7 @@ public class PlayerPortalListener implements Listener {
 		double playerZ = player.getLocation().getZ();
 		if(check1v1(playerX, playerZ)) {
 			if(ArenaData.getInstance().getCurrent1v1() == null) {
-				MessageSender.INSTANCE.sendMessage(player, Component.text("Leider ist zur Zeit keine Arena für 1vs1 verfügbar!").color(NamedTextColor.RED));
+				Constants.plugin.getMessageSender().sendMessage(player, Component.text("Leider ist zur Zeit keine Arena für 1vs1 verfügbar!").color(NamedTextColor.RED));
 				return;
 			}
 			player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20 * 10, 5, false, false));
@@ -56,7 +55,7 @@ public class PlayerPortalListener implements Listener {
 		}
 		if(check3v3(playerX, playerZ)) {
 			if(ArenaData.getInstance().getCurrent3v3() == null) {
-				MessageSender.INSTANCE.sendMessage(player, Component.text("Leider ist zur Zeit keine Arena für 3vs3 verfügbar!").color(NamedTextColor.RED));
+				Constants.plugin.getMessageSender().sendMessage(player, Component.text("Leider ist zur Zeit keine Arena für 3vs3 verfügbar!").color(NamedTextColor.RED));
 				return;
 			}
 			player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20 * 10, 5, false, false));

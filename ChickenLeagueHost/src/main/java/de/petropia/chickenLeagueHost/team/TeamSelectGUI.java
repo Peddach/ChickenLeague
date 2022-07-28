@@ -3,6 +3,7 @@ package de.petropia.chickenLeagueHost.team;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.petropia.chickenLeagueHost.Constants;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -14,7 +15,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import de.petropia.chickenLeagueHost.arena.Arena;
-import de.petropia.chickenLeagueHost.util.MessageSender;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
@@ -102,12 +102,12 @@ public class TeamSelectGUI implements Listener {
 	private void toggleTeam(ChickenLeagueTeam team, Player player, Arena arena) {
 		if(team.isPlayerPresent(player)) {
 			team.removePlayer(player);
-			MessageSender.getInstace().sendMessage(player, Component.text("Du hast ").color(NamedTextColor.GRAY).append(team.getName()).append(Component.text(" verlassen").color(NamedTextColor.GRAY)));
+			Constants.plugin.getMessageSender().sendMessage(player, Component.text("Du hast ").color(NamedTextColor.GRAY).append(team.getName()).append(Component.text(" verlassen").color(NamedTextColor.GRAY)));
 			arena.getTeamSelectGui().updateInv(arena);
 			return;
 		}
 		if(team.isFull()) {
-			MessageSender.getInstace().sendMessage(player, Component.text("Das Team ist bereits voll").color(NamedTextColor.GRAY));
+			Constants.plugin.getMessageSender().sendMessage(player, Component.text("Das Team ist bereits voll").color(NamedTextColor.GRAY));
 			arena.getTeamSelectGui().updateInv(arena);
 			return;
 		}
@@ -115,7 +115,7 @@ public class TeamSelectGUI implements Listener {
 		arena.getTeam1().removePlayer(player);
 		arena.getTeam2().removePlayer(player);
 		team.addPlayer(player);
-		MessageSender.getInstace().sendMessage(player, Component.text("Du hast ").color(NamedTextColor.GRAY).append(team.getName()).append(Component.text(" betreten").color(NamedTextColor.GRAY)));
+		Constants.plugin.getMessageSender().sendMessage(player, Component.text("Du hast ").color(NamedTextColor.GRAY).append(team.getName()).append(Component.text(" betreten").color(NamedTextColor.GRAY)));
 		arena.getTeamSelectGui().updateInv(arena);
 		return;
 	}

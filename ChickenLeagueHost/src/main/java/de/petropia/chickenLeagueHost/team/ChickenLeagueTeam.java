@@ -1,5 +1,6 @@
 package de.petropia.chickenLeagueHost.team;
 
+import de.petropia.turtleServer.server.prefix.PrefixManager;
 import org.bukkit.entity.Player;
 
 import net.kyori.adventure.text.Component;
@@ -33,14 +34,15 @@ public class ChickenLeagueTeam {
 	}
 
 	/**
-	 * Add player to team
-	 * @param player
+	 * Add player to team and set name color
+	 * @param player Player
 	 * @return false when full
 	 */
 	public boolean addPlayer(Player player) {
 		for (int i = 0; i < players.length; i++) {
 			if (players[i] == null) {
 				players[i] = player;
+				PrefixManager.getInstance().setPlayerNameColor(name.color(), player);
 				return true;
 			}
 		}
@@ -68,6 +70,7 @@ public class ChickenLeagueTeam {
 		for (int i = 0; i < players.length; i++) {
 			if (players[i] == player) {
 				players[i] = null;
+				PrefixManager.getInstance().resetPlayerNameColor(player);
 			}
 		}
 	}
@@ -77,8 +80,8 @@ public class ChickenLeagueTeam {
 	 */
 	public int teamSize() {
 		int playerCount = 0;
-		for(int i = 0; i < players.length; i++) {
-			if(players[i] == null) {
+		for (Player player : players) {
+			if (player == null) {
 				continue;
 			}
 			playerCount++;

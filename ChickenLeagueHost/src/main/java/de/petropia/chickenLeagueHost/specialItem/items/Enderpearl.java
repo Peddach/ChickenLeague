@@ -18,7 +18,6 @@ import org.spigotmc.event.entity.EntityDismountEvent;
 import de.petropia.chickenLeagueHost.Constants;
 import de.petropia.chickenLeagueHost.events.PlayerGoalEvent;
 import de.petropia.chickenLeagueHost.specialItem.SpecialItem;
-import de.petropia.chickenLeagueHost.util.MessageSender;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
@@ -69,7 +68,7 @@ public class Enderpearl extends SpecialItem {
 		Player player = (Player) event.getEntity().getShooter();
 		if(BLACKLIST.contains(player)) {
 			event.setCancelled(true);
-			MessageSender.INSTANCE.sendMessage(player, Component.text("Die Enderperle ist grade deaktiviert").color(NamedTextColor.RED));
+			Constants.plugin.getMessageSender().sendMessage(player, Component.text("Die Enderperle ist grade deaktiviert").color(NamedTextColor.RED));
 			return;
 		}
 		BOUND_PLAYERS.add(player);

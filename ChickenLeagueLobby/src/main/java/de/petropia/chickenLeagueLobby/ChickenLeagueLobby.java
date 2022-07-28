@@ -1,6 +1,6 @@
 package de.petropia.chickenLeagueLobby;
 
-import org.bukkit.plugin.java.JavaPlugin;
+import de.petropia.turtleServer.api.PetropiaPlugin;
 
 import de.petropia.chickenLeagueHost.Constants;
 import de.petropia.chickenLeagueHost.mysql.MySQLManager;
@@ -9,7 +9,7 @@ import de.petropia.chickenLeagueLobby.commands.ChickenLeagueLobbyCommand;
 import de.petropia.chickenLeagueLobby.join.ArenaData;
 import de.petropia.chickenLeagueLobby.listener.PlayerPortalListener;
 
-public class ChickenLeagueLobby extends JavaPlugin {
+public class ChickenLeagueLobby extends PetropiaPlugin {
 	
 	private static ChickenLeagueLobby plugin;
 	

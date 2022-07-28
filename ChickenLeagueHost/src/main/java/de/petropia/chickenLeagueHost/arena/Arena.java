@@ -31,7 +31,7 @@ import de.petropia.chickenLeagueHost.specialItem.SpecialItemManager;
 import de.petropia.chickenLeagueHost.team.ChickenLeagueTeam;
 import de.petropia.chickenLeagueHost.team.TeamSelectGUI;
 import de.petropia.chickenLeagueHost.util.CloudNetAdapter;
-import de.petropia.chickenLeagueHost.util.MessageSender;
+import de.petropia.chickenLeagueHost.util.MessageUtil;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -187,7 +187,7 @@ public class Arena {
 				if(team2.addPlayer(player)) {
 					continue;
 				}
-				MessageSender.INSTANCE.sendMessage(player, Component.text("Du konntest keinen Team zugeordnet werden!").color(NamedTextColor.RED));
+				Constants.plugin.getMessageSender().sendMessage(player, Component.text("Du konntest keinen Team zugeordnet werden!").color(NamedTextColor.RED));
 				player.kick();
 			}
 		}
@@ -274,7 +274,7 @@ public class Arena {
 		new GoalFireWork(this, team, true);
 		ball.kill();
 		playSong();
-		MessageSender.INSTANCE.broadcastTitle(this, Title.title(title, subtitle, times), Sound.sound(org.bukkit.Sound.ITEM_GOAT_HORN_PLAY.key(), Sound.Source.NEUTRAL, 200F, 1F));
+		MessageUtil.INSTANCE.broadcastTitle(this, Title.title(title, subtitle, times), Sound.sound(org.bukkit.Sound.ITEM_GOAT_HORN_PLAY.key(), Sound.Source.NEUTRAL, 200F, 1F));
 		setGamestate(GameState.ENDING);
 	}
 	

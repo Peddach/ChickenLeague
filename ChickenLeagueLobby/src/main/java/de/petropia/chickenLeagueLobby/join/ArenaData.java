@@ -12,7 +12,6 @@ import de.petropia.chickenLeagueHost.arena.ArenaMode;
 import de.petropia.chickenLeagueHost.arena.GameState;
 import de.petropia.chickenLeagueHost.mysql.ArenaRecord;
 import de.petropia.chickenLeagueHost.mysql.MySQLManager;
-import de.petropia.chickenLeagueHost.util.MessageSender;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
@@ -77,7 +76,7 @@ public class ArenaData {
 	private void showWarning(ArenaMode mode) {
 		Bukkit.getOnlinePlayers().forEach(player -> {
 			if(player.hasPermission("chickenLeague.admin") && pingList.contains(player)) {
-				MessageSender.getInstace().sendMessage(player, Component.text("Keine Arena gefunden: " + mode.name()).color(NamedTextColor.RED));
+				Constants.plugin.getMessageSender().sendMessage(player, Component.text("Keine Arena gefunden: " + mode.name()).color(NamedTextColor.RED));
 			}
 		});
 	}

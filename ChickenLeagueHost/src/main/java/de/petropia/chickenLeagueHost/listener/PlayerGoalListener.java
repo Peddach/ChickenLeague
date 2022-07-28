@@ -15,7 +15,7 @@ import de.petropia.chickenLeagueHost.arena.Arena;
 import de.petropia.chickenLeagueHost.arena.GoalCountDown;
 import de.petropia.chickenLeagueHost.events.PlayerGoalEvent;
 import de.petropia.chickenLeagueHost.firework.GoalFireWork;
-import de.petropia.chickenLeagueHost.util.MessageSender;
+import de.petropia.chickenLeagueHost.util.MessageUtil;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.sound.Sound.Source;
 import net.kyori.adventure.text.Component;
@@ -40,7 +40,7 @@ public class PlayerGoalListener implements Listener {
 			name = event.getPlayer().name();
 		}
 		final Title title = Title.title(event.getTeam().getName(), name.append(SUBTITLE), TIMES);
-		MessageSender.INSTANCE.broadcastTitle(event.getArena(), title, SOUND);
+		MessageUtil.INSTANCE.broadcastTitle(event.getArena(), title, SOUND);
 		event.getArena().getBatManager().resetAllBuffs();
 		if(event.getTeam().getScore() == 5) {
 			event.getArena().setWinner(event.getTeam());

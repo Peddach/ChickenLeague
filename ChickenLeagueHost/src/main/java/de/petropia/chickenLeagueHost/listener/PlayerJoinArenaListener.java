@@ -1,12 +1,12 @@
 package de.petropia.chickenLeagueHost.listener;
 
+import net.kyori.adventure.audience.Audience;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 import de.petropia.chickenLeagueHost.Constants;
 import de.petropia.chickenLeagueHost.arena.GameCountDown;
 import de.petropia.chickenLeagueHost.events.PlayerJoinArenaEvent;
-import de.petropia.chickenLeagueHost.util.MessageSender;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -19,7 +19,7 @@ public class PlayerJoinArenaListener implements Listener {
 	
 	@EventHandler
 	public void onPlayerJoinArena(PlayerJoinArenaEvent event) {
-		MessageSender.INSTANCE.broadcastMessage(event.getArena(), event.getPlayer().name().append(JOIN_MESSAGE));
+		Constants.plugin.getMessageSender().broadcastMessage(Audience.audience(event.getArena().getPlayers()), event.getPlayer().name().append(JOIN_MESSAGE));
 		if(event.getArena().getPlayers().size() == event.getArena().getMaxPlayers()) {
 			new GameCountDown(10, event.getArena(), false);
 		}

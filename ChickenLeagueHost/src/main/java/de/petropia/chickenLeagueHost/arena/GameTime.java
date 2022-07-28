@@ -1,9 +1,9 @@
 package de.petropia.chickenLeagueHost.arena;
 
+import net.kyori.adventure.audience.Audience;
 import org.bukkit.Bukkit;
 
 import de.petropia.chickenLeagueHost.Constants;
-import de.petropia.chickenLeagueHost.util.MessageSender;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
@@ -49,7 +49,7 @@ public class GameTime {
 				if(team2 > team1) {
 					arena.setWinner(arena.getTeam2());
 				}
-				MessageSender.INSTANCE.broadcastMessage(arena, Component.text("Die Zeit ist vorbei!").color(NamedTextColor.RED));
+				Constants.plugin.getMessageSender().broadcastMessage(Audience.audience(arena.getPlayers()), Component.text("Die Zeit ist vorbei!").color(NamedTextColor.RED));
 				return;
 			}
 			time ++;

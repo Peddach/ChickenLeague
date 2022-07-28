@@ -6,7 +6,7 @@ import org.bukkit.Bukkit;
 
 import de.petropia.chickenLeagueHost.Constants;
 import de.petropia.chickenLeagueHost.listener.PlayerMoveListener;
-import de.petropia.chickenLeagueHost.util.MessageSender;
+import de.petropia.chickenLeagueHost.util.MessageUtil;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.sound.Sound.Source;
 import net.kyori.adventure.text.Component;
@@ -37,7 +37,7 @@ public class GoalCountDown {
 			if(arena.getGameState() != GameState.INGAME) {
 				cancel(); //Cancel if time is exceeded
 			}
-			MessageSender.INSTANCE.broadcastTitle(arena, currentTitle(), currentSound());
+			MessageUtil.INSTANCE.broadcastTitle(arena, currentTitle(), currentSound());
 			if(countdown == 0) {
 				cancel(); //Cancel if countdown is at 0
 				arena.getBall().spawn();

@@ -1,9 +1,9 @@
 package de.petropia.chickenLeagueHost;
 
 
+import de.petropia.turtleServer.api.PetropiaPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.MultiverseCore.api.MVWorldManager;
@@ -44,7 +44,7 @@ import de.petropia.chickenLeagueHost.specialItem.items.Trap;
 import de.petropia.chickenLeagueHost.team.TeamSelectGUI;
 import de.petropia.chickenLeagueHost.util.CloudNetAdapter;
 
-public class ChickenLeagueHost extends JavaPlugin{
+public class ChickenLeagueHost extends PetropiaPlugin {
 	
 	/**
 	 * Entry point of plugin
