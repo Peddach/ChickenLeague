@@ -25,7 +25,7 @@ public class ChickenLeagueTeam {
 	 * @param z2 z coord of goal
 	 */
 	public ChickenLeagueTeam(int teamSize, Component name, int x1, int x2, int z1, int z2) {
-		players = new Player[teamSize - 1];
+		players = new Player[teamSize];
 		this.name = name;
 		this.x1 = x1;
 		this.x2 = x2;
@@ -54,8 +54,8 @@ public class ChickenLeagueTeam {
 	 * @return true when full
 	 */
 	public boolean isFull() {
-		for (int i = 0; i < players.length; i++) {
-			if (players[i] == null) {
+		for (Player player : players) {
+			if (player == null) {
 				return false;
 			}
 		}

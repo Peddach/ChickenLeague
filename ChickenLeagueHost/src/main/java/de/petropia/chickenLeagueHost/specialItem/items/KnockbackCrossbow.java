@@ -48,7 +48,7 @@ public class KnockbackCrossbow extends SpecialItem implements Listener {
 		if(BLACKLIST.contains(player)) {
 			event.setCancelled(true);
 			player.getInventory().setItem(8, ITEM);
-			Constants.plugin.getMessageSender().sendMessage(player, Component.text("Diese Armbrust ist grade deaktiviert").color(NamedTextColor.RED));
+			Constants.plugin.getMessageUtil().sendMessage(player, Component.text("Diese Armbrust ist grade deaktiviert").color(NamedTextColor.RED));
 			return;
 		}
 		LAUNCHING_PLAYERS.add(player);

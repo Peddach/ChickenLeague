@@ -68,7 +68,7 @@ public class Enderpearl extends SpecialItem {
 		Player player = (Player) event.getEntity().getShooter();
 		if(BLACKLIST.contains(player)) {
 			event.setCancelled(true);
-			Constants.plugin.getMessageSender().sendMessage(player, Component.text("Die Enderperle ist grade deaktiviert").color(NamedTextColor.RED));
+			Constants.plugin.getMessageUtil().sendMessage(player, Component.text("Die Enderperle ist grade deaktiviert").color(NamedTextColor.RED));
 			return;
 		}
 		BOUND_PLAYERS.add(player);

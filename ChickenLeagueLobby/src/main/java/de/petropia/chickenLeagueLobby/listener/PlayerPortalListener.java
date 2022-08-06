@@ -47,7 +47,7 @@ public class PlayerPortalListener implements Listener {
 		double playerZ = player.getLocation().getZ();
 		if(check1v1(playerX, playerZ)) {
 			if(ArenaData.getInstance().getCurrent1v1() == null) {
-				Constants.plugin.getMessageSender().sendMessage(player, Component.text("Leider ist zur Zeit keine Arena für 1vs1 verfügbar!").color(NamedTextColor.RED));
+				Constants.plugin.getMessageUtil().sendMessage(player, Component.text("Leider ist zur Zeit keine Arena für 1vs1 verfügbar!").color(NamedTextColor.RED));
 				return;
 			}
 			player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20 * 10, 5, false, false));
@@ -55,7 +55,7 @@ public class PlayerPortalListener implements Listener {
 		}
 		if(check3v3(playerX, playerZ)) {
 			if(ArenaData.getInstance().getCurrent3v3() == null) {
-				Constants.plugin.getMessageSender().sendMessage(player, Component.text("Leider ist zur Zeit keine Arena für 3vs3 verfügbar!").color(NamedTextColor.RED));
+				Constants.plugin.getMessageUtil().sendMessage(player, Component.text("Leider ist zur Zeit keine Arena für 3vs3 verfügbar!").color(NamedTextColor.RED));
 				return;
 			}
 			player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20 * 10, 5, false, false));

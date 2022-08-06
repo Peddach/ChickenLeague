@@ -102,12 +102,12 @@ public class TeamSelectGUI implements Listener {
 	private void toggleTeam(ChickenLeagueTeam team, Player player, Arena arena) {
 		if(team.isPlayerPresent(player)) {
 			team.removePlayer(player);
-			Constants.plugin.getMessageSender().sendMessage(player, Component.text("Du hast ").color(NamedTextColor.GRAY).append(team.getName()).append(Component.text(" verlassen").color(NamedTextColor.GRAY)));
+			Constants.plugin.getMessageUtil().sendMessage(player, Component.text("Du hast ").color(NamedTextColor.GRAY).append(team.getName()).append(Component.text(" verlassen").color(NamedTextColor.GRAY)));
 			arena.getTeamSelectGui().updateInv(arena);
 			return;
 		}
 		if(team.isFull()) {
-			Constants.plugin.getMessageSender().sendMessage(player, Component.text("Das Team ist bereits voll").color(NamedTextColor.GRAY));
+			Constants.plugin.getMessageUtil().sendMessage(player, Component.text("Das Team ist bereits voll").color(NamedTextColor.GRAY));
 			arena.getTeamSelectGui().updateInv(arena);
 			return;
 		}
@@ -115,7 +115,7 @@ public class TeamSelectGUI implements Listener {
 		arena.getTeam1().removePlayer(player);
 		arena.getTeam2().removePlayer(player);
 		team.addPlayer(player);
-		Constants.plugin.getMessageSender().sendMessage(player, Component.text("Du hast ").color(NamedTextColor.GRAY).append(team.getName()).append(Component.text(" betreten").color(NamedTextColor.GRAY)));
+		Constants.plugin.getMessageUtil().sendMessage(player, Component.text("Du hast ").color(NamedTextColor.GRAY).append(team.getName()).append(Component.text(" betreten").color(NamedTextColor.GRAY)));
 		arena.getTeamSelectGui().updateInv(arena);
 		return;
 	}

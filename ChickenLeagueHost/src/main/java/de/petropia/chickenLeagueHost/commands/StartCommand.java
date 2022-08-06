@@ -25,7 +25,7 @@ public class StartCommand implements CommandExecutor {
 		}
 		Player player = (Player) sender;
 		if(!player.hasPermission("chickenleague.start")) {
-			Constants.plugin.getMessageSender().sendMessage(player, Component.text("Dieser Command ist Teammitgliedern in Chickenleague vorbehalten"));
+			Constants.plugin.getMessageUtil().sendMessage(player, Component.text("Dieser Command ist Teammitgliedern in Chickenleague vorbehalten"));
 			return false;
 		}
 		Arena arena = null;
@@ -36,7 +36,7 @@ public class StartCommand implements CommandExecutor {
 			arena = i;
 			break;
 		}
-		Constants.plugin.getMessageSender().broadcastMessage(Audience.audience(arena.getPlayers()), player.name().append(Component.text(" hat das Spiel gestartet").color(NamedTextColor.GRAY)));
+		Constants.plugin.getMessageUtil().broadcastMessage(Audience.audience(arena.getPlayers()), player.name().append(Component.text(" hat das Spiel gestartet").color(NamedTextColor.GRAY)));
 		new GameCountDown(10, arena, true);
 		return true;
 	}

@@ -41,7 +41,7 @@ public class PlayerJoinServerListener implements Listener{
 					continue;
 				}
 				if(!i.addPlayer(player)) {
-					Constants.plugin.getMessageSender().sendMessage(player, ARENA_FULL_OR_STARTED);
+					Constants.plugin.getMessageUtil().sendMessage(player, ARENA_FULL_OR_STARTED);
 					CloudNetAdapter.sendPlayerToLobbyTask(player);
 				}
 				else {
@@ -50,7 +50,7 @@ public class PlayerJoinServerListener implements Listener{
 				}
 				return;
 			}
-			Constants.plugin.getMessageSender().sendMessage(player, DATA_LOADING_ERROR);
+			Constants.plugin.getMessageUtil().sendMessage(player, DATA_LOADING_ERROR);
 			CloudNetAdapter.sendPlayerToLobbyTask(player);
 		});
 	}

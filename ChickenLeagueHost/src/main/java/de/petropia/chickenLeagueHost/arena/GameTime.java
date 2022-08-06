@@ -49,7 +49,7 @@ public class GameTime {
 				if(team2 > team1) {
 					arena.setWinner(arena.getTeam2());
 				}
-				Constants.plugin.getMessageSender().broadcastMessage(Audience.audience(arena.getPlayers()), Component.text("Die Zeit ist vorbei!").color(NamedTextColor.RED));
+				Constants.plugin.getMessageUtil().broadcastMessage(Audience.audience(arena.getPlayers()), Component.text("Die Zeit ist vorbei!").color(NamedTextColor.RED));
 				return;
 			}
 			time ++;

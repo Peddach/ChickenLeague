@@ -31,7 +31,7 @@ public class ChickenLeagueHostCommand implements CommandExecutor {
 		//Permission check
 		Player player = (Player) sender;
 		if (!player.hasPermission("chickenLeague.admin")) {
-			Constants.plugin.getMessageSender().sendMessage(player, Component.text("Leider darfst du diesen Command nicht ausführen"));
+			Constants.plugin.getMessageUtil().sendMessage(player, Component.text("Leider darfst du diesen Command nicht ausführen"));
 			return false;
 		}
 		//teams subcommand to display players in different teams
@@ -40,23 +40,23 @@ public class ChickenLeagueHostCommand implements CommandExecutor {
 				if (!arena.isPlayerPresent(player)) {
 					continue;
 				}
-				Constants.plugin.getMessageSender().sendMessage(player, arena.getTeam1().getName());
+				Constants.plugin.getMessageUtil().sendMessage(player, arena.getTeam1().getName());
 				for (Player p : arena.getTeam1().getPlayers()) {
 					if (p == null) {
 						continue;
 					}
-					Constants.plugin.getMessageSender().sendMessage(player, p.name());
+					Constants.plugin.getMessageUtil().sendMessage(player, p.name());
 				}
-				Constants.plugin.getMessageSender().sendMessage(player, arena.getTeam2().getName());
+				Constants.plugin.getMessageUtil().sendMessage(player, arena.getTeam2().getName());
 				for (Player p : arena.getTeam2().getPlayers()) {
 					if (p == null) {
 						continue;
 					}
-					Constants.plugin.getMessageSender().sendMessage(player, p.name());
+					Constants.plugin.getMessageUtil().sendMessage(player, p.name());
 				}
 				return true;
 			}
-			Constants.plugin.getMessageSender().sendMessage(player, Component.text("Du bist in keiner Arena!"));
+			Constants.plugin.getMessageUtil().sendMessage(player, Component.text("Du bist in keiner Arena!"));
 			return false;
 		}
 		//time subcommand to get human readable ingame time
@@ -66,10 +66,10 @@ public class ChickenLeagueHostCommand implements CommandExecutor {
 					continue;
 				}
 				if (arena.getGameTime() == null) {
-					Constants.plugin.getMessageSender().sendMessage(player, Component.text("Keine Zeit vorhanden"));
+					Constants.plugin.getMessageUtil().sendMessage(player, Component.text("Keine Zeit vorhanden"));
 					return false;
 				}
-				Constants.plugin.getMessageSender().sendMessage(player, Component.text(arena.getGameTime().getTimeAsString()).color(NamedTextColor.GOLD));
+				Constants.plugin.getMessageUtil().sendMessage(player, Component.text(arena.getGameTime().getTimeAsString()).color(NamedTextColor.GOLD));
 				
 			}
 		}
@@ -82,10 +82,10 @@ public class ChickenLeagueHostCommand implements CommandExecutor {
 				for (Location location : arena.getSpecialItemManager().getChests().keySet()) {
 					MysteryChest chest = arena.getSpecialItemManager().getChests().get(location);
 					if(chest == null) {
-						Constants.plugin.getMessageSender().sendMessage(player, Component.text(location.getX() + " - " + location.getBlockZ() + " : null"));
+						Constants.plugin.getMessageUtil().sendMessage(player, Component.text(location.getX() + " - " + location.getBlockZ() + " : null"));
 						continue;
 					}
-					Constants.plugin.getMessageSender().sendMessage(player, Component.text(location.getX() + " - " + location.getBlockZ() + " : ✅"));
+					Constants.plugin.getMessageUtil().sendMessage(player, Component.text(location.getX() + " - " + location.getBlockZ() + " : ✅"));
 				}
 			}
 		}
@@ -110,7 +110,7 @@ public class ChickenLeagueHostCommand implements CommandExecutor {
 		if(args.length == 2 && args[0].equalsIgnoreCase("Specialitem")) {
 			int i = Integer.parseInt(args[1]);
 			if(i > SpecialItemManager.getSpecialItems().size()) {
-				Constants.plugin.getMessageSender().sendMessage(player, Component.text("Out of Range"));
+				Constants.plugin.getMessageUtil().sendMessage(player, Component.text("Out of Range"));
 				return false;
 			}
 			SpecialItem item = SpecialItemManager.getSpecialItems().get(i);

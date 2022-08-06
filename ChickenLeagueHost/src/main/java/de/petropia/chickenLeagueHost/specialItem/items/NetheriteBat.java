@@ -71,7 +71,7 @@ public class NetheriteBat extends SpecialItem {
 		}
 		if(BLACKLIST.contains(player)) {
 			event.setCancelled(true);
-			Constants.plugin.getMessageSender().sendMessage(player, Component.text("Der Superschläger ist grade deaktiviert").color(NamedTextColor.RED));
+			Constants.plugin.getMessageUtil().sendMessage(player, Component.text("Der Superschläger ist grade deaktiviert").color(NamedTextColor.RED));
 			return;
 		}
 		player.getInventory().clear(8);

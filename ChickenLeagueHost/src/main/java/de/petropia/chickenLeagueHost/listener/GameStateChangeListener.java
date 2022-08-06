@@ -38,7 +38,7 @@ public class GameStateChangeListener implements Listener{
 				@Override
 				public void run() {
 					if(i % 5 == 0) {
-						Constants.plugin.getMessageSender().broadcastMessage(Audience.audience(event.getArena().getPlayers()), Component.text("Der Server stoppt in " + i + " Sekunden!").color(NamedTextColor.RED));
+						Constants.plugin.getMessageUtil().broadcastMessage(Audience.audience(event.getArena().getPlayers()), Component.text("Der Server stoppt in " + i + " Sekunden!").color(NamedTextColor.RED));
 					}
 					if(i == 0) {
 						event.getArena().delete();

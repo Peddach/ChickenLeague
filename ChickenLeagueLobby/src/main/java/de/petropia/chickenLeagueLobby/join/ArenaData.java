@@ -76,7 +76,7 @@ public class ArenaData {
 	private void showWarning(ArenaMode mode) {
 		Bukkit.getOnlinePlayers().forEach(player -> {
 			if(player.hasPermission("chickenLeague.admin") && pingList.contains(player)) {
-				Constants.plugin.getMessageSender().sendMessage(player, Component.text("Keine Arena gefunden: " + mode.name()).color(NamedTextColor.RED));
+				Constants.plugin.getMessageUtil().sendMessage(player, Component.text("Keine Arena gefunden: " + mode.name()).color(NamedTextColor.RED));
 			}
 		});
 	}

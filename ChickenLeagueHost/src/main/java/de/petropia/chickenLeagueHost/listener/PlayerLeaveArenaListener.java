@@ -17,7 +17,7 @@ public class PlayerLeaveArenaListener implements Listener {
 	
 	@EventHandler
 	public void onPlayerLeaveArena(PlayerQuitArenaEvent event) {
-		Constants.plugin.getMessageSender().broadcastMessage(Audience.audience(event.getArena().getPlayers()), event.getPlayer().name().append(LEAVE_MESSAGE));
+		Constants.plugin.getMessageUtil().broadcastMessage(Audience.audience(event.getArena().getPlayers()), event.getPlayer().name().append(LEAVE_MESSAGE));
 		if(event.getArena().getGameState() != GameState.INGAME) {
 			return;
 		}
