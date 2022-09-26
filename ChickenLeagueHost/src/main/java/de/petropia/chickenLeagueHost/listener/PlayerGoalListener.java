@@ -2,9 +2,11 @@ package de.petropia.chickenLeagueHost.listener;
 
 import java.time.Duration;
 
+import de.petropia.turtleServer.server.TurtleServer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -35,6 +37,10 @@ public class PlayerGoalListener implements Listener {
 	@EventHandler
 	public void onPlayerGoal(PlayerGoalEvent event) {
 		Location chickenLocataion = event.getArena().getBall().getChicken().getLocation();
+		TurtleServer.getMongoDBHandler().getPetropiaPlayerByUUID(event.getPlayer().getUniqueId().toString()).thenAccept(player -> {
+			player.increateStats("ChickenLeague_Goals",1);
+			player.increateStats("ChickenLeague_Points", 1);
+		});
 		event.getArena().getBall().kill();
 		if(event.getPlayer() != null) {
 			name = event.getPlayer().name();
@@ -45,6 +51,15 @@ public class PlayerGoalListener implements Listener {
 		if(event.getTeam().getScore() == 5) {
 			event.getArena().setWinner(event.getTeam());
 			showExplosion(event.getArena(), chickenLocataion);
+			for(Player p : event.getTeam().getPlayers()){
+				if(p == null){
+					continue;
+				}
+				TurtleServer.getMongoDBHandler().getPetropiaPlayerByOnlinePlayer(p).thenAccept(petropiaPlayer -> {
+					petropiaPlayer.increateStats("ChickenLeague_Points", 3);
+					petropiaPlayer.increateStats("ChickenLeague_Wins", 1);
+				});
+			}
 			return;
 		}
 		Bukkit.getScheduler().runTaskLater(Constants.plugin, () -> {

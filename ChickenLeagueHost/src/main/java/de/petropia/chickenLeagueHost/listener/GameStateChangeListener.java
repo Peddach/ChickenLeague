@@ -38,7 +38,7 @@ public class GameStateChangeListener implements Listener{
 				@Override
 				public void run() {
 					if(i % 5 == 0) {
-						Constants.plugin.getMessageUtil().broadcastMessage(Audience.audience(event.getArena().getPlayers()), Component.text("Der Server stoppt in " + i + " Sekunden!").color(NamedTextColor.RED));
+						Constants.plugin.getMessageUtil().sendMessage(Audience.audience(event.getArena().getPlayers()), Component.text("Der Server stoppt in " + i + " Sekunden!").color(NamedTextColor.RED));
 					}
 					if(i == 0) {
 						event.getArena().delete();
@@ -49,11 +49,13 @@ public class GameStateChangeListener implements Listener{
 				}
 			}, 0, 20);
 			event.getArena().getGameTime().stop();
-			event.getArena().getPlayers().forEach(p -> InventoryUtil.clearPlayer(p));
-			event.getArena().getPlayers().forEach(p -> LeaveItem.giveItemPlayer(p));
+			event.getArena().getPlayers().forEach(player -> {
+				InventoryUtil.clearPlayer(player);
+				LeaveItem.giveItemPlayer(player);
+			});
 		}
 		if(event.getAfter() == GameState.INGAME) {
-			event.getArena().getPlayers().forEach(p -> InventoryUtil.clearPlayer(p));
+			event.getArena().getPlayers().forEach(InventoryUtil::clearPlayer);
 			new GoalCountDown(event.getArena());
 			event.getArena().setGameTime(new GameTime(event.getArena()));
 			event.getArena().getSpecialItemManager().start();
