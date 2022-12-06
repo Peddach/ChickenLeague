@@ -26,6 +26,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.util.Vector;
 
 public class EggWall extends SpecialItem implements Listener {
 
@@ -42,10 +43,9 @@ public class EggWall extends SpecialItem implements Listener {
 		if(event.getEntity().getType() != EntityType.EGG) {
 			return;
 		}
-		if(event.getEntity().getShooter() instanceof Player == false) {
+		if(!(event.getEntity().getShooter() instanceof Player player)) {
 			return;
 		}
-		Player player = (Player) event.getEntity().getShooter();
 		if(!player.getInventory().getItemInMainHand().equals(ITEM)) {
 			return;
 		}
@@ -57,11 +57,18 @@ public class EggWall extends SpecialItem implements Listener {
 		if(event.getEntityType() != EntityType.EGG) {
 			return;
 		}
-		if(event.getEntity().getShooter() instanceof Player == false) {
+		if(!(event.getEntity().getShooter() instanceof Player player)) {
 			return;
 		}
-		Player player = (Player) event.getEntity().getShooter();
 		if(!LAUNCHING_PLAYERS.containsKey(player)) {
+			return;
+		}
+		if(event.getHitEntity() != null){
+			event.setCancelled(true);
+			Vector vector = event.getEntity().getVelocity().clone();
+			vector = vector.multiply(new Vector(-0.25, 1,-0.25));
+			vector = vector.add(new Vector(0, 0.3, 0));
+			event.getEntity().setVelocity(vector);
 			return;
 		}
 		float yaw = LAUNCHING_PLAYERS.get(player);
@@ -119,7 +126,7 @@ public class EggWall extends SpecialItem implements Listener {
 			meta.displayName(Component.text("Spiegelei Mauer").color(TextColor.fromCSSHexString("#ffd500")).decorate(TextDecoration.BOLD));
 			final List<Component> lore = new ArrayList<>();
 			lore.add(Component.text(" "));
-			lore.add(Component.text("Wirf das Ei und eine 2x2 Mauer erscheint").color(NamedTextColor.GRAY));
+			lore.add(Component.text("Wirf das Ei und eine 3x2 Mauer erscheint").color(NamedTextColor.GRAY));
 			lore.add(Component.text(" "));
 			meta.lore(lore);
 			meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_DESTROYS);

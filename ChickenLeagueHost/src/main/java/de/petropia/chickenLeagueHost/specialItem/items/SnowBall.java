@@ -23,6 +23,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.util.Vector;
 
 public class SnowBall extends SpecialItem implements Listener {
 	
@@ -36,10 +37,9 @@ public class SnowBall extends SpecialItem implements Listener {
 	
 	@EventHandler
 	public void onThrow(ProjectileLaunchEvent event) {
-		if(event.getEntity().getShooter() instanceof Player == false) {
+		if(!(event.getEntity().getShooter() instanceof Player player)) {
 			return;
 		}
-		Player player = (Player) event.getEntity().getShooter();
 		if(!player.getInventory().getItemInMainHand().equals(ITEM)) {
 			return;
 		}
@@ -52,14 +52,22 @@ public class SnowBall extends SpecialItem implements Listener {
 		if(event.getEntityType() != EntityType.SNOWBALL) {
 			return;
 		}
-		if(event.getEntity().getShooter() instanceof Player == false) {
+		if(!(event.getEntity().getShooter() instanceof Player player)) {
 			return;
 		}
-		Player player = (Player) event.getEntity().getShooter();
 		if(!LAUNCHING_PLAYERS.contains(player)) {
 			return;
 		}
 		LAUNCHING_PLAYERS.remove(player);
+		if(event.getHitEntity() != null){
+			event.setCancelled(true);
+			Vector vector = event.getEntity().getVelocity().clone();
+			vector = vector.multiply(new Vector(-0.25, 1,-0.25));
+			vector = vector.add(new Vector(0, 0.3, 0));
+			event.getEntity().setVelocity(vector);
+			LAUNCHING_PLAYERS.add(player);
+			return;
+		}
 		if(event.getHitBlock() == null) {
 			return;
 		}
