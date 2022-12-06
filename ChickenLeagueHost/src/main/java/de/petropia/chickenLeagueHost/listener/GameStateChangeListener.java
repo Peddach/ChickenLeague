@@ -51,6 +51,7 @@ public class GameStateChangeListener implements Listener{
 			event.getArena().getGameTime().stop();
 			event.getArena().getPlayers().forEach(player -> {
 				InventoryUtil.clearPlayer(player);
+				player.getInventory().setHeldItemSlot(4);
 				LeaveItem.giveItemPlayer(player);
 			});
 		}
