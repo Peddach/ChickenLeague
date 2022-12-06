@@ -52,7 +52,6 @@ public class ImposterBall extends SpecialItem implements Listener{
 		if(event.getPlayer().getInventory().getItemInMainHand() == null || !event.getPlayer().getInventory().getItemInMainHand().equals(ITEM)) {
 			return;
 		}
-		event.getPlayer().getInventory().clear(8);
 		Arena arena = null;
 		for (Arena i :Arena.getArenas()) {
 			if(!i.isPlayerPresent(event.getPlayer())) {
@@ -64,6 +63,11 @@ public class ImposterBall extends SpecialItem implements Listener{
 		if(arena == null) {
 			return;
 		}
+		if(arena.getBall().getChicken() == null || arena.getBall().getChicken().isDead()){
+			Constants.plugin.getMessageUtil().sendMessage(event.getPlayer(), Component.text("Es ist aktuell kein Ball vorhanden!", NamedTextColor.RED));
+			return;
+		}
+		event.getPlayer().getInventory().clear(8);
 		new Imposter(arena, event.getPlayer());
 	}
 
@@ -163,7 +167,6 @@ class Imposter {
 		double min = -0.5;
 		double max = 0.5;
 		Random r = new Random();
-		double random = min + r.nextDouble() * (max - min);
-		return random;
+		return min + r.nextDouble() * (max - min);
 	}
 }
