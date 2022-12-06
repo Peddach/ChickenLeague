@@ -3,6 +3,7 @@ package de.petropia.chickenLeagueHost.specialItem;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.kyori.adventure.sound.Sound;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
@@ -89,10 +90,9 @@ public class MysteryChestListener implements Listener {
 			int locZ = (int) loc.getZ();
 			if (locX == x && locZ == z && loc.getWorld() == player.getLocation().getWorld()) {
 				arena.getBatManager().speedBuffPlayer(player, 0.25);
+				player.playSound(Sound.sound(org.bukkit.Sound.BLOCK_CONDUIT_DEACTIVATE, Sound.Source.NEUTRAL, 0.4F, 1.99F));
 				BOOST_BLACK_LIST.add(player);
-				Bukkit.getScheduler().runTaskLater(Constants.plugin, () -> {
-					BOOST_BLACK_LIST.remove(player);
-				}, 20);
+				Bukkit.getScheduler().runTaskLater(Constants.plugin, () -> BOOST_BLACK_LIST.remove(player), 20);
 			}
 		}
 	}
