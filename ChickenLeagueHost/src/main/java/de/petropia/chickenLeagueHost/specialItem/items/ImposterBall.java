@@ -89,8 +89,10 @@ class Imposter {
 	private int taskID; 
 	
 	public Imposter(Arena arena, Player player) {
-		
 		Entity ball = arena.getBall().getChicken();
+		if(ball == null){
+			return;
+		}
 		Entity imposter = ball.getLocation().getWorld().spawnEntity(ball.getLocation(), ball.getType());
 		imposter.setSilent(true);
 		imposter.setGlowing(true);
