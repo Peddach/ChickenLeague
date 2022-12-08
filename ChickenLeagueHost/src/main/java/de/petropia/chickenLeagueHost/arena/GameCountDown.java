@@ -33,7 +33,7 @@ public class GameCountDown {
 		this.time = count;
 		this.arena = arena;
 		task = Bukkit.getScheduler().runTaskTimer(Constants.plugin, () -> {
-			if(arena.getPlayers().size() != arena.getMaxPlayers() && force == false) {
+			if(arena.getPlayers().size() != arena.getMaxPlayers() && !force) {
 				cancel(true);
 				return;
 			}
@@ -98,7 +98,7 @@ public class GameCountDown {
 	 * @param pitch Pitch of cowbell
 	 * @return Sound
 	 */
-	private final Sound sound(float pitch) {
+	private Sound sound(float pitch) {
 		return Sound.sound(Key.key("block.note_block.cow_bell"), Source.NEUTRAL, 1, pitch);
 	}
 }

@@ -36,19 +36,20 @@ public class PlayerGoalListener implements Listener {
 	
 	@EventHandler
 	public void onPlayerGoal(PlayerGoalEvent event) {
-		Location chickenLocataion = event.getArena().getBall().getChicken().getLocation();
+		//stats
 		TurtleServer.getMongoDBHandler().getPetropiaPlayerByUUID(event.getPlayer().getUniqueId().toString()).thenAccept(player -> {
 			player.increateStats("ChickenLeague_Goals",1);
 			player.increateStats("ChickenLeague_Points", 1);
 		});
+		Location chickenLocataion = event.getArena().getBall().getChicken().getLocation();
 		event.getArena().getBall().kill();
-		if(event.getPlayer() != null) {
+		if(event.getPlayer() != null) {	//Prepare Title
 			name = event.getPlayer().name();
 		}
-		final Title title = Title.title(event.getTeam().getName(), name.append(SUBTITLE), TIMES);
+		final Title title = Title.title(event.getTeam().getName(), name.append(SUBTITLE), TIMES);	//send title
 		MessageUtil.INSTANCE.broadcastTitle(event.getArena(), title, SOUND);
 		event.getArena().getBatManager().resetAllBuffs();
-		if(event.getTeam().getScore() == 5) {
+		if(event.getTeam().getScore() >= 5) {	//Win managment
 			event.getArena().setWinner(event.getTeam());
 			showExplosion(event.getArena(), chickenLocataion);
 			for(Player p : event.getTeam().getPlayers()){

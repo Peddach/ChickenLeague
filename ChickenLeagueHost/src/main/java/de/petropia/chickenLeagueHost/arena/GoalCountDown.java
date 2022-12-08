@@ -40,6 +40,16 @@ public class GoalCountDown {
 			MessageUtil.INSTANCE.broadcastTitle(arena, currentTitle(), currentSound());
 			if(countdown == 0) {
 				cancel(); //Cancel if countdown is at 0
+				arena.getPlayers().forEach(player -> {	//reset fishhooks
+					if(player == null){
+						return;
+					}
+					if(player.getFishHook() == null){
+						return;
+					}
+					player.getFishHook().setHookedEntity(null);
+					player.getFishHook().setWaitTime(20);
+				});
 				arena.getBall().spawn();
 				arena.getSpecialItemManager().start(); //start spawning special items
 			}
@@ -57,7 +67,7 @@ public class GoalCountDown {
 	
 	/**
 	 * return a title to display to players based on time
-	 * @return
+	 * @return the current title
 	 */
 	private Title currentTitle() {
 		return Title.title(Component.text(countdown).color(NamedTextColor.GRAY), Component.text("Sekunden").color(NamedTextColor.GRAY), TIMES);
