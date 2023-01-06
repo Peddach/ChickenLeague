@@ -14,6 +14,10 @@ Bats:
       Speed: 0.22
    Diamond:
       Speed: 0.15
+Worlds:
+   OneVsOne: "CL_OneVsOne"
+   ThreeVsThree: "CL_ThreeVsThree"
+   FiveVsFive: "CL_ThreeVsThree"
 Spawn:
    X: 100
    Y: 100

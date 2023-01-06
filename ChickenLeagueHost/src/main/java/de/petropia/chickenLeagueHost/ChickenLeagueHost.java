@@ -5,9 +5,6 @@ import de.petropia.turtleServer.api.PetropiaPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 
-import com.onarandombox.MultiverseCore.MultiverseCore;
-import com.onarandombox.MultiverseCore.api.MVWorldManager;
-
 import de.petropia.chickenLeagueHost.arena.Arena;
 import de.petropia.chickenLeagueHost.arena.ArenaMode;
 import de.petropia.chickenLeagueHost.commands.ChickenLeagueHostCommand;
@@ -62,13 +59,6 @@ public class ChickenLeagueHost extends PetropiaPlugin {
 		Constants.serverName = CloudNetAdapter.getServerInstanceName();
 		Constants.setupFile = getResource("dbsetup.sql");
 		Constants.debug = getConfig().getBoolean("debug");
-		
-		//loading worlds as templates for arenas
-		MultiverseCore mvCore = (MultiverseCore) Bukkit.getServer().getPluginManager().getPlugin("Multiverse-Core");
-		MVWorldManager worldManager = mvCore.getMVWorldManager();
-		worldManager.loadWorld("ONE_VS_ONE");
-		worldManager.loadWorld("THREE_VS_THREE");
-		worldManager.loadWorld("FIVE_VS_FIVE");
 		
 		//connnecting to Database
 		if(!MySQLManager.setup()) {
