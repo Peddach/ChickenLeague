@@ -8,14 +8,13 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import de.petropia.turtleServer.api.worlds.WorldManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-import com.onarandombox.MultiverseCore.MultiverseCore;
-import com.onarandombox.MultiverseCore.api.MVWorldManager;
 import com.xxmicloxx.NoteBlockAPI.model.Song;
 import com.xxmicloxx.NoteBlockAPI.songplayer.RadioSongPlayer;
 
@@ -47,20 +46,20 @@ public class Arena {
     private GameState gamestate;
     private final ArenaMode arenaMode;
     private final List<Player> players = new ArrayList<>();
-    private final World world;
+    private World world;
     private int maxPlayer;
-    private final ChickenLeagueTeam team1;
-    private final ChickenLeagueTeam team2;
-    private final Location[] team1Spawns;
-    private final Location[] team2Spawns;
-    private final Location middle;
-    private final ChickenLeagueBall ball;
+    private ChickenLeagueTeam team1;
+    private ChickenLeagueTeam team2;
+    private Location[] team1Spawns;
+    private Location[] team2Spawns;
+    private Location middle;
+    private ChickenLeagueBall ball;
     private boolean registered = false;
     private GameTime gameTime;
-    private final ScoreboardManager scoreboradManager;
-    private final TeamSelectGUI teamSelectGui;
+    private ScoreboardManager scoreboradManager;
+    private TeamSelectGUI teamSelectGui;
     private final BatManager batManager = new BatManager();
-    private final SpecialItemManager specialItemManager;
+    private SpecialItemManager specialItemManager;
 
     /**
      * Create and register arena right after new instance
@@ -71,42 +70,49 @@ public class Arena {
         setGamestate(GameState.WAITING);
         this.name = getRandomString();
         this.arenaMode = mode;
-
+        String worldName = null;
         //Cloning worlds
-        MultiverseCore mvCore = (MultiverseCore) Bukkit.getServer().getPluginManager().getPlugin("Multiverse-Core");
-        MVWorldManager worldManager = mvCore.getMVWorldManager();
         if (mode == ArenaMode.FIVE_VS_FIVE) {
-            worldManager.cloneWorld("FIVE_VS_FIVE", name);
             maxPlayer = 5 + 5;
+            worldName = Constants.config.getString("Worlds.FiveVsFive");
         }
         if (mode == ArenaMode.THREE_VS_THREE) {
-            worldManager.cloneWorld("THREE_VS_THREE", name);
             maxPlayer = 3 + 3;
+            worldName = Constants.config.getString("Worlds.ThreeVsThree");
         }
         if (mode == ArenaMode.ONE_VS_ONE) {
-            worldManager.cloneWorld("ONE_VS_ONE", name);
             maxPlayer = 1 + 1;
+            worldName = Constants.config.getString("Worlds.OneVsOne");
         }
-        world = Bukkit.getWorld(name);
-        applyGameRules();
+        if(worldName == null){
+            Constants.plugin.getLogger().warning("World ID can not be found for " + name);
+            return;
+        }
+        Constants.plugin.getLogger().info("Loading " + worldName + " for Arena " + name);
+        WorldManager.loadWorld(worldName, name).thenAccept(loadedWorld -> {
+            Constants.plugin.getLogger().info("Done loading " + name);
+            world = loadedWorld;
+            applyGameRules();
 
-        //init teams
-        team1 = new ChickenLeagueTeam(maxPlayer / 2, Component.text("Team 1").color(NamedTextColor.BLUE), teamGoalCoord("X1", 1), teamGoalCoord("X2", 1), teamGoalCoord("Z1", 1), teamGoalCoord("Z2", 1));
-        team2 = new ChickenLeagueTeam(maxPlayer / 2, Component.text("Team 2").color(NamedTextColor.RED), teamGoalCoord("X1", 2), teamGoalCoord("X2", 2), teamGoalCoord("Z1", 2), teamGoalCoord("Z2", 2));
+            //init teams
+            team1 = new ChickenLeagueTeam(maxPlayer / 2, Component.text("Team 1").color(NamedTextColor.BLUE), teamGoalCoord("X1", 1), teamGoalCoord("X2", 1), teamGoalCoord("Z1", 1), teamGoalCoord("Z2", 1));
+            team2 = new ChickenLeagueTeam(maxPlayer / 2, Component.text("Team 2").color(NamedTextColor.RED), teamGoalCoord("X1", 2), teamGoalCoord("X2", 2), teamGoalCoord("Z1", 2), teamGoalCoord("Z2", 2));
 
-        //spawns init
-        team2Spawns = loadSpawns(2);
-        team1Spawns = loadSpawns(1);
-        middle = loadMiddleLocation();
+            //spawns init
+            team2Spawns = loadSpawns(2);
+            team1Spawns = loadSpawns(1);
+            middle = loadMiddleLocation();
 
-        //misc init
-        ball = new ChickenLeagueBall(this);
-        scoreboradManager = new ScoreboardManager(this);
-        teamSelectGui = new TeamSelectGUI(this);
-        specialItemManager = new SpecialItemManager(this);
+            //misc init
+            ball = new ChickenLeagueBall(this);
+            scoreboradManager = new ScoreboardManager(this);
+            teamSelectGui = new TeamSelectGUI(this);
+            specialItemManager = new SpecialItemManager(this);
 
-        //register arena in db and Arenas list
-        registerArena();
+            //register arena in db and Arenas list
+            registerArena();
+        });
+
     }
 
     /**
@@ -131,8 +137,7 @@ public class Arena {
         final double z = Constants.config.getDouble(arenaMode.name() + ".Middle.Z");
         final float yaw = Constants.config.getLong(arenaMode.name() + ".Middle.Yaw");
         final float pitch = Constants.config.getLong(arenaMode.name() + ".Middle.Pitch");
-        final Location location = new Location(world, x, y, z, yaw, pitch);
-        return location;
+        return new Location(world, x, y, z, yaw, pitch);
     }
 
     /**
@@ -170,7 +175,7 @@ public class Arena {
     }
 
     /**
-     * Assign every player who doesnt have a team a team and kick the rest
+     * Assign every player who doesn't have a team and kick the rest
      */
     public void assignPlayersToTeams() {
         List<Player> playerWithoutTeams = new ArrayList<>(players);
@@ -300,8 +305,7 @@ public class Arena {
         int rightLimit = 122; // letter 'z'
         int targetStringLength = 5;
         Random random = new Random();
-        String generatedString = random.ints(leftLimit, rightLimit + 1).limit(targetStringLength).collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
-        return generatedString;
+        return random.ints(leftLimit, rightLimit + 1).limit(targetStringLength).collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
     }
 
     /**
@@ -314,18 +318,8 @@ public class Arena {
         MySQLManager.deleteArena(name);
         ARENAS.remove(this);
         scoreboradManager.deleteScordboardManager();
-        Bukkit.getScheduler().runTaskLater(Constants.plugin, () -> {
-            deleteWorld();
-        }, 20);
-    }
-
-    /**
-     * Remove the arena world from Bukkit and server directory
-     */
-    private void deleteWorld() {
-        MultiverseCore mvCore = (MultiverseCore) Bukkit.getServer().getPluginManager().getPlugin("Multiverse-Core");
-        MVWorldManager worldManager = mvCore.getMVWorldManager();
-        worldManager.deleteWorld(name);
+        Bukkit.getScheduler().runTaskLater(Constants.plugin, () -> world.getPlayers().forEach(Player::kick), 50);
+        Bukkit.getScheduler().runTaskLater(Constants.plugin, () -> WorldManager.deleteLocalWorld(world), 60);
     }
 
     /**
@@ -360,7 +354,7 @@ public class Arena {
     /**
      * Set the gamestate and trigger GameStateChangeEvent
      *
-     * @param gamestate
+     * @param gamestate State to set
      */
     public void setGamestate(GameState gamestate) {
         GameStateChangeEvent event = new GameStateChangeEvent(this, this.gamestate, gamestate);
