@@ -29,9 +29,9 @@
 			<url>https://jitpack.io</url>
 		</repository>
 		<repository>
-			<id>Petropia-releases</id>
+			<id>petropia</id>
 			<name>Petropia Maven Repo</name>
-			<url>https://repo.petropia.de/releases</url>
+			<url>https://repo.petropia.net/releases</url>
 		</repository>
 	</repositories>
 	<dependencies>
