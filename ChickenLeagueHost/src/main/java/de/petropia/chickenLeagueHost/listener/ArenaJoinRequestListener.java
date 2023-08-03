@@ -47,6 +47,7 @@ public class ArenaJoinRequestListener implements Listener {
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent event){
         hideAllPlayers(event.getPlayer());
+        event.joinMessage(null);
         Arena arena = joiningPlayers.get(event.getPlayer().getUniqueId());
         joiningPlayers.remove(event.getPlayer().getUniqueId());
         if(arena == null){
