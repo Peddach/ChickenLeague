@@ -1,6 +1,7 @@
 package de.petropia.chickenLeagueHost;
 
 
+import de.petropia.chickenLeagueHost.listener.*;
 import de.petropia.turtleServer.api.PetropiaPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
@@ -11,19 +12,6 @@ import de.petropia.chickenLeagueHost.commands.ChickenLeagueHostCommand;
 import de.petropia.chickenLeagueHost.commands.StartCommand;
 import de.petropia.chickenLeagueHost.items.LeaveItem;
 import de.petropia.chickenLeagueHost.items.TeamSelectItem;
-import de.petropia.chickenLeagueHost.listener.ArenaProtectionListener;
-import de.petropia.chickenLeagueHost.listener.ChatListener;
-import de.petropia.chickenLeagueHost.listener.ChickenDamageListener;
-import de.petropia.chickenLeagueHost.listener.ChickenMoveListener;
-import de.petropia.chickenLeagueHost.listener.DatabaseUpdater;
-import de.petropia.chickenLeagueHost.listener.GameStateChangeListener;
-import de.petropia.chickenLeagueHost.listener.PlayerGoalListener;
-import de.petropia.chickenLeagueHost.listener.PlayerJoinArenaListener;
-import de.petropia.chickenLeagueHost.listener.PlayerJoinServerListener;
-import de.petropia.chickenLeagueHost.listener.PlayerLeaveArenaListener;
-import de.petropia.chickenLeagueHost.listener.PlayerLeaveServerListener;
-import de.petropia.chickenLeagueHost.listener.PlayerMoveListener;
-import de.petropia.chickenLeagueHost.mysql.MySQLManager;
 import de.petropia.chickenLeagueHost.specialItem.MysteryChestListener;
 import de.petropia.chickenLeagueHost.specialItem.SpecialItemManager;
 import de.petropia.chickenLeagueHost.specialItem.items.BlindnessCrossbow;
@@ -59,13 +47,7 @@ public class ChickenLeagueHost extends PetropiaPlugin {
 		Constants.serverName = CloudNetAdapter.getServerInstanceName();
 		Constants.setupFile = getResource("dbsetup.sql");
 		Constants.debug = getConfig().getBoolean("debug");
-		
-		//connnecting to Database
-		if(!MySQLManager.setup()) {
-			getLogger().warning("Could not Connect to database!!!");
-			getServer().getPluginManager().disablePlugin(this);
-			return;
-		}
+
 		registerCommands();
 		registerListener();
 		registerSpecialItems();
@@ -119,7 +101,6 @@ public class ChickenLeagueHost extends PetropiaPlugin {
 		final PluginManager manager = Bukkit.getServer().getPluginManager();
 		manager.registerEvents(new PlayerJoinArenaListener(), this);
 		manager.registerEvents(new PlayerLeaveArenaListener(), this);
-		manager.registerEvents(new PlayerJoinServerListener(), this);
 		manager.registerEvents(new PlayerLeaveServerListener(), this);
 		manager.registerEvents(new ChatListener(), this);
 		manager.registerEvents(new GameStateChangeListener(), this);
@@ -133,6 +114,8 @@ public class ChickenLeagueHost extends PetropiaPlugin {
 		manager.registerEvents(new ArenaProtectionListener(), this);
 		manager.registerEvents(new ChickenMoveListener(), this);
 		manager.registerEvents(new MysteryChestListener(), this);
+		manager.registerEvents(new ArenaUpdateResendListener(), this);
+		manager.registerEvents(new ArenaJoinRequestListener(), this);
 	}
 	
 	/**
@@ -140,7 +123,7 @@ public class ChickenLeagueHost extends PetropiaPlugin {
 	 */
 	@Override
 	public void onDisable() {
-		MySQLManager.purgeDatabase();
+		Arena.getArenas().forEach(a -> getCloudNetAdapter().publishArenaDelete(a.getName()));
 	}
 
 }

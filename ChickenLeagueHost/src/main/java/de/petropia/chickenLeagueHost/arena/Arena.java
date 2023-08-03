@@ -24,7 +24,6 @@ import de.petropia.chickenLeagueHost.events.GameStateChangeEvent;
 import de.petropia.chickenLeagueHost.events.PlayerJoinArenaEvent;
 import de.petropia.chickenLeagueHost.events.PlayerQuitArenaEvent;
 import de.petropia.chickenLeagueHost.firework.GoalFireWork;
-import de.petropia.chickenLeagueHost.mysql.MySQLManager;
 import de.petropia.chickenLeagueHost.scoreboard.ScoreboardManager;
 import de.petropia.chickenLeagueHost.song.SongList;
 import de.petropia.chickenLeagueHost.specialItem.SpecialItemManager;
@@ -170,7 +169,7 @@ public class Arena {
      */
     private void registerArena() {
         ARENAS.add(this);
-        MySQLManager.addArena(this);
+        CloudNetAdapter.publishArenaUpdate(this);
         registered = true;
     }
 
@@ -315,7 +314,7 @@ public class Arena {
         for (Player player : players) {
             CloudNetAdapter.sendPlayerToLobbyTask(player);
         }
-        MySQLManager.deleteArena(name);
+        CloudNetAdapter.publishArenaDelete(this);
         ARENAS.remove(this);
         scoreboradManager.deleteScordboardManager();
         Bukkit.getScheduler().runTaskLater(Constants.plugin, () -> world.getPlayers().forEach(Player::kick), 50);
@@ -343,6 +342,10 @@ public class Arena {
         players.forEach(p -> p.setBedSpawnLocation(middle));
     }
 
+    /**
+     * The name is the same es the id of an arena. It is always unique!
+     * @return arena name
+     */
     public String getName() {
         return name;
     }

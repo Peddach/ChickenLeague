@@ -7,6 +7,5 @@
   <name>Chicken League</name>
   <modules>
   	<module>ChickenLeagueHost</module>
-  	<module>ChickenLeagueLobby</module>
   </modules>
 </project>

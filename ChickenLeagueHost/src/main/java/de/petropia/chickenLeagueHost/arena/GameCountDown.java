@@ -23,7 +23,7 @@ public class GameCountDown {
 	private final Arena arena;
 	
 	/**
-	 * First Coundown before game starts. Afterwards create a GoalCountdown which teleports players to spawnpoints
+	 * First Coundown before game starts. Afterward create a GoalCountdown which teleports players to spawnpoints
 	 * 
 	 * @param count How long the countdown should be
 	 * @param arena Arena to start
