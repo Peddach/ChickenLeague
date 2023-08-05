@@ -193,7 +193,7 @@ public class Arena {
                 continue;
             }
             Constants.plugin.getMessageUtil().sendMessage(player, Component.text("Du konntest keinen Team zugeordnet werden!").color(NamedTextColor.RED));
-            CloudNetAdapter.sendPlayerToLobbyTask(player);
+            Constants.plugin.getCloudNetAdapter().sendPlayerToLobby(player);
         }
     }
 
@@ -312,7 +312,7 @@ public class Arena {
      */
     public void delete() {
         for (Player player : players) {
-            CloudNetAdapter.sendPlayerToLobbyTask(player);
+            Constants.plugin.getCloudNetAdapter().sendPlayerToLobby(player);
         }
         CloudNetAdapter.publishArenaDelete(this);
         ARENAS.remove(this);

@@ -3,6 +3,7 @@ package de.petropia.chickenLeagueHost.items;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.petropia.chickenLeagueHost.Constants;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Material;
@@ -17,7 +18,6 @@ import org.bukkit.inventory.meta.FireworkEffectMeta;
 
 import de.petropia.chickenLeagueHost.arena.GameState;
 import de.petropia.chickenLeagueHost.events.PlayerJoinArenaEvent;
-import de.petropia.chickenLeagueHost.util.CloudNetAdapter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
@@ -63,7 +63,7 @@ public class LeaveItem implements Listener{
 		if(!event.getItem().equals(ITEM)) {
 			return;
 		}
-		CloudNetAdapter.sendPlayerToLobbyTask(event.getPlayer());
+		Constants.plugin.getCloudNetAdapter().sendPlayerToLobby(event.getPlayer());
 	}
 	
 	//listen if player clicks the item in inventory
@@ -75,7 +75,7 @@ public class LeaveItem implements Listener{
 		if(!event.getCurrentItem().equals(ITEM)) {
 			return;
 		}
-		CloudNetAdapter.sendPlayerToLobbyTask((Player) event.getWhoClicked());
+		Constants.plugin.getCloudNetAdapter().sendPlayerToLobby((Player) event.getWhoClicked());
 	}
 	
 	//Gives the item players who joins

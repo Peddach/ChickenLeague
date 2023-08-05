@@ -20,10 +20,9 @@ public class StartCommand implements CommandExecutor {
 	 */
 	@Override
 	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-		if(sender instanceof Player == false) {
+		if(!(sender instanceof Player player)) {
 			return false;
 		}
-		Player player = (Player) sender;
 		if(!player.hasPermission("chickenleague.start")) {
 			Constants.plugin.getMessageUtil().sendMessage(player, Component.text("Dieser Command ist Teammitgliedern in Chickenleague vorbehalten"));
 			return false;
@@ -36,7 +35,7 @@ public class StartCommand implements CommandExecutor {
 			arena = i;
 			break;
 		}
-		Constants.plugin.getMessageUtil().broadcastMessage(Audience.audience(arena.getPlayers()), player.name().append(Component.text(" hat das Spiel gestartet").color(NamedTextColor.GRAY)));
+		Constants.plugin.getMessageUtil().sendMessage(Audience.audience(arena.getPlayers()), player.name().append(Component.text(" hat das Spiel gestartet").color(NamedTextColor.GRAY)));
 		new GameCountDown(10, arena, true);
 		return true;
 	}

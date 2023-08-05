@@ -19,7 +19,7 @@ public class PlayerJoinArenaListener implements Listener {
 	
 	@EventHandler
 	public void onPlayerJoinArena(PlayerJoinArenaEvent event) {
-		Constants.plugin.getMessageUtil().broadcastMessage(Audience.audience(event.getArena().getPlayers()), event.getPlayer().name().append(JOIN_MESSAGE));
+		Constants.plugin.getMessageUtil().sendMessage(Audience.audience(event.getArena().getPlayers()), event.getPlayer().name().append(JOIN_MESSAGE));
 		if(event.getArena().getPlayers().size() == event.getArena().getMaxPlayers()) {
 			new GameCountDown(10, event.getArena(), false);
 		}

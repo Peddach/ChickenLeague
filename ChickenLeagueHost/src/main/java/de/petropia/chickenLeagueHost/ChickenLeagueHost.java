@@ -1,33 +1,20 @@
 package de.petropia.chickenLeagueHost;
 
 
-import de.petropia.chickenLeagueHost.listener.*;
-import de.petropia.turtleServer.api.PetropiaPlugin;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.PluginManager;
-
 import de.petropia.chickenLeagueHost.arena.Arena;
 import de.petropia.chickenLeagueHost.arena.ArenaMode;
 import de.petropia.chickenLeagueHost.commands.ChickenLeagueHostCommand;
 import de.petropia.chickenLeagueHost.commands.StartCommand;
 import de.petropia.chickenLeagueHost.items.LeaveItem;
 import de.petropia.chickenLeagueHost.items.TeamSelectItem;
+import de.petropia.chickenLeagueHost.listener.*;
 import de.petropia.chickenLeagueHost.specialItem.MysteryChestListener;
 import de.petropia.chickenLeagueHost.specialItem.SpecialItemManager;
-import de.petropia.chickenLeagueHost.specialItem.items.BlindnessCrossbow;
-import de.petropia.chickenLeagueHost.specialItem.items.ChangeBall;
-import de.petropia.chickenLeagueHost.specialItem.items.EggWall;
-import de.petropia.chickenLeagueHost.specialItem.items.Enderpearl;
-import de.petropia.chickenLeagueHost.specialItem.items.ImposterBall;
-import de.petropia.chickenLeagueHost.specialItem.items.LevitationCrossbow;
-import de.petropia.chickenLeagueHost.specialItem.items.KnockbackCrossbow;
-import de.petropia.chickenLeagueHost.specialItem.items.NetheriteBat;
-import de.petropia.chickenLeagueHost.specialItem.items.NetheriteSword;
-import de.petropia.chickenLeagueHost.specialItem.items.Rod;
-import de.petropia.chickenLeagueHost.specialItem.items.SnowBall;
-import de.petropia.chickenLeagueHost.specialItem.items.Trap;
+import de.petropia.chickenLeagueHost.specialItem.items.*;
 import de.petropia.chickenLeagueHost.team.TeamSelectGUI;
-import de.petropia.chickenLeagueHost.util.CloudNetAdapter;
+import de.petropia.turtleServer.api.PetropiaPlugin;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.PluginManager;
 
 public class ChickenLeagueHost extends PetropiaPlugin {
 	
@@ -44,7 +31,7 @@ public class ChickenLeagueHost extends PetropiaPlugin {
 		//setting constants
 		Constants.plugin = this;
 		Constants.config = getConfig();
-		Constants.serverName = CloudNetAdapter.getServerInstanceName();
+		Constants.serverName = Constants.plugin.getCloudNetAdapter().getServerInstanceName();
 		Constants.setupFile = getResource("dbsetup.sql");
 		Constants.debug = getConfig().getBoolean("debug");
 

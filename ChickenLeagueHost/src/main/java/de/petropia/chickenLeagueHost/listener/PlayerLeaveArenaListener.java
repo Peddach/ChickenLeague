@@ -13,11 +13,11 @@ import net.kyori.adventure.text.format.NamedTextColor;
 public class PlayerLeaveArenaListener implements Listener {
 	private static final Component LEAVE_MESSAGE = Component.text(" hat das Spiel verlassen!").color(NamedTextColor.GRAY);
 	
-	public PlayerLeaveArenaListener() {};
+	public PlayerLeaveArenaListener() {}
 	
 	@EventHandler
 	public void onPlayerLeaveArena(PlayerQuitArenaEvent event) {
-		Constants.plugin.getMessageUtil().broadcastMessage(Audience.audience(event.getArena().getPlayers()), event.getPlayer().name().append(LEAVE_MESSAGE));
+		Constants.plugin.getMessageUtil().sendMessage(Audience.audience(event.getArena().getPlayers()), event.getPlayer().name().append(LEAVE_MESSAGE));
 		if(event.getArena().getGameState() != GameState.INGAME) {
 			return;
 		}
